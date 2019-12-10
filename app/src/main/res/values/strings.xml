@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Arrival Message</string>
+    <string name="app_name">ArrivalMessage</string>
     <string name="title_activity_maps">Map</string>
 </resources>
