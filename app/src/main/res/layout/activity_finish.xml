@@ -7,27 +7,20 @@
     android:layout_height="match_parent"
     android:background="@drawable/map"
     tools:context=".FinishActivity">
-    <ImageView
-        android:id="@+id/create_upper"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="592dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@drawable/create_upper"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/create_upper" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/ready_upper"
-        android:layout_width="328dp"
-        android:layout_height="475dp"
-        android:layout_marginBottom="308dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.542"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ready_upper" />
+
+
+
+
+    </TableRow>
 
     <ImageButton
         android:id="@+id/main_menu_btn"

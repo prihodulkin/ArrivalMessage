@@ -30,18 +30,11 @@ public class SelectUserActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        FinishManager.addActivity(SelectUserActivity.this);
                         startActivity(new Intent(SelectUserActivity.this, SelectLocationActivity.class));
                     }
                 }
         );
     }
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
-    }
+
 }

@@ -20,7 +20,12 @@ public class FinishActivity extends AppCompatActivity {
         main_menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(FinishActivity.this, MainActivity.class));
+
+               // startActivity(new Intent(FinishActivity.this, MainActivity.class));
+                FinishManager.finishActivity(SelectUserActivity.class);
+                FinishManager.finishActivity(SelectLocationActivity.class);
+                FinishManager.finishActivity(ChooseTextActivity.class);
+                FinishActivity.super.finish();
             }
         });
     }
@@ -31,6 +36,6 @@ public class FinishActivity extends AppCompatActivity {
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        finish();
+        super.finish();
     }
 }

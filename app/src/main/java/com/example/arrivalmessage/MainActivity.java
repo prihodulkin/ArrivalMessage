@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, SelectUserActivity.class));
+               // MainActivity.super.finish();
             }
         });
         ImageButton settings_btn = findViewById(R.id.settings_btn);
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+               // MainActivity.super.finish();
             }
         });
         ImageButton saved_btn = findViewById(R.id.saved_btn);
@@ -36,16 +38,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, SavedNotificationsActivity.class));
+               // MainActivity.super.finish();
             }
         });
     }
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
-    }
+
 }
