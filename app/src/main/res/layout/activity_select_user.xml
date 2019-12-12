@@ -33,6 +33,7 @@
         app:srcCompat="@drawable/next" />
 
     <TableRow
+        android:id="@+id/users_table_row"
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:background="@drawable/create_upper"
@@ -56,10 +57,9 @@
             android:layout_width="20dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/back"
-            />
+            android:background="@drawable/back" />
 
 
-   </TableRow>
+    </TableRow>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
