@@ -21,8 +21,9 @@ public class SavedNotificationsActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(SavedNotificationsActivity.this, MainActivity.class));
-                        SavedNotificationsActivity.super.finish();
+                        Intent intent = new Intent(SavedNotificationsActivity.this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                     }
                 }
         );

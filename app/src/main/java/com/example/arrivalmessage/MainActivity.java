@@ -2,6 +2,7 @@ package com.example.arrivalmessage;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,24 +22,28 @@ public class MainActivity extends AppCompatActivity {
         create_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SelectUserActivity.class));
-               // MainActivity.super.finish();
+                Intent intent = new Intent(MainActivity.this, SelectUserActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+
             }
         });
         ImageButton settings_btn = findViewById(R.id.settings_btn);
         settings_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-               // MainActivity.super.finish();
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
         ImageButton saved_btn = findViewById(R.id.saved_btn);
         saved_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SavedNotificationsActivity.class));
-               // MainActivity.super.finish();
+                Intent intent = new Intent(MainActivity.this, SavedNotificationsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
     }

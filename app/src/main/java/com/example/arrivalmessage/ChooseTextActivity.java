@@ -21,7 +21,9 @@ public class ChooseTextActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(ChooseTextActivity.this, SelectLocationActivity.class));
+                        Intent intent = new Intent(ChooseTextActivity.this, SelectLocationActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                     }
                 }
         );
@@ -30,8 +32,9 @@ public class ChooseTextActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        FinishManager.addActivity(ChooseTextActivity.this);
-                        startActivity(new Intent(ChooseTextActivity.this, FinishActivity.class));
+                        Intent intent = new Intent(ChooseTextActivity.this, FinishActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                     }
                 }
         );

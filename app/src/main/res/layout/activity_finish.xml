@@ -24,8 +24,8 @@
 
     <ImageButton
         android:id="@+id/main_menu_btn"
-        android:layout_width="203dp"
-        android:layout_height="56dp"
+        android:layout_width="192dp"
+        android:layout_height="55dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
