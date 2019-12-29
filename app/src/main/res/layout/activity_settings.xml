@@ -24,7 +24,7 @@
         android:id="@+id/tableRow2"
         android:layout_width="match_parent"
         android:layout_height="65dp"
-        android:background="@drawable/saved_upper"
+        android:background="@drawable/settings_upper"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
