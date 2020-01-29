@@ -19,17 +19,17 @@
         app:srcCompat="@drawable/users_table" />
 
 
-
     <ImageButton
         android:id="@+id/next_btn"
         android:layout_width="192dp"
         android:layout_height="57dp"
+        android:layout_marginBottom="60dp"
         android:background="@drawable/button_next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/next" />
 
     <TableRow

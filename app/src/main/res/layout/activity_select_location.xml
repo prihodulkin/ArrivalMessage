@@ -12,6 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:background="@drawable/create_upper"
+        android:gravity="top"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,33 +39,43 @@
 
     </TableRow>
 
-    <ImageButton
-        android:id="@+id/next_btn"
-        android:layout_width="192dp"
-        android:layout_height="57dp"
-        android:background="@drawable/button_next"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/map_main"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9"
-        app:srcCompat="@drawable/next" />
+        app:layout_constraintTop_toBottomOf="@+id/tableRow3">
 
-    <com.google.android.gms.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/map"
-        android:layout_width="302dp"
-        android:layout_height="451dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="39dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginRight="48dp"
-        android:layout_marginBottom="52dp"
-        map:layout_constraintBottom_toTopOf="@+id/next_btn"
-        map:layout_constraintEnd_toEndOf="parent"
-        map:layout_constraintStart_toStartOf="parent"
-        map:layout_constraintTop_toBottomOf="@+id/tableRow3"></com.google.android.gms.maps.MapView>
+
+        <Button
+            android:id="@+id/next_btn"
+            android:layout_width="193dp"
+            android:layout_height="57dp"
+            android:layout_alignStart="@+id/map"
+            android:layout_alignLeft="@+id/map"
+            android:layout_alignEnd="@+id/map"
+            android:layout_alignRight="@+id/map"
+            android:layout_alignBottom="@+id/map"
+            android:layout_marginStart="103dp"
+            android:layout_marginLeft="103dp"
+            android:layout_marginEnd="113dp"
+            android:layout_marginRight="113dp"
+            android:layout_marginBottom="55dp"
+            android:background="@drawable/button_next"
+            android:gravity="center_horizontal" />
+
+        <com.google.android.gms.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/map"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:filterTouchesWhenObscured="false"></com.google.android.gms.maps.MapView>
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
     <!--
     map:mapType="0" Specifies a change to the initial map type
     map:zOrderOnTop="true"  Control whether the map view's surface is placed on top of its window
@@ -79,6 +91,7 @@
     map:ambientEnabled="true" Specifies whether ambient-mode styling should be enabled
     map:cameraMinZoomPreference="0.0" Specifies a preferred lower bound for camera zoom
     map:cameraMaxZoomPreference="1.0" Specifies a preferred upper bound for camera zoom -->
-    />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+

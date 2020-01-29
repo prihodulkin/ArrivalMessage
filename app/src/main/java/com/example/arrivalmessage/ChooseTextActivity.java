@@ -2,7 +2,11 @@ package com.example.arrivalmessage;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -15,6 +19,7 @@ public class ChooseTextActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choose_text);
         addListenerOnButton();
     }
+
     public void addListenerOnButton() {
         ImageButton back_btn = findViewById(R.id.back_btn);
         back_btn.setOnClickListener(
@@ -39,5 +44,6 @@ public class ChooseTextActivity extends AppCompatActivity {
                 }
         );
     }
-
 }
+
+
