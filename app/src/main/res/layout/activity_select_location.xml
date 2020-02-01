@@ -39,37 +39,41 @@
 
     </TableRow>
 
-    <EditText
-        android:id="@+id/search"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_above="@+id/next_btn"
-        android:layout_alignStart="@+id/map"
-        android:layout_alignLeft="@+id/map"
-        android:layout_alignEnd="@+id/map"
-        android:layout_alignRight="@+id/map"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="50dp"
+
+    <LinearLayout
+        android:id="@+id/search_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:background="#73B2CA"
-
-        android:alpha="0.8"
-        android:textColor="#182631"
-        android:textColorHint="#182631"
-        android:textColorLink="#182631"
-        android:outlineAmbientShadowColor="#182631"
-        android:textCursorDrawable="@null"
+        android:gravity="top"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="@+id/map"
         app:layout_constraintStart_toStartOf="@+id/map"
-        app:layout_constraintTop_toTopOf="@+id/map" />
+        app:layout_constraintTop_toTopOf="@+id/map">
+        <SearchView
+            android:layout_width="match_parent"
+            android:id="@+id/search"
+            android:layout_height="match_parent"></SearchView>
+
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_layout" />
 
 
     <ImageButton
         android:id="@+id/next_btn"
         android:layout_width="193dp"
-        android:layout_height="57dp"
+        android:layout_height="wrap_content"
         android:layout_alignStart="@+id/map"
         android:layout_alignLeft="@+id/map"
         android:layout_alignEnd="@+id/map"
@@ -82,6 +86,7 @@
         android:gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/map"
         app:layout_constraintEnd_toEndOf="@+id/map"
+        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="@+id/map" />
 
     <com.google.android.gms.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -90,31 +95,13 @@
 
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="65dp"
         android:filterTouchesWhenObscured="false"
         map:layout_constraintBottom_toBottomOf="parent"
         map:layout_constraintEnd_toEndOf="parent"
         map:layout_constraintStart_toStartOf="parent"
-        map:layout_constraintTop_toBottomOf="@+id/tableRow3"></com.google.android.gms.maps.MapView>
-
+        map:layout_constraintTop_toTopOf="parent"></com.google.android.gms.maps.MapView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-    <!--
-    map:mapType="0" Specifies a change to the initial map type
-    map:zOrderOnTop="true"  Control whether the map view's surface is placed on top of its window
-    map:useVieLifecycle="true" When using a MapFragment, this flag specifies whether the lifecycle of the map should be tied to the fragment's view or the fragment itself
-    map:uiCompass="true" Enables or disables the compass
-    map:uiRotateGestures="true" Sets the preference for whether rotate gestures should be enabled or disabled
-    map:uiScrollGestures="true" Sets the preference for whether scroll gestures should be enabled or disabled
-    map:uiTiltGestures="true" Sets the preference for whether tilt gestures should be enabled or disabled
-    map:uiZoomGestures="true" Sets the preference for whether zoom gestures should be enabled or disabled
-    map:uiZoomControls="true" Enables or disables the zoom controls
-    map:liteMode="true" Specifies whether the map should be created in lite mode
-    map:uiMapToolbar="true" Specifies whether the mapToolbar should be enabled
-    map:ambientEnabled="true" Specifies whether ambient-mode styling should be enabled
-    map:cameraMinZoomPreference="0.0" Specifies a preferred lower bound for camera zoom
-    map:cameraMaxZoomPreference="1.0" Specifies a preferred upper bound for camera zoom -->
-
-
-
 

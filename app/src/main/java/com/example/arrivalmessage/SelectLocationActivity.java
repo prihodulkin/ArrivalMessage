@@ -1,21 +1,21 @@
 package com.example.arrivalmessage;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import androidx.core.app.ActivityCompat;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.GoogleMap;
@@ -36,49 +36,20 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.model.CameraPosition;
 import java.io.IOException;
 import java.util.*;
-
+import android.app.SearchManager;
 
 
 
 public class SelectLocationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-   private class SearchClicked extends AsyncTask<Void, Void, Boolean> {
-        private String toSearch;
-        private Address address;
 
-        public SearchClicked(String toSearch) {
-            this.toSearch = toSearch;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... voids) {
-
-            try {
-                Geocoder geocoder = new Geocoder(getApplicationContext());
-                List<Address> results = geocoder.getFromLocationName(toSearch, 1);
-
-                if (results.size() == 0) {
-                    return false;
-                }
-
-                address = results.get(0);
-
-                // Now do something with this GeoPoint:
-
-
-            } catch (Exception e) {
-                Log.e("", "Something went wrong: ", e);
-                return false;
-            }
-            return true;
-        }
-    }
 
     private MapView mMapView;
     private  double latitude;
     private double longitude;
     private Marker SelectedPlaceMarker;
-    String address;
+    private String address;
+
 
     private LocationListener listener = new LocationListener() {
         @Override
@@ -86,9 +57,7 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
 
             if (location!=null) {
                latitude=location.getLatitude();
-               longitude=location.getLongitude();
-
-            }
+               longitude=location.getLongitude(); }
             else{
 
 
@@ -112,6 +81,7 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,8 +92,9 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
         mMapView.getMapAsync(this);
         ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.INTERNET},1
                 );
-
+         //настраиваем листенер
         LocationManager manager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
+
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
@@ -158,35 +129,80 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
         }
 
 
-        final EditText mapSearchBox = (EditText) findViewById(R.id.search);
-        mapSearchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
-                        actionId == EditorInfo.IME_ACTION_DONE ||
-                        actionId == EditorInfo.IME_ACTION_GO ||
-                        event.getAction() == KeyEvent.ACTION_DOWN &&
-                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
 
-                    // hide virtual keyboard
-                    InputMethodManager imm = (InputMethodManager) getSystemService(SelectLocationActivity.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(mapSearchBox.getWindowToken(), 0);
+        LinearLayout search_layout=(LinearLayout)findViewById(R.id.search_layout);
+        search_layout.bringToFront();
+        ListView listView=(ListView)findViewById(R.id.list);
+        listView.bringToFront();
 
-                    new SearchClicked(mapSearchBox.getText().toString()).execute();
-                    mapSearchBox.setText("", TextView.BufferType.EDITABLE);
-                    return true;
+
+        //
+        SearchView searchView=(SearchView)findViewById(R.id.search);
+        searchView.onActionViewExpanded();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+               // showResults(s);
+                try {
+
+                   Geocoder geocoder=new Geocoder(getApplicationContext());
+                    List<Address> addresses = geocoder.getFromLocationName(s, 10);
+                    String[] addresses_string = new String[addresses.size()];
+                    for(int i=0;i<addresses.size();i++)
+                    {
+                        addresses_string[i]=addresses.get(i).getAddressLine(0);
+                    }
+                    ArrayAdapter<String> a=new ArrayAdapter<String>(getApplicationContext(),R.layout.record,addresses_string);
+                    ListView list=(ListView)findViewById(R.id.list);
+                    list.setAdapter(a);
                 }
-                return false;
+                catch (Exception e)
+                {
+
+                }
+
+                return true;
             }
         });
+    }
+
+    public void showResults(String query)
+    {
+        try {
+            Geocoder geocoder;
+            List<Address> addresses;
+            geocoder = new Geocoder(this);
+            addresses = geocoder.getFromLocationName(query, 10);
 
 
 
+// используем адаптер данных
+            String[] adresses_string = new String[]{"dsd","ds","ffdfd"};
 
-        /*
+/*
+             for(int i=0;i<addresses.size();i++)
+            {
+                if(addresses.get(i)!=null)
+                adresses_string[i]=addresses.get(i).getAddressLine(0);
+            }
 
-         */
+*/
 
 
+            ArrayAdapter<String> a=new ArrayAdapter<String>(this,R.layout.record,adresses_string);
+            ListView list=(ListView)findViewById(R.id.list);
+            list.setAdapter(a);
+        }
+        catch (IOException e)
+        {
+
+        }
 
     }
 
@@ -217,8 +233,8 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
 
 
         );
-        EditText select_location=(EditText) findViewById(R.id.search);
-        select_location.bringToFront();
+
+
     }
 
 
@@ -240,8 +256,7 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
         map.animateCamera(cameraUpdate);
         SelectedPlaceMarker =map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(address
         ));
-        EditText selected_location=(EditText)findViewById(R.id.search);
-        selected_location.setText(address);
+
 
 
 
@@ -265,6 +280,16 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
 
 
     }
+
+
+
+
+
+
+
+
+
+
 
     @Override
     protected void onPause() {
