@@ -39,41 +39,64 @@
 
     </TableRow>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/map_main"
+    <EditText
+        android:id="@+id/search"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/next_btn"
+        android:layout_alignStart="@+id/map"
+        android:layout_alignLeft="@+id/map"
+        android:layout_alignEnd="@+id/map"
+        android:layout_alignRight="@+id/map"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#73B2CA"
+
+        android:alpha="0.8"
+        android:textColor="#182631"
+        android:textColorHint="#182631"
+        android:textColorLink="#182631"
+        android:outlineAmbientShadowColor="#182631"
+        android:textCursorDrawable="@null"
+        app:layout_constraintEnd_toEndOf="@+id/map"
+        app:layout_constraintStart_toStartOf="@+id/map"
+        app:layout_constraintTop_toTopOf="@+id/map" />
+
+
+    <ImageButton
+        android:id="@+id/next_btn"
+        android:layout_width="193dp"
+        android:layout_height="57dp"
+        android:layout_alignStart="@+id/map"
+        android:layout_alignLeft="@+id/map"
+        android:layout_alignEnd="@+id/map"
+        android:layout_alignRight="@+id/map"
+        android:layout_alignBottom="@+id/map"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/button_next"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/map"
+        app:layout_constraintEnd_toEndOf="@+id/map"
+        app:layout_constraintStart_toStartOf="@+id/map" />
+
+    <com.google.android.gms.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/map"
+
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableRow3">
+        android:filterTouchesWhenObscured="false"
+        map:layout_constraintBottom_toBottomOf="parent"
+        map:layout_constraintEnd_toEndOf="parent"
+        map:layout_constraintStart_toStartOf="parent"
+        map:layout_constraintTop_toBottomOf="@+id/tableRow3"></com.google.android.gms.maps.MapView>
 
 
-        <Button
-            android:id="@+id/next_btn"
-            android:layout_width="193dp"
-            android:layout_height="57dp"
-            android:layout_alignStart="@+id/map"
-            android:layout_alignLeft="@+id/map"
-            android:layout_alignEnd="@+id/map"
-            android:layout_alignRight="@+id/map"
-            android:layout_alignBottom="@+id/map"
-            android:layout_marginStart="103dp"
-            android:layout_marginLeft="103dp"
-            android:layout_marginEnd="113dp"
-            android:layout_marginRight="113dp"
-            android:layout_marginBottom="55dp"
-            android:background="@drawable/button_next"
-            android:gravity="center_horizontal" />
-
-        <com.google.android.gms.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:map="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/map"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:filterTouchesWhenObscured="false"></com.google.android.gms.maps.MapView>
-    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
     <!--

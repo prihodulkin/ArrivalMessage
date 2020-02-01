@@ -3,10 +3,17 @@ package com.example.arrivalmessage;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Button;
+import android.widget.SearchView;
+import android.widget.TextView;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -25,19 +32,52 @@ import android.content.DialogInterface;
 import com.google.android.gms.maps.model.Marker;
 import android.location.Geocoder;
 import android.location.Address;
-
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.model.CameraPosition;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
+
 
 
 
 public class SelectLocationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+   private class SearchClicked extends AsyncTask<Void, Void, Boolean> {
+        private String toSearch;
+        private Address address;
+
+        public SearchClicked(String toSearch) {
+            this.toSearch = toSearch;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+
+            try {
+                Geocoder geocoder = new Geocoder(getApplicationContext());
+                List<Address> results = geocoder.getFromLocationName(toSearch, 1);
+
+                if (results.size() == 0) {
+                    return false;
+                }
+
+                address = results.get(0);
+
+                // Now do something with this GeoPoint:
+
+
+            } catch (Exception e) {
+                Log.e("", "Something went wrong: ", e);
+                return false;
+            }
+            return true;
+        }
+    }
+
     private MapView mMapView;
     private  double latitude;
     private double longitude;
-    private Marker curentMarker;
+    private Marker SelectedPlaceMarker;
     String address;
 
     private LocationListener listener = new LocationListener() {
@@ -118,6 +158,30 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
         }
 
 
+        final EditText mapSearchBox = (EditText) findViewById(R.id.search);
+        mapSearchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                        actionId == EditorInfo.IME_ACTION_DONE ||
+                        actionId == EditorInfo.IME_ACTION_GO ||
+                        event.getAction() == KeyEvent.ACTION_DOWN &&
+                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+
+                    // hide virtual keyboard
+                    InputMethodManager imm = (InputMethodManager) getSystemService(SelectLocationActivity.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(mapSearchBox.getWindowToken(), 0);
+
+                    new SearchClicked(mapSearchBox.getText().toString()).execute();
+                    mapSearchBox.setText("", TextView.BufferType.EDITABLE);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
+
+
         /*
 
          */
@@ -139,7 +203,8 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
                     }
                 }
         );
-        Button next_btn = findViewById(R.id.next_btn);
+        ImageButton next_btn = findViewById(R.id.next_btn);
+        next_btn.bringToFront();
         next_btn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -149,8 +214,13 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
                         startActivity(intent);
                     }
                 }
+
+
         );
+        EditText select_location=(EditText) findViewById(R.id.search);
+        select_location.bringToFront();
     }
+
 
 
     @Override
@@ -162,19 +232,37 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
     @Override
     public void onMapReady(final GoogleMap map) {
         map.setMinZoomPreference(12);
-        map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude,longitude)));
-        curentMarker =map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(address
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(new LatLng(latitude, longitude))
+                .zoom(12)
+                .build();
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+        map.animateCamera(cameraUpdate);
+        SelectedPlaceMarker =map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(address
         ));
+        EditText selected_location=(EditText)findViewById(R.id.search);
+        selected_location.setText(address);
+
+
 
         map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                curentMarker.remove();
-                curentMarker=map.addMarker(new MarkerOptions().position(new LatLng(latLng.latitude, latLng.longitude)).title(address));
+                SelectedPlaceMarker.remove();
+                SelectedPlaceMarker =map.addMarker(new MarkerOptions().position(new LatLng(latLng.latitude, latLng.longitude)).title(address));
                 latitude = latLng.latitude;
                 longitude=latLng.latitude;
             }
         });
+        try {
+            map.setMyLocationEnabled(true);
+        }
+        catch (SecurityException s)
+        {
+
+
+        }
+
 
     }
 
@@ -202,3 +290,5 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
         mMapView.onSaveInstanceState(outState);
     }
 }
+
+
