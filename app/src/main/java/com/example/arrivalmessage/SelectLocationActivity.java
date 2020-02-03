@@ -45,7 +45,7 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
 
 
     private MapView mMapView;
-    private  double latitude;
+    private double latitude;
     private double longitude;
     private Marker SelectedPlaceMarker;
     private String address;
