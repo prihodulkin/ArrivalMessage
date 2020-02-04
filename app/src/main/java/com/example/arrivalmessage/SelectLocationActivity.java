@@ -36,9 +36,13 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.model.CameraPosition;
 import java.io.IOException;
 import java.util.*;
-import android.app.SearchManager;
 
-
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+import com.google.android.gms.common.api.Status;
 
 public class SelectLocationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -49,6 +53,10 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
     private double longitude;
     private Marker SelectedPlaceMarker;
     private String address;
+    private LocationManager manager;
+    private GoogleMap gmap;
+    private LocationManager locationManager;
+    public static boolean geolocationEnabled = false;
 
 
     private LocationListener listener = new LocationListener() {
@@ -57,11 +65,17 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
 
             if (location!=null) {
                latitude=location.getLatitude();
-               longitude=location.getLongitude(); }
+               longitude=location.getLongitude();
+            setCamera();
+            }
             else{
-
+                buildAlertMessageNoLocationService(geolocationEnabled);
+                latitude=location.getLatitude();
+                longitude=location.getLongitude();
+                setCamera();
 
             }
+
         }
 
         @Override
@@ -70,10 +84,13 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
 
         @Override
         public void onProviderEnabled(String provider) {
+
         }
 
         @Override
         public void onProviderDisabled(String provider) {
+            ActivityCompat.requestPermissions(SelectLocationActivity.this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.INTERNET},1
+            );
         }
 
 
@@ -86,21 +103,20 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_location);
+
         addListenerOnButton();
         mMapView = (MapView) findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
         ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.INTERNET},1
                 );
-         //настраиваем листенер
-        LocationManager manager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
 
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(SelectLocationActivity.this);
             builder.setTitle("Важное сообщение!")
-                    .setMessage("Ошибка!")
+                    .setMessage("Необходим доступ к местоположению!")
                     .setNegativeButton("ОК",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
@@ -112,99 +128,48 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
             return;
 
         }
+
+        manager=(LocationManager) getSystemService(this.LOCATION_SERVICE);
         manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,listener);
 
-        latitude=manager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
-        longitude=manager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude();
-        try {
-            Geocoder geocoder;
-            List<Address> addresses;
-            geocoder = new Geocoder(this);
-            addresses = geocoder.getFromLocation(latitude, longitude, 1);
-            address = addresses.get(0).getAddressLine(0);
-        }
-        catch (IOException e)
+        if(!Places.isInitialized())
         {
-
+            Places.initialize(this,getString(R.string.api_key));
         }
+        Places.createClient(this);
 
+        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+                getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
 
-        LinearLayout search_layout=(LinearLayout)findViewById(R.id.search_layout);
-        search_layout.bringToFront();
-        ListView listView=(ListView)findViewById(R.id.list);
-        listView.bringToFront();
+        autocompleteFragment.setActivityMode(AutocompleteActivityMode.FULLSCREEN);
 
-
-        //
-        SearchView searchView=(SearchView)findViewById(R.id.search);
-        searchView.onActionViewExpanded();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
 
-                return true;
             }
 
             @Override
-            public boolean onQueryTextChange(String s) {
-               // showResults(s);
-                try {
+            public void onError(Status status) {
+                // TODO: Handle the error.
 
-                   Geocoder geocoder=new Geocoder(getApplicationContext());
-                    List<Address> addresses = geocoder.getFromLocationName(s, 10);
-                    String[] addresses_string = new String[addresses.size()];
-                    for(int i=0;i<addresses.size();i++)
-                    {
-                        addresses_string[i]=addresses.get(i).getAddressLine(0);
-                    }
-                    ArrayAdapter<String> a=new ArrayAdapter<String>(getApplicationContext(),R.layout.record,addresses_string);
-                    ListView list=(ListView)findViewById(R.id.list);
-                    list.setAdapter(a);
-                }
-                catch (Exception e)
-                {
-
-                }
-
-                return true;
             }
         });
+
+
+
+
+
+
+
+
+
     }
 
-    public void showResults(String query)
-    {
-        try {
-            Geocoder geocoder;
-            List<Address> addresses;
-            geocoder = new Geocoder(this);
-            addresses = geocoder.getFromLocationName(query, 10);
 
-
-
-// используем адаптер данных
-            String[] adresses_string = new String[]{"dsd","ds","ffdfd"};
-
-/*
-             for(int i=0;i<addresses.size();i++)
-            {
-                if(addresses.get(i)!=null)
-                adresses_string[i]=addresses.get(i).getAddressLine(0);
-            }
-
-*/
-
-
-            ArrayAdapter<String> a=new ArrayAdapter<String>(this,R.layout.record,adresses_string);
-            ListView list=(ListView)findViewById(R.id.list);
-            list.setAdapter(a);
-        }
-        catch (IOException e)
-        {
-
-        }
-
-    }
 
 
     public void addListenerOnButton() {
@@ -243,21 +208,35 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
     protected void onResume() {
         super.onResume();
         mMapView.onResume();
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                1000 * 10, 10, listener);
+        manager.requestLocationUpdates(
+                LocationManager.NETWORK_PROVIDER, 1000 * 10, 10,
+                listener);
+        if(manager.getLastKnownLocation(LocationManager.GPS_PROVIDER)!=null) {
+            latitude = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
+            longitude = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude();
+//            SelectedPlaceMarker.remove();
+//            SelectedPlaceMarker =gmap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(address));
+        }
+        //checkEnabled();
+
     }
 
     @Override
     public void onMapReady(final GoogleMap map) {
-        map.setMinZoomPreference(12);
+        gmap=map;
+        setCamera();
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(latitude, longitude))
+                .target(new LatLng(latitude,longitude))
                 .zoom(12)
                 .build();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-        map.animateCamera(cameraUpdate);
+        gmap.animateCamera(cameraUpdate);
         SelectedPlaceMarker =map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(address
         ));
-
-
 
 
         map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -269,17 +248,52 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
                 longitude=latLng.latitude;
             }
         });
-        try {
-            map.setMyLocationEnabled(true);
-        }
-        catch (SecurityException s)
-        {
-
-
-        }
-
 
     }
+
+    private void  setCamera()
+    {
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(new LatLng(latitude,longitude))
+                .zoom(12)
+                .build();
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+        gmap.animateCamera(cameraUpdate);
+    }
+
+
+    private boolean checkLocationServiceEnabled() {
+        locationManager = (LocationManager) getSystemService(getApplicationContext().LOCATION_SERVICE);
+        try {
+            geolocationEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch (Exception ex) {
+        }
+        return buildAlertMessageNoLocationService(geolocationEnabled);
+    }
+
+    /**
+     *  Показываем диалог и переводим пользователя к настройкам геолокации
+     */
+    private boolean buildAlertMessageNoLocationService(boolean network_enabled) {
+        String msg = !network_enabled ? getResources().getString(R.string.msg_switch_network) : null;
+
+        if (msg != null) {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(false)
+                    .setMessage(msg)
+                    .setPositiveButton("Включить", new DialogInterface.OnClickListener() {
+                        public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        }
+                    });
+            final AlertDialog alert = builder.create();
+            alert.show();
+            return true;
+        }
+        return false;
+    }
+
+
 
 
 
