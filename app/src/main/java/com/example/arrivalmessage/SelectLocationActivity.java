@@ -145,6 +145,10 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
 
         autocompleteFragment.setActivityMode(AutocompleteActivityMode.FULLSCREEN);
 
+        autocompleteFragment.setCountry("Russia");
+
+
+
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
