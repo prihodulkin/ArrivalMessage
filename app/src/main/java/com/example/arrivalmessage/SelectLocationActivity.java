@@ -51,6 +51,7 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
     private MapView mMapView;
     private double latitude;
     private double longitude;
+    private  LatLng latLng;
     private Marker SelectedPlaceMarker;
     private String address;
     private LocationManager manager;
@@ -63,18 +64,7 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
         @Override
         public void onLocationChanged(Location location) {
 
-            if (location!=null) {
-               latitude=location.getLatitude();
-               longitude=location.getLongitude();
-            setCamera();
-            }
-            else{
-                buildAlertMessageNoLocationService(geolocationEnabled);
-                latitude=location.getLatitude();
-                longitude=location.getLongitude();
-                setCamera();
 
-            }
 
         }
 
@@ -137,40 +127,36 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
             Places.initialize(this,getString(R.string.api_key));
         }
         Places.createClient(this);
+        setAutocompleteSupportFragment();
+    }
 
-        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+
+
+    private  void setAutocompleteSupportFragment()
+    {
+        final AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
-
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
-
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME,Place.Field.LAT_LNG));
         autocompleteFragment.setActivityMode(AutocompleteActivityMode.FULLSCREEN);
-
-        autocompleteFragment.setCountry("Russia");
-
-
-
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
 
+                SelectedPlaceMarker.remove();
+                latitude =place.getLatLng().latitude;
+                longitude=place.getLatLng().longitude;
+                SelectedPlaceMarker =gmap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(address));
+                gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),16f));
+
+
             }
 
             @Override
             public void onError(Status status) {
-                // TODO: Handle the error.
-
+                Log.i( "PlaceApi","An error occurred: " + status.getStatusCode () );
             }
         });
-
-
-
-
-
-
-
-
-
     }
 
 
@@ -208,14 +194,15 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
 
 
 
+
+
     @Override
     protected void onResume() {
         super.onResume();
         mMapView.onResume();
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                1000 * 10, 10, listener);
+            manager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                    1000 * 10, 10, listener);
         manager.requestLocationUpdates(
                 LocationManager.NETWORK_PROVIDER, 1000 * 10, 10,
                 listener);
@@ -225,45 +212,29 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
 //            SelectedPlaceMarker.remove();
 //            SelectedPlaceMarker =gmap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(address));
         }
-        //checkEnabled();
 
     }
 
     @Override
     public void onMapReady(final GoogleMap map) {
         gmap=map;
-        setCamera();
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(latitude,longitude))
-                .zoom(12)
-                .build();
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-        gmap.animateCamera(cameraUpdate);
         SelectedPlaceMarker =map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(address
         ));
-
-
+        gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),16f));
         map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
                 SelectedPlaceMarker.remove();
                 SelectedPlaceMarker =map.addMarker(new MarkerOptions().position(new LatLng(latLng.latitude, latLng.longitude)).title(address));
                 latitude = latLng.latitude;
-                longitude=latLng.latitude;
+                longitude=latLng.longitude;
+                //gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),16f));
             }
         });
 
     }
 
-    private void  setCamera()
-    {
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(latitude,longitude))
-                .zoom(12)
-                .build();
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-        gmap.animateCamera(cameraUpdate);
-    }
+
 
 
     private boolean checkLocationServiceEnabled() {
