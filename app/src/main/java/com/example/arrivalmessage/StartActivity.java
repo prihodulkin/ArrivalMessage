@@ -1,5 +1,6 @@
 package com.example.arrivalmessage;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.example.arrivalmessage.VK_Module.VKUser;
 import com.example.arrivalmessage.VK_Module.VK_Controller;
 import com.vk.api.sdk.VK;
 import com.vk.api.sdk.auth.VKAccessToken;
@@ -18,25 +20,41 @@ import com.vk.api.sdk.auth.VKScope;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.List;
 
-public class StartActivity extends AppCompatActivity {
+public class StartActivity extends Activity {
+
+    VK_Controller controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.startactivity);
 
-        VK.login(this, Arrays.asList(VKScope.FRIENDS));
-
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.start();
 
-        VK_Controller controller = new VK_Controller(requestQueue,getResources().getString(R.string.Access_Key));
+        controller = new VK_Controller(requestQueue,getResources().getString(R.string.Access_Key),getResources().getString(R.string.Group_id));
+
+
 
         if (VK.isLoggedIn()) {
-            System.out.println(controller.GetFriends());
-            controller.SendMessage(1111111, "Object is near");
+            // System.out.println(controller.CheckId(432595574));
+            // controller.SendMessage(1111111, "Object is near");
+
         }
+        else VK.login(this, Arrays.asList(VKScope.FRIENDS));
+
+    }
+
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        List<VKUser> frds;
+        frds = controller.GetFriends();
+        System.out.println(frds);
 
     }
 
@@ -46,7 +64,6 @@ public class StartActivity extends AppCompatActivity {
         if(data == null || !VK.onActivityResult(requestCode, resultCode, data, new VKAuthCallback() {
             @Override
             public void onLogin(@NotNull VKAccessToken vkAccessToken) {
-
             }
 
             @Override
