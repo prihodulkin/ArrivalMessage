@@ -1,5 +1,6 @@
 package com.example.arrivalmessage;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -15,7 +16,11 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.arrivalmessage.VK_Module.VK_Controller;
 import com.vk.api.sdk.VK;
+import com.vk.api.sdk.auth.VKAccessToken;
+import com.vk.api.sdk.auth.VKAuthCallback;
 import com.vk.api.sdk.auth.VKScope;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
@@ -32,11 +37,13 @@ public class MainActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.start();
 
+
+        if(!VK.isLoggedIn())
+        {
+            VK.login(this, Arrays.asList(VKScope.FRIENDS));
+        }
+
         controller = new VK_Controller(requestQueue,getResources().getString(R.string.Access_Key),getResources().getString(R.string.Group_id));
-
-
-
-        VK.login(this, Arrays.asList(VKScope.FRIENDS));
 
     }
     public void addListenerOnButton(){
@@ -89,5 +96,25 @@ public class MainActivity extends AppCompatActivity {
                 });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if(data == null || !VK.onActivityResult(requestCode, resultCode, data, new VKAuthCallback() {
+            @Override
+            public void onLogin(@NotNull VKAccessToken vkAccessToken) {
+            }
+
+            @Override
+            public void onLoginFailed(int i) {
+                Intent n = getIntent();
+                finish();
+                startActivity(n);
+            }
+        }))
+        {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }
