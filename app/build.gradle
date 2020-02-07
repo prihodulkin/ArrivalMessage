@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "com.example.arrivalmessage"
         minSdkVersion 16
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -30,5 +30,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation 'com.vk:androidsdk:2.2.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.2.2'
+    implementation 'com.android.volley:dc-volley:1.1.0'
+    implementation 'org.apache:apache:21'
 
 }

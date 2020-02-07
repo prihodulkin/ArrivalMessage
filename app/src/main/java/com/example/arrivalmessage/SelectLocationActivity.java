@@ -228,7 +228,8 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
                 SelectedPlaceMarker =map.addMarker(new MarkerOptions().position(new LatLng(latLng.latitude, latLng.longitude)).title(address));
                 latitude = latLng.latitude;
                 longitude=latLng.longitude;
-                //gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),16f));
+                //
+                // gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),16f));
             }
         });
 
