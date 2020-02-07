@@ -33,11 +33,7 @@ public class VK_Controller {
     public List<VKUser> GetFriends()
     {
         UpdateFriends();
-        int j =0;
-        while(friends==null)
-        {
-            j++;
-        }
+
 
         return friends;
     }

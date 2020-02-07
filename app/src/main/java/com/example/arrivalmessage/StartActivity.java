@@ -38,12 +38,15 @@ public class StartActivity extends Activity {
 
 
 
-        if (VK.isLoggedIn()) {
+        VK.login(this, Arrays.asList(VKScope.FRIENDS));
+
+
+        while(VK.isLoggedIn()) {
+            VK.login(this, Arrays.asList(VKScope.FRIENDS));
             // System.out.println(controller.CheckId(432595574));
             // controller.SendMessage(1111111, "Object is near");
-
         }
-        else VK.login(this, Arrays.asList(VKScope.FRIENDS));
+
 
     }
 
@@ -52,9 +55,7 @@ public class StartActivity extends Activity {
     public void onResume(){
         super.onResume();
 
-        List<VKUser> frds;
-        frds = controller.GetFriends();
-        System.out.println(frds);
+
 
     }
 
