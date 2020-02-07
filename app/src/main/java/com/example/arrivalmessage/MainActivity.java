@@ -11,13 +11,32 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+import com.example.arrivalmessage.VK_Module.VK_Controller;
+import com.vk.api.sdk.VK;
+import com.vk.api.sdk.auth.VKScope;
+
+import java.util.Arrays;
+
 public class MainActivity extends AppCompatActivity {
+
+    VK_Controller controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         addListenerOnButton();
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.start();
+
+        controller = new VK_Controller(requestQueue,getResources().getString(R.string.Access_Key),getResources().getString(R.string.Group_id));
+
+
+
+        VK.login(this, Arrays.asList(VKScope.FRIENDS));
 
     }
     public void addListenerOnButton(){

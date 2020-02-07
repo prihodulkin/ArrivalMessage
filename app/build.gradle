@@ -33,7 +33,7 @@ dependencies {
 
     implementation 'com.vk:androidsdk:2.2.0'
     implementation 'com.squareup.okhttp3:okhttp:4.2.2'
-    implementation 'com.android.volley:dc-volley:1.1.0'
+    //implementation 'com.android.volley:dc-volley:1.1.0'
     implementation 'org.apache:apache:21'
 
 }
