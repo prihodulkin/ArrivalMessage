@@ -38,12 +38,15 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.start();
 
 
+
+
         if(!VK.isLoggedIn())
         {
             VK.login(this, Arrays.asList(VKScope.FRIENDS));
         }
 
         controller = new VK_Controller(requestQueue,getResources().getString(R.string.Access_Key),getResources().getString(R.string.Group_id));
+        controller.UpdateFriends();
 
     }
     public void addListenerOnButton(){

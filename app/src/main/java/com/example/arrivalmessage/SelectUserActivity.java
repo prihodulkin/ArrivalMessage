@@ -7,6 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.example.arrivalmessage.VK_Module.VKUser;
+import com.example.arrivalmessage.VK_Module.VK_Controller;
+
+import java.util.List;
+
 public class SelectUserActivity extends AppCompatActivity {
 
     @Override
@@ -14,6 +19,9 @@ public class SelectUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_user);
         addListenerOnButton();
+
+        List<VKUser> friends = VK_Controller.friends;
+
     }
     public void addListenerOnButton(){
         ImageButton back_btn = findViewById(R.id.back_btn);

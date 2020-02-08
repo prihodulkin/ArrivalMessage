@@ -19,7 +19,7 @@ public class VK_Controller {
     private VKFriendsRequest friendsRequest;
     private SendMessageGroup sendMessageGroup;
     private VKCheckMessagesAllowed vkcheckid;
-    private List<VKUser> friends;
+    public static List<VKUser> friends;
 
     public VK_Controller(RequestQueue queue, String key, String group_id)
     {
