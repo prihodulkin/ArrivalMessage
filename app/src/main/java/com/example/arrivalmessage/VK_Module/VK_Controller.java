@@ -19,24 +19,41 @@ public class VK_Controller {
     private VKFriendsRequest friendsRequest;
     private SendMessageGroup sendMessageGroup;
     private VKCheckMessagesAllowed vkcheckid;
+    private GetUserInfo userInfo;
+
     public static List<VKUser> friends;
+    public static int UserID;
 
     public VK_Controller(RequestQueue queue, String key, String group_id)
     {
         friendsRequest = new VKFriendsRequest();
         sendMessageGroup = new SendMessageGroup(key,queue);
         vkcheckid = new VKCheckMessagesAllowed(key,group_id, queue);
-
-       // UpdateFriends();
+        userInfo = new GetUserInfo();
     }
 
     public List<VKUser> GetFriends()
     {
         UpdateFriends();
-
-
         return friends;
     }
+
+    public void UpdateUserID()
+    {
+        VKApiCallback<VKUser> callback = new VKApiCallback<VKUser>() {
+            @Override
+            public void success(VKUser vkUser) {
+                UserID = vkUser.id;
+            }
+
+            @Override
+            public void fail(@NotNull Exception e) {
+
+            }
+        };
+        VK.execute(userInfo, callback);
+    }
+
 
     public void UpdateFriends()
     {

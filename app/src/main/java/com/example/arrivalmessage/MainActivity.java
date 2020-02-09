@@ -18,7 +18,11 @@ import com.example.arrivalmessage.VK_Module.VK_Controller;
 import com.vk.api.sdk.VK;
 import com.vk.api.sdk.auth.VKAccessToken;
 import com.vk.api.sdk.auth.VKAuthCallback;
+import com.vk.api.sdk.auth.VKAuthManager;
+import com.vk.api.sdk.auth.VKAuthParams;
+import com.vk.api.sdk.auth.VKAuthResult;
 import com.vk.api.sdk.auth.VKScope;
+import com.vk.api.sdk.ui.VKWebViewAuthActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -37,16 +41,16 @@ public class MainActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.start();
 
-
-
+        controller = new VK_Controller(requestQueue, getResources().getString(R.string.Access_Key), getResources().getString(R.string.Group_id));
 
         if(!VK.isLoggedIn())
         {
             VK.login(this, Arrays.asList(VKScope.FRIENDS));
         }
-
-        controller = new VK_Controller(requestQueue,getResources().getString(R.string.Access_Key),getResources().getString(R.string.Group_id));
-        controller.UpdateFriends();
+        else {
+            controller.UpdateFriends();
+            controller.UpdateUserID();
+        }
 
     }
     public void addListenerOnButton(){
@@ -107,6 +111,9 @@ public class MainActivity extends AppCompatActivity {
         if(data == null || !VK.onActivityResult(requestCode, resultCode, data, new VKAuthCallback() {
             @Override
             public void onLogin(@NotNull VKAccessToken vkAccessToken) {
+                VK_Controller.UserID = vkAccessToken.getUserId();
+                controller.UpdateUserID();
+                controller.UpdateFriends();
             }
 
             @Override
