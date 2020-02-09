@@ -7,19 +7,19 @@ import org.json.JSONObject;
 
 public class VKUser implements Parcelable {
 
-    int id ;
-    String firstname ;
-    String lastname ;
-    String photo ;
-    Boolean deactivated ;
+    public int id ;
+    public String firstname ;
+    public String lastname ;
+    public String photo ;
+    public Boolean deactivated ;
 
     VKUser()
     {
-        int id = 0;
-        String firstname = "";
-        String lastname = "";
-        String photo = "";
-        Boolean deactivated = false;
+        id = 0;
+        firstname = "";
+        lastname = "";
+        photo = "";
+        deactivated = false;
     }
 
     VKUser(Parcel parcel)

@@ -10,9 +10,12 @@ import android.widget.ImageButton;
 import com.example.arrivalmessage.VK_Module.VKUser;
 import com.example.arrivalmessage.VK_Module.VK_Controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SelectUserActivity extends AppCompatActivity {
+
+    List<VKUser> friends;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +23,7 @@ public class SelectUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select_user);
         addListenerOnButton();
 
-        List<VKUser> friends = VK_Controller.friends;
+        friends = VK_Controller.friends;
 
     }
     public void addListenerOnButton(){
