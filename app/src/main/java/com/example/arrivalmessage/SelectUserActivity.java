@@ -1,8 +1,15 @@
 package com.example.arrivalmessage;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -13,7 +20,10 @@ import com.example.arrivalmessage.VK_Module.VK_Controller;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class SelectUserActivity extends AppCompatActivity {
+
 
     List<VKUser> friends;
 
@@ -22,8 +32,8 @@ public class SelectUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_user);
         addListenerOnButton();
-
         friends = VK_Controller.friends;
+
 
     }
     public void addListenerOnButton(){

@@ -2,11 +2,17 @@ package com.example.arrivalmessage;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +24,6 @@ import com.example.arrivalmessage.VK_Module.VK_Controller;
 import com.vk.api.sdk.VK;
 import com.vk.api.sdk.auth.VKAccessToken;
 import com.vk.api.sdk.auth.VKAuthCallback;
-import com.vk.api.sdk.auth.VKAuthManager;
 import com.vk.api.sdk.auth.VKAuthParams;
 import com.vk.api.sdk.auth.VKAuthResult;
 import com.vk.api.sdk.auth.VKScope;
@@ -32,11 +37,64 @@ public class MainActivity extends AppCompatActivity {
 
     VK_Controller controller;
 
+    private  LocationManager manager;
+    private LocationListener listener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Внимание!");
+                builder.setMessage("Включите передачу местоположения");
+                builder.setCancelable(false);
+                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() { // Кнопка ОК
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));// Отпускает диалоговое окно
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         addListenerOnButton();
+        if(ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)!=0) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Внимание!");
+            builder.setMessage("Для работы приложения нужен доступ к местоположению");
+            builder.setCancelable(false);
+            builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() { // Кнопка ОК
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1
+                    );// Отпускает диалоговое окно
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+        //
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.start();
@@ -51,6 +109,11 @@ public class MainActivity extends AppCompatActivity {
             controller.UpdateFriends();
             controller.UpdateUserID();
         }
+
+
+
+        manager=(LocationManager) getSystemService(this.LOCATION_SERVICE);
+        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,listener);
 
     }
     public void addListenerOnButton(){
@@ -127,4 +190,10 @@ public class MainActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
+
+
+
+
+
 }

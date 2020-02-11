@@ -1,8 +1,12 @@
 package com.example.arrivalmessage;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
@@ -13,11 +17,14 @@ import android.widget.ImageButton;
 
 public class ChooseTextActivity extends AppCompatActivity {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_text);
         addListenerOnButton();
+
     }
 
     public void addListenerOnButton() {
