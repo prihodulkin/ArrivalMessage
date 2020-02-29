@@ -25,11 +25,13 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.graphics.Bitmap;
+import  android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 
 
 import com.example.arrivalmessage.VK_Module.VKUser;
 import com.example.arrivalmessage.VK_Module.VK_Controller;
-import com.squareup.picasso.Picasso;
+
 
 import java.io.InputStream;
 import java.net.URL;
@@ -59,10 +61,12 @@ public class SelectUserActivity extends AppCompatActivity {
         for (int i = 0; i < friends.size(); i++){
             TableRow tableRow = new TableRow(this);
             ImageView photo = new ImageView(this);
-            TextView firstName  = new TextView(this);
-            TextView lastName = new TextView(this);
+            //TextView firstName  = new TextView(this);
+          //  TextView lastName = new TextView(this);
+            TextView name=new TextView(this);
 
             CheckBox check = new CheckBox(this);
+
 
 //            String userPhotoUrl = friends.get(i).photo;
 //            if (userPhotoUrl != null){
@@ -71,17 +75,33 @@ public class SelectUserActivity extends AppCompatActivity {
 //                    .into(photo);
 //            }
 
-            tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT));
 
-            firstName.setText(friends.get(i).firstname);
-            firstName.setTextColor(-1);
+            tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
+            LinearLayout linearLayout=new LinearLayout(this);
 
-            lastName.setText(friends.get(i).lastname);
-            lastName.setTextColor(-1);
+          //  firstName.setText(friends.get(i).firstname);
+          //  firstName.setTextColor(-1);
 
-            tableRow.addView(firstName);
-            tableRow.addView(lastName);
-            tableRow.addView(check);
+           // lastName.setText(friends.get(i).lastname);
+          //  lastName.setTextColor(-1);
+
+
+            name.setText(friends.get(i).firstname+" "+friends.get(i).lastname);
+
+
+            linearLayout.addView(name, 500,50);
+            linearLayout.addView(check);
+            tableRow.addView(linearLayout);
+
+
+
+
+
+            //tableRow.addView(name);
+
+         //   tableRow.addView(firstName);
+           // tableRow.addView(lastName);
+
 
             tableLayout.addView(tableRow);
         }
