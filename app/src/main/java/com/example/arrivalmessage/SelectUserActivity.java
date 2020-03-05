@@ -89,8 +89,8 @@ public class SelectUserActivity extends AppCompatActivity {
             lastName.setText(friend.lastname);
             lastName.setTextColor(-1);
 
-            tableRow.addView(firstName);
-            tableRow.addView(lastName);
+            tableRow.addView(firstName,250,50);
+            tableRow.addView(lastName,250,50);
             tableRow.addView(check);
 
             tableLayout.addView(tableRow);
