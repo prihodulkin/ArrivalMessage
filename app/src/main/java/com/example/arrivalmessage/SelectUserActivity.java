@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -33,7 +34,9 @@ import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -43,6 +46,7 @@ public class SelectUserActivity extends AppCompatActivity {
 
     TableLayout tableLayout;
     List<VKUser> friends;
+    List<VKUser> chosenFriends;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,32 +55,38 @@ public class SelectUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select_user);
         addListenerOnButton();
         friends = VK_Controller.friends;
-
+        chosenFriends = new ArrayList();
         tableLayout = findViewById(R.id.userList);
         createUserList();
     }
     public void createUserList(){
         for (int i = 0; i < friends.size(); i++){
+            final VKUser friend = friends.get(i);
             TableRow tableRow = new TableRow(this);
-            ImageView photo = new ImageView(this);
             TextView firstName  = new TextView(this);
             TextView lastName = new TextView(this);
 
             CheckBox check = new CheckBox(this);
 
-//            String userPhotoUrl = friends.get(i).photo;
-//            if (userPhotoUrl != null){
-//            Picasso.get().load()
-//                    .resize(50,50)
-//                    .into(photo);
-//            }
+            check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked){
+                        chosenFriends.add(friend);
+                    }
+                    else {
+                        chosenFriends.remove(friend);
+                    }
+                }
+            });
+
 
             tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT));
 
-            firstName.setText(friends.get(i).firstname);
+            firstName.setText(friend.firstname);
             firstName.setTextColor(-1);
 
-            lastName.setText(friends.get(i).lastname);
+            lastName.setText(friend.lastname);
             lastName.setTextColor(-1);
 
             tableRow.addView(firstName);
