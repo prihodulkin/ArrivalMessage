@@ -55,7 +55,8 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_location);
-
+        Bundle arguments = getIntent().getExtras();
+        idChosenFriends = arguments.getIntArray("lst");
         addListenerOnButton();
         mMapView = (MapView) findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);
@@ -120,9 +121,7 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
             }
         });
 
-        Intent coordinates = new Intent(this, FinishActivity.class);
-        coordinates.putExtra("firstCoordinate", latitude);
-        coordinates.putExtra("secondCoordinate", latitude);
+
 
 
     }
@@ -150,6 +149,9 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
                     public void onClick(View v) {
                         Intent intent = new Intent(SelectLocationActivity.this, ChooseTextActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("firstCoordinate", latitude);
+                        intent.putExtra("secondCoordinate", longitude);
+                        intent.putExtra("lst1", idChosenFriends);
                         startActivity(intent);
                     }
                 }

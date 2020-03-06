@@ -85,8 +85,7 @@ public class SelectUserActivity extends AppCompatActivity {
                 final VKUser chosenFriend = chosenFriends.get(j);
                 idsChosenFriends[j] = chosenFriend.id;
             }
-            Intent arrayIds = new Intent(this, FinishActivity.class);
-            arrayIds.putExtra("lst", idsChosenFriends);
+
             
 
             tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT));
@@ -123,6 +122,7 @@ public class SelectUserActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent intent = new Intent(SelectUserActivity.this, SelectLocationActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("lst", idsChosenFriends);
                         startActivity(intent);
                     }
                 }

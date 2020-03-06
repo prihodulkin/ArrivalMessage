@@ -21,6 +21,10 @@ import android.widget.TextView;
 public class ChooseTextActivity extends AppCompatActivity {
 
     EditText textMessage;
+    int[] idChosenFriends;
+    double latitude;
+    double longitude;
+    String writtenText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,10 @@ public class ChooseTextActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choose_text);
         addListenerOnButton();
         textMessage = findViewById(R.id.text_message);
+        Bundle arguments = getIntent().getExtras();
+        idChosenFriends = arguments.getIntArray("lst1");
+        latitude = arguments.getDouble("firstCoordinate");
+        longitude = arguments.getDouble("secondCoordinate");
     }
 
     public void addListenerOnButton() {
@@ -64,9 +72,14 @@ public class ChooseTextActivity extends AppCompatActivity {
                             dialog.show();
                         }
                         else {
-                            Intent intent1 = new Intent(ChooseTextActivity.this, FinishActivity.class);
-                            intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent1);
+                            Intent intent = new Intent(ChooseTextActivity.this, FinishActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            writtenText = textMessage.getText().toString();
+                            intent.putExtra("firstCoordinate1", latitude);
+                            intent.putExtra("secondCoordinate1", longitude);
+                            intent.putExtra("lst2", idChosenFriends);
+                            intent.putExtra("text", writtenText);
+                            startActivity(intent);
                         }
 
 

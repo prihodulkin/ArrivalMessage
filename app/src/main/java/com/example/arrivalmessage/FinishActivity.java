@@ -16,9 +16,10 @@ import android.widget.ImageButton;
 
 public class FinishActivity extends AppCompatActivity {
 
-private int[] idChosenFriends;
-private double latitude;
-private double longitude;
+     int[] idChosenFriends;
+     double latitude;
+     double longitude;
+     String writtenText;
 
 
     @Override
@@ -26,12 +27,11 @@ private double longitude;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finish);
         addListenerOnButton();
-
         Bundle arguments = getIntent().getExtras();
-        idChosenFriends = arguments.getIntArray("lst");
-        latitude = arguments.getDouble("firstCoordinate");
-        latitude = arguments.getDouble("secondCoordinate");
-
+        idChosenFriends = arguments.getIntArray("lst2");
+        latitude = arguments.getDouble("firstCoordinate1");
+        longitude = arguments.getDouble("secondCoordinate1");
+        writtenText = arguments.getString("text");
     }
     public void addListenerOnButton() {
         ImageButton main_menu_btn = findViewById(R.id.main_menu_btn);
