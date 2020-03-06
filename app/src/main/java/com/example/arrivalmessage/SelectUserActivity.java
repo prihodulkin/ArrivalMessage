@@ -47,6 +47,7 @@ public class SelectUserActivity extends AppCompatActivity {
     TableLayout tableLayout;
     List<VKUser> friends;
     List<VKUser> chosenFriends;
+    int[] idsChosenFriends;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,13 @@ public class SelectUserActivity extends AppCompatActivity {
                 }
             });
 
+            for (int j = 0; j < chosenFriends.size(); j++) {
+                final VKUser chosenFriend = chosenFriends.get(j);
+                idsChosenFriends[j] = chosenFriend.id;
+            }
+            Intent arrayIds = new Intent(this, FinishActivity.class);
+            arrayIds.putExtra("lst", idsChosenFriends);
+            
 
             tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT));
 

@@ -27,6 +27,7 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.gms.common.api.Status;
+import java.lang.Object;
 
 
 public class SelectLocationActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -36,6 +37,9 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
     private double longitude=39.628510;
     private Marker SelectedPlaceMarker;
     private GoogleMap gmap;
+    int[] idChosenFriends;
+
+
 
 
 
@@ -86,6 +90,8 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
         Places.createClient(this);
         setAutocompleteSupportFragment();
 
+
+
     }
 
 
@@ -113,6 +119,12 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
                 Log.i( "PlaceApi","An error occurred: " + status.getStatusCode () );
             }
         });
+
+        Intent coordinates = new Intent(this, FinishActivity.class);
+        coordinates.putExtra("firstCoordinate", latitude);
+        coordinates.putExtra("secondCoordinate", latitude);
+
+
     }
 
 

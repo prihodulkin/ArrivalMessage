@@ -16,6 +16,9 @@ import android.widget.ImageButton;
 
 public class FinishActivity extends AppCompatActivity {
 
+private int[] idChosenFriends;
+private double latitude;
+private double longitude;
 
 
     @Override
@@ -23,6 +26,11 @@ public class FinishActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finish);
         addListenerOnButton();
+
+        Bundle arguments = getIntent().getExtras();
+        idChosenFriends = arguments.getIntArray("lst");
+        latitude = arguments.getDouble("firstCoordinate");
+        latitude = arguments.getDouble("secondCoordinate");
 
     }
     public void addListenerOnButton() {
