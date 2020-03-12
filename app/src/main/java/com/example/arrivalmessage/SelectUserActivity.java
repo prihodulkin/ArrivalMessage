@@ -34,9 +34,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
 import java.net.URL;
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -47,6 +45,7 @@ public class SelectUserActivity extends AppCompatActivity {
     TableLayout tableLayout;
     List<VKUser> friends;
     List<VKUser> chosenFriends;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +62,8 @@ public class SelectUserActivity extends AppCompatActivity {
         for (int i = 0; i < friends.size(); i++){
             final VKUser friend = friends.get(i);
             TableRow tableRow = new TableRow(this);
-            TextView firstName  = new TextView(this);
-            TextView lastName = new TextView(this);
+            String fullName = friend.firstname + " " + friend.lastname;
+            TextView name = new TextView(this);
 
             CheckBox check = new CheckBox(this);
 
@@ -82,17 +81,10 @@ public class SelectUserActivity extends AppCompatActivity {
 
 
             tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT));
-
-            firstName.setText(friend.firstname);
-            firstName.setTextColor(-1);
-
-            lastName.setText(friend.lastname);
-            lastName.setTextColor(-1);
-
-            tableRow.addView(firstName,250,50);
-            tableRow.addView(lastName,250,50);
+            name.setText(fullName);
+            name.setTextColor(-1);
+            tableRow.addView(name);
             tableRow.addView(check);
-
             tableLayout.addView(tableRow);
         }
     }
