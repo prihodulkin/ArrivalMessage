@@ -79,11 +79,18 @@ public class SelectUserActivity extends AppCompatActivity {
                 }
             });
 
+            ImageView avatar=new ImageView(this);
+            ImageManager.fetchImage(friend.photo,avatar);
+
+            tableRow.setMinimumHeight(170);
+
+            tableRow.addView(avatar,150,150);
+
 
             tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT));
             name.setText(fullName);
             name.setTextColor(-1);
-            tableRow.addView(name);
+            tableRow.addView(name,400,50);
             tableRow.addView(check);
             tableLayout.addView(tableRow);
         }
