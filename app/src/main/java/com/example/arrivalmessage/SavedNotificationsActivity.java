@@ -20,6 +20,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SavedNotificationsActivity extends AppCompatActivity {
 
@@ -30,10 +32,28 @@ public class SavedNotificationsActivity extends AppCompatActivity {
     double longitude;
     String writtenText;
 
+    List<mydata> datas;
+
     //Переменная для работы с БД
     private DatabaseHelper mDBHelper;
     private SQLiteDatabase mDb;
 
+    public class mydata {
+        int [] idChosenFriends_;
+        double latitude_ ;
+        double longitude_;
+        String writtenText_;
+        public mydata(String isCF, double lat, double longt, String wT)
+        {
+            String[] idss = isCF.split(" ");
+            idChosenFriends_ = new int[idss.length];
+            for (int i = 0; i < idss.length; i++)
+                idChosenFriends_[i] = Integer.parseInt(idss[i]);
+            latitude_ = lat;
+            longitude_ = longt;
+            writtenText_ = wT;
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,33 +62,34 @@ public class SavedNotificationsActivity extends AppCompatActivity {
 
         mDBHelper = new DatabaseHelper(this);
 
-        try {
+       /*try {
             mDBHelper.updateDataBase();
         } catch (IOException mIOException) {
             throw new Error("UnableToUpdateDatabase");
-        }
+        }*/
 
         try {
-            mDb = mDBHelper.getWritableDatabase();
+            mDb = mDBHelper.getReadableDatabase();
         } catch (SQLException mSQLException) {
             throw mSQLException;
         }
+        datas = new ArrayList();
 
-        Cursor cursor = mDb.rawQuery("SELECT * FROM clients", null);
+        Cursor cursor = mDb.rawQuery("SELECT * FROM users1", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             ids = cursor.getString(0);
             latitude = cursor.getDouble(1);
             longitude = cursor.getDouble(2);
             writtenText = cursor.getString(3);
+
+            datas.add(new mydata(ids, latitude,longitude,writtenText));
+
             cursor.moveToNext();
         }
         cursor.close();
 
-        String[] idss = ids.split(" ");
-        idChosenFriends = new int[idss.length];
-        for (int i = 0; i < idss.length; i++)
-            idChosenFriends[i] = Integer.parseInt(idss[i]);
+
 
     }
     public void addListenerOnButton(){

@@ -53,11 +53,11 @@ public class FinishActivity extends AppCompatActivity {
 
         mDBHelper = new DatabaseHelper(this);
 
-        try {
+        /*try {
             mDBHelper.updateDataBase();
         } catch (IOException mIOException) {
             throw new Error("UnableToUpdateDatabase");
-        }
+        }*/
 
         try {
             mDb = mDBHelper.getWritableDatabase();
@@ -71,7 +71,7 @@ public class FinishActivity extends AppCompatActivity {
         cv.put("COORD2", longitude);
         cv.put("TEXT", writtenText);
 
-        mDb.insert("clients", null, cv);
+        mDb.insert("users1", null, cv);
 
     }
     public void addListenerOnButton() {

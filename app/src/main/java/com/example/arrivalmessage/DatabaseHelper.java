@@ -12,9 +12,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static String DB_NAME = "info.dib";
+    private static String DB_NAME = "dbase.dib";
     private static String DB_PATH = "";
-    private static final int DB_VERSION = 3;
+    private static final int DB_VERSION = 2;
 
     private SQLiteDatabase mDataBase;
     private final Context mContext;
@@ -64,7 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private void copyDBFile() throws IOException {
         //InputStream mInput = mContext.getAssets().open(DB_NAME);
-        InputStream mInput = mContext.getResources().openRawResource(R.raw.info);
+        InputStream mInput = mContext.getResources().openRawResource(R.raw.dbase);
         OutputStream mOutput = new FileOutputStream(DB_PATH + DB_NAME);
         byte[] mBuffer = new byte[1024];
         int mLength;
