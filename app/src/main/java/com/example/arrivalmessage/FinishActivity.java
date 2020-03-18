@@ -33,7 +33,7 @@ public class FinishActivity extends AppCompatActivity {
     double longitude;
     String writtenText;
 
-    //Переменная для работы с БД
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ
     private DatabaseHelper mDBHelper;
     private SQLiteDatabase mDb;
 
@@ -66,12 +66,14 @@ public class FinishActivity extends AppCompatActivity {
         }
 
         ContentValues cv = new ContentValues();
+
         cv.put("_IDS", ids);
         cv.put("COORD1", latitude);
         cv.put("COORD2", longitude);
         cv.put("TEXT", writtenText);
+        cv.put("isEnabled", 1);
 
-        mDb.insert("users1", null, cv);
+        mDb.insert("users3", null, cv);
 
     }
     public void addListenerOnButton() {

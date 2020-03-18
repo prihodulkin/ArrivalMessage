@@ -31,6 +31,7 @@ public class SavedNotificationsActivity extends AppCompatActivity {
     double latitude;
     double longitude;
     String writtenText;
+    int isEnabled;
 
     List<mydata> datas;
 
@@ -43,7 +44,9 @@ public class SavedNotificationsActivity extends AppCompatActivity {
         double latitude_ ;
         double longitude_;
         String writtenText_;
-        public mydata(String isCF, double lat, double longt, String wT)
+        int isEnabled_;
+
+        public mydata(String isCF, double lat, double longt, String wT, int isEn)
         {
             String[] idss = isCF.split(" ");
             idChosenFriends_ = new int[idss.length];
@@ -52,6 +55,7 @@ public class SavedNotificationsActivity extends AppCompatActivity {
             latitude_ = lat;
             longitude_ = longt;
             writtenText_ = wT;
+            isEnabled_ = isEn;
         }
     }
     @Override
@@ -62,7 +66,7 @@ public class SavedNotificationsActivity extends AppCompatActivity {
 
         mDBHelper = new DatabaseHelper(this);
 
-       /*try {
+        /* try {
             mDBHelper.updateDataBase();
         } catch (IOException mIOException) {
             throw new Error("UnableToUpdateDatabase");
@@ -75,15 +79,16 @@ public class SavedNotificationsActivity extends AppCompatActivity {
         }
         datas = new ArrayList();
 
-        Cursor cursor = mDb.rawQuery("SELECT * FROM users1", null);
+        Cursor cursor = mDb.rawQuery("SELECT * FROM users3", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             ids = cursor.getString(0);
             latitude = cursor.getDouble(1);
             longitude = cursor.getDouble(2);
             writtenText = cursor.getString(3);
+            isEnabled = cursor.getInt(4);
 
-            datas.add(new mydata(ids, latitude,longitude,writtenText));
+            datas.add(new mydata(ids, latitude,longitude,writtenText, isEnabled));
 
             cursor.moveToNext();
         }
