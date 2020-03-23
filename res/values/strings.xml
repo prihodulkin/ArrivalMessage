@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Arrival Message</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="msg_switch_network">Необходимо включить GPS</string>
+    <string name="api_key">AIzaSyCBGwiNfmddXZ1tROGG3BzVqJsDxGb_aF0</string>
+    <integer name="com_vk_sdk_AppId">7197198</integer>
+</resources>
