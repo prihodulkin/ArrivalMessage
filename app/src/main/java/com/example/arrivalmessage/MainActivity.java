@@ -111,9 +111,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
-        manager=(LocationManager) getSystemService(this.LOCATION_SERVICE);
-        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,listener);
+        if(ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)!=0) {
+            manager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
+//            manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
+        }
 
     }
     public void addListenerOnButton(){
