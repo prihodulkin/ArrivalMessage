@@ -23,14 +23,13 @@
         android:id="@+id/next_btn"
         android:layout_width="192dp"
         android:layout_height="57dp"
-        android:layout_marginBottom="60dp"
         android:background="@drawable/button_next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/next" />
+        app:layout_constraintTop_toBottomOf="@+id/users_table_row"
+        app:layout_constraintVertical_bias="0.995" />
 
     <TableRow
         android:id="@+id/users_table_row"
@@ -54,8 +53,8 @@
 
         <ImageButton
             android:id="@+id/back_btn"
-            android:layout_width="20dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="51dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/back" />
 

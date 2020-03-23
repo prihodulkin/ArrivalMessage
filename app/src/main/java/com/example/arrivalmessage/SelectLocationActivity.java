@@ -49,6 +49,7 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_location);
 

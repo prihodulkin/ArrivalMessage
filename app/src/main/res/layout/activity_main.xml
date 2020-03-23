@@ -66,6 +66,7 @@
         android:layout_marginTop="40dp"
         android:background="@drawable/button_saved_change"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/create_btn" />
 

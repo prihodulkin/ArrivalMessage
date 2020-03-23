@@ -45,8 +45,8 @@
 
         <ImageButton
             android:id="@+id/back_btn"
-            android:layout_width="20dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="51dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/back" />
 
@@ -63,6 +63,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.9"
-        app:srcCompat="@drawable/ready" />
+         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
