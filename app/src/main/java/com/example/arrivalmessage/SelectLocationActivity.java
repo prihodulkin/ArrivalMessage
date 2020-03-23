@@ -27,6 +27,7 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.gms.common.api.Status;
+import java.lang.Object;
 
 
 public class SelectLocationActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -36,6 +37,9 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
     private double longitude=39.628510;
     private Marker SelectedPlaceMarker;
     private GoogleMap gmap;
+    int[] idChosenFriends;
+
+
 
 
 
@@ -52,7 +56,8 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_location);
-
+        Bundle arguments = getIntent().getExtras();
+        idChosenFriends = arguments.getIntArray("lst");
         addListenerOnButton();
         mMapView = (MapView) findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);
@@ -87,6 +92,8 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
         Places.createClient(this);
         setAutocompleteSupportFragment();
 
+
+
     }
 
 
@@ -114,6 +121,10 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
                 Log.i( "PlaceApi","An error occurred: " + status.getStatusCode () );
             }
         });
+
+
+
+
     }
 
 
@@ -139,6 +150,9 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
                     public void onClick(View v) {
                         Intent intent = new Intent(SelectLocationActivity.this, ChooseTextActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("firstCoordinate", latitude);
+                        intent.putExtra("secondCoordinate", longitude);
+                        intent.putExtra("lst1", idChosenFriends);
                         startActivity(intent);
                     }
                 }

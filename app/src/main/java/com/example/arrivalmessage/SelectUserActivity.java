@@ -47,6 +47,7 @@ public class SelectUserActivity extends AppCompatActivity {
     TableLayout tableLayout;
     List<VKUser> friends;
     List<VKUser> chosenFriends;
+    int[] idsChosenFriends;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +82,6 @@ public class SelectUserActivity extends AppCompatActivity {
                 }
             });
 
-
             tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT));
 
             firstName.setText(friend.firstname);
@@ -114,8 +114,14 @@ public class SelectUserActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        idsChosenFriends = new int[chosenFriends.size()];
+                        for (int j = 0; j < chosenFriends.size(); j++) {
+                            final VKUser chosenFriend = chosenFriends.get(j);
+                            idsChosenFriends[j] = chosenFriend.id;
+                        }
                         Intent intent = new Intent(SelectUserActivity.this, SelectLocationActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("lst", idsChosenFriends);
                         startActivity(intent);
                     }
                 }
