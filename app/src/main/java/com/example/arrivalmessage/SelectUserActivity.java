@@ -98,7 +98,7 @@ public class SelectUserActivity extends AppCompatActivity {
             fullName.setGravity(Gravity.CENTER_HORIZONTAL);
             fullName.setTypeface(null, Typeface.BOLD);
 
-            
+
 
 
 
