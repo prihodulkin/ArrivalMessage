@@ -10,10 +10,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.shapes.Shape;
+import android.graphics.fonts.FontFamily;
+import android.graphics.fonts.FontStyle;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -65,8 +71,8 @@ public class SelectUserActivity extends AppCompatActivity {
         for (int i = 0; i < friends.size(); i++){
             final VKUser friend = friends.get(i);
             TableRow tableRow = new TableRow(this);
-            TextView firstName  = new TextView(this);
-            TextView lastName = new TextView(this);
+            TextView fullName  = new TextView(this);
+
 
             CheckBox check = new CheckBox(this);
 
@@ -82,16 +88,22 @@ public class SelectUserActivity extends AppCompatActivity {
                 }
             });
 
+            CircularImageView avatar=new CircularImageView(this);
+            ImageManager.fetchImage(friend.photo,avatar);
+
             tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT));
+            tableRow.setMinimumHeight(170);
+            fullName.setText(friend.firstname+' '+friend.lastname);
+            fullName.setTextColor(-1);
+            fullName.setGravity(Gravity.CENTER_HORIZONTAL);
+            fullName.setTypeface(null, Typeface.BOLD);
 
-            firstName.setText(friend.firstname);
-            firstName.setTextColor(-1);
+            
 
-            lastName.setText(friend.lastname);
-            lastName.setTextColor(-1);
 
-            tableRow.addView(firstName,250,50);
-            tableRow.addView(lastName,250,50);
+
+            tableRow.addView(avatar,150,150);
+            tableRow.addView(fullName,450,50);
             tableRow.addView(check);
 
             tableLayout.addView(tableRow);
@@ -114,6 +126,22 @@ public class SelectUserActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if(chosenFriends.size()==0){
+                            AlertDialog.Builder builder = new AlertDialog.Builder(SelectUserActivity.this);
+                            builder.setTitle("Внимание!");
+                            builder.setMessage("Выберете друзей для отправки сообщения!");
+                            builder.setCancelable(false);
+                            builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() { // Кнопка ОК
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                            return;
+                        }
+
                         idsChosenFriends = new int[chosenFriends.size()];
                         for (int j = 0; j < chosenFriends.size(); j++) {
                             final VKUser chosenFriend = chosenFriends.get(j);

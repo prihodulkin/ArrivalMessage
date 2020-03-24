@@ -16,6 +16,7 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.ImageView;
 
+
 public class ImageManager {
     private final static String TAG = "ImageManager";
 
