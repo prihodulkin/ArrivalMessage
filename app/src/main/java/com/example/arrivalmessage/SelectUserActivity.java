@@ -67,6 +67,7 @@ public class SelectUserActivity extends AppCompatActivity {
         tableLayout = findViewById(R.id.userList);
         createUserList();
     }
+
     public void createUserList(){
         for (int i = 0; i < friends.size(); i++){
             final VKUser friend = friends.get(i);
@@ -91,8 +92,10 @@ public class SelectUserActivity extends AppCompatActivity {
             CircularImageView avatar=new CircularImageView(this);
             ImageManager.fetchImage(friend.photo,avatar);
 
+
             tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT));
             tableRow.setMinimumHeight(170);
+            tableRow.setGravity(Gravity.TOP);
             fullName.setText(friend.firstname+' '+friend.lastname);
             fullName.setTextColor(-1);
             fullName.setGravity(Gravity.CENTER_HORIZONTAL);
