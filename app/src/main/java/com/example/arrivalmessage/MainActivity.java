@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         addListenerOnButton();
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         if(ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)!=0) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Внимание!");
@@ -143,6 +144,18 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, SavedNotificationsActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+            }
+        });
+        ImageButton change_acc_btn = findViewById(R.id.change_acc_btn);
+        change_acc_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                VK.logout();
+
+                Intent n = getIntent();
+                finish();
+                startActivity(n);
             }
         });
     }
