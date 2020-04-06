@@ -40,16 +40,33 @@
 
     <ImageView
         android:id="@+id/choice_table"
-        android:layout_width="354dp"
-        android:layout_height="485dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="289dp"
+        android:layout_height="559dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="60dp"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableRow"
+        app:layout_constraintTop_toBottomOf="@id/tableRow"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/table" />
+
+    <ScrollView
+        android:id="@+id/ScrollTable"
+        android:layout_width="299dp"
+        android:layout_height="361dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="@+id/choice_table"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="@+id/choice_table"
+        app:layout_constraintTop_toTopOf="@+id/choice_table">
+
+        <TableLayout
+            android:id="@+id/notificationsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

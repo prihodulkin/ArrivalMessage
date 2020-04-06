@@ -1,6 +1,10 @@
 package com.example.arrivalmessage;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +24,8 @@ import android.content.pm.PackageManager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import com.google.android.gms.maps.model.Marker;
+
+import java.io.IOException;
 import java.util.*;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.Places;
@@ -35,6 +41,7 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
     private MapView mMapView;
     private double latitude=47.216724;
     private double longitude=39.628510;
+    private String location;
     private Marker SelectedPlaceMarker;
     private GoogleMap gmap;
     int[] idChosenFriends;
@@ -143,16 +150,38 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
                 }
         );
         ImageButton next_btn = findViewById(R.id.next_btn);
+
+        final Context context = this;
         next_btn.bringToFront();
         next_btn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        final Geocoder geocoder = new Geocoder(context, new Locale("ru", "RU"));
+
+                        Address address;
+                        try {
+                            address = geocoder.getFromLocation(latitude, longitude, 1).get(0);
+
+                            final String street = address.getThoroughfare() != null ? address.getThoroughfare() : "";
+                            final String house = address.getSubThoroughfare() != null ? address.getSubThoroughfare() : "";
+                            final String city = address.getLocality() != null ? address.getLocality() : "";
+
+                            location = street + " " + house + ", " + city;
+
+                            if (location.equals(" , ")) {
+                                location = "Unknown location";
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
                         Intent intent = new Intent(SelectLocationActivity.this, ChooseTextActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra("firstCoordinate", latitude);
                         intent.putExtra("secondCoordinate", longitude);
                         intent.putExtra("lst1", idChosenFriends);
+                        intent.putExtra("location", location);
                         startActivity(intent);
                     }
                 }

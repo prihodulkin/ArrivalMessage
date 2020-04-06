@@ -24,6 +24,7 @@ public class ChooseTextActivity extends AppCompatActivity {
     int[] idChosenFriends;
     double latitude;
     double longitude;
+    String location;
     String writtenText;
 
     @Override
@@ -37,6 +38,7 @@ public class ChooseTextActivity extends AppCompatActivity {
         idChosenFriends = arguments.getIntArray("lst1");
         latitude = arguments.getDouble("firstCoordinate");
         longitude = arguments.getDouble("secondCoordinate");
+        location = arguments.getString("location");
     }
 
     public void addListenerOnButton() {
@@ -80,6 +82,7 @@ public class ChooseTextActivity extends AppCompatActivity {
                             intent.putExtra("secondCoordinate1", longitude);
                             intent.putExtra("lst2", idChosenFriends);
                             intent.putExtra("text", writtenText);
+                            intent.putExtra("location", location);
                             startActivity(intent);
                         }
 

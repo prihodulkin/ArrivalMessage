@@ -9,6 +9,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Address;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -19,8 +20,11 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
+import android.location.Geocoder;
+import java.util.Locale;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import static android.os.Build.ID;
 
@@ -28,10 +32,11 @@ public class FinishActivity extends AppCompatActivity {
 
     int[] idChosenFriends;
 
-    String ids = "";
+    String users_ids = "";
     double latitude;
     double longitude;
-    String writtenText;
+    String message;
+    String location;
 
     //���������� ��� ������ � ��
     private DatabaseHelper mDBHelper;
@@ -48,9 +53,13 @@ public class FinishActivity extends AppCompatActivity {
         idChosenFriends = arguments.getIntArray("lst2");
         latitude = arguments.getDouble("firstCoordinate1");
         longitude = arguments.getDouble("secondCoordinate1");
-        writtenText = arguments.getString("text");
-        for (int i = 0; i < idChosenFriends.length; i++)
-            ids += idChosenFriends[i] + " ";
+        location = arguments.getString("location");
+        message = arguments.getString("text");
+
+
+        for (int id : idChosenFriends) {
+            users_ids += id + " ";
+        }
 
         mDBHelper = new DatabaseHelper(this);
 
@@ -68,13 +77,14 @@ public class FinishActivity extends AppCompatActivity {
 
         ContentValues cv = new ContentValues();
 
-        cv.put("_IDS", ids);
-        cv.put("COORD1", latitude);
-        cv.put("COORD2", longitude);
-        cv.put("TEXT", writtenText);
+        cv.put("users_ids", users_ids);
+        cv.put("latitude", latitude);
+        cv.put("longitude", longitude);
+        cv.put("message", message);
         cv.put("isEnabled", 1);
+        cv.put("location", location);
 
-        mDb.insert("users3", null, cv);
+        mDb.insert("users", null, cv);
 
     }
     public void addListenerOnButton() {
