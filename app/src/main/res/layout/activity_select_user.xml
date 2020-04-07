@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/users_table"
-        android:layout_width="328dp"
-        android:layout_height="475dp"
+        android:layout_width="327dp"
+        android:layout_height="479dp"
         android:layout_marginBottom="130dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,13 +64,13 @@
 
     <ScrollView
         android:id="@+id/scrollTable"
-        android:layout_weight="1"
-        android:fillViewport="true"
         android:layout_width="299dp"
-        android:layout_height="361dp"
+        android:layout_height="313dp"
+        android:layout_weight="1"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:fadeScrollbars="false"
+        android:fillViewport="true"
         android:foregroundGravity="top"
         android:overScrollMode="never"
         android:scrollbarAlwaysDrawVerticalTrack="true"
@@ -81,9 +81,10 @@
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/users_table"
         app:layout_constraintEnd_toEndOf="@+id/users_table"
+        app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="@+id/users_table"
-        app:layout_constraintTop_toTopOf="@+id/users_table"
-        app:layout_constraintVertical_bias="0.701">
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        app:layout_constraintVertical_bias="0.122">
 
         <TableLayout
             android:id="@+id/userList"
@@ -108,6 +109,16 @@
 
         </TableLayout>
     </ScrollView>
+
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="292dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="84dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/users_table" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
