@@ -14,6 +14,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import android.location.LocationListener;
@@ -119,6 +120,8 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
                 longitude=place.getLatLng().longitude;
                 SelectedPlaceMarker =gmap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)));
                 gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),16f));
+                SelectedPlaceMarker =gmap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).icon(
+                        BitmapDescriptorFactory.fromResource(R.drawable.marker)));
 
 
             }
@@ -128,14 +131,7 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
                 Log.i( "PlaceApi","An error occurred: " + status.getStatusCode () );
             }
         });
-
-
-
-
     }
-
-
-
 
     public void addListenerOnButton() {
         ImageButton back_btn = findViewById(R.id.back_btn);
@@ -207,7 +203,8 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
     @Override
     public void onMapReady(final GoogleMap map) {
         gmap=map;
-        SelectedPlaceMarker =map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)));
+        SelectedPlaceMarker =map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).icon(
+                BitmapDescriptorFactory.fromResource(R.drawable.marker)));
         gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),16f));
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
         gmap.setMyLocationEnabled(true);
@@ -215,28 +212,14 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
             @Override
             public void onMapClick(LatLng latLng) {
                 SelectedPlaceMarker.remove();
-                SelectedPlaceMarker =map.addMarker(new MarkerOptions().position(new LatLng(latLng.latitude, latLng.longitude)));
+                SelectedPlaceMarker =map.addMarker(new MarkerOptions().position(new LatLng(latLng.latitude, latLng.longitude)).icon(
+                        BitmapDescriptorFactory.fromResource(R.drawable.marker)));
                 latitude = latLng.latitude;
                 longitude=latLng.longitude;
             }
         });
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     @Override
