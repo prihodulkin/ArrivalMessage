@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                     if(calculationByDistance(latLng,new LatLng(location.getLatitude(),location.getLongitude()))<=0.1)
                     {
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                       /* AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                         builder.setTitle("Внимание!");
                         builder.setMessage("Сообщение отправлено: "+d.writtenText_);
                         builder.setCancelable(false);
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
                         AlertDialog dialog = builder.create();
-                        dialog.show();
+                        dialog.show();*/
                         Log.i("Sent message", "Сообщение "+d.writtenText_+" отправлено!");
                         for(int id:d.idChosenFriends_)
                             controller.SendMessage(id,d.writtenText_);

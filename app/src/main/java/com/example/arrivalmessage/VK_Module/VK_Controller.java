@@ -23,6 +23,7 @@ public class VK_Controller {
 
     public static List<VKUser> friends;
     public static int UserID;
+    public static String FirstName;
     public static String SecondName;
 
     public VK_Controller(RequestQueue queue, String key, String group_id)
@@ -45,6 +46,7 @@ public class VK_Controller {
             @Override
             public void success(VKUser vkUser) {
                 UserID = vkUser.id;
+                FirstName=vkUser.firstname;
                 SecondName = vkUser.lastname;
             }
 
