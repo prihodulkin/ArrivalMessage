@@ -4,15 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -24,39 +20,16 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.sql.SQLOutput;
+import com.example.arrivalmessage.VK_Module.NotificationData;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class SavedNotificationsActivity extends AppCompatActivity {
     TableLayout tableLayout;
-    List<mydata> datas;
+    List<NotificationData> datas=MainActivity.datas;
+    NotificationData curData;
 
-    //Переменная для работы с БД
-    private DatabaseHelper mDBHelper;
-    private SQLiteDatabase mDb;
-
-    public class mydata {
-        int[] idChosenFriends_;
-        double latitude_;
-        double longitude_;
-        String writtenText_;
-        String location_;
-        int isEnabled_;
-
-        mydata(String isCF, double lat, double longt, String wT, int isEn, String location) {
-            String[] idss = isCF.split(" ");
-            idChosenFriends_ = new int[idss.length];
-            for (int i = 0; i < idss.length; i++)
-                idChosenFriends_[i] = Integer.parseInt(idss[i]);
-            latitude_ = lat;
-            longitude_ = longt;
-            writtenText_ = wT;
-            isEnabled_ = isEn;
-            location_ = location;
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,57 +40,48 @@ public class SavedNotificationsActivity extends AppCompatActivity {
 
         tableLayout = findViewById(R.id.notificationsList);
 
-        mDBHelper = new DatabaseHelper(this);
-
-        /* try {
-            mDBHelper.updateDataBase();
-        } catch (IOException mIOException) {
-            throw new Error("UnableToUpdateDatabase");
-        }*/
-
-        try {
-            mDb = mDBHelper.getReadableDatabase();
-        } catch (SQLException mSQLException) {
-            throw mSQLException;
-        }
-        datas = new ArrayList();
 
 
-        Cursor cursor = mDb.rawQuery("SELECT * FROM users", null);
-        cursor.moveToFirst();
 
-
-        while (!cursor.isAfterLast()) {
-            String id = cursor.getString(0);
-            double latitude = cursor.getDouble(1);
-            double longitude = cursor.getDouble(2);
-            String message = cursor.getString(3);
-            int isEnabled = cursor.getInt(4);
-            String location = cursor.getString(5);
-
-            datas.add(new mydata(id, latitude, longitude, message, isEnabled, location));
-
-            cursor.moveToNext();
-        }
-        cursor.close();
-
-        for (int i = 0; i < datas.size(); i++) {
+        for (int i = 0; i < MainActivity.datas.size(); i++) {
             TableRow tableRow = new TableRow(this);
+            tableRow.setMinimumHeight(170);
+            TableRow tableRow1 = new TableRow(this);
+            tableRow1.setMinimumWidth(30);
+            TableRow tableRow2 = new TableRow(this);
+            tableRow2.setMinimumWidth(30);
             TextView notificationText = new TextView(this);
-
-            Switch toggle = new Switch(this);
+            Button imageButton=new Button(this);
+            imageButton.setBackground(getResources().getDrawable(R.drawable.edit));
+            final Switch toggle = new Switch(this);
+            toggle.setTag(i);
+            toggle.setChecked(datas.get(i).isEnabled_==1);
             toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                  if(datas.get((int)buttonView.getTag()).isEnabled_==1)
+                      datas.get((int)buttonView.getTag()).isEnabled_=0;
+                  else
+                      datas.get((int)buttonView.getTag()).isEnabled_=1;
+
                     // @todo update isEnabled in DB
                 }
             });
 
-            notificationText.setText(datas.get(i).location_);
+
+            notificationText.setText(MainActivity.datas.get(i).location_);
+            notificationText.setTextColor(-1);
+            notificationText.setWidth(500);
+            notificationText.setTypeface(null, Typeface.BOLD);
+            tableRow.setGravity(Gravity.CENTER_HORIZONTAL);
             notificationText.setGravity(Gravity.CENTER_HORIZONTAL);
 
+            tableRow.addView(imageButton,80,80);
+            tableRow.addView(tableRow2);
             tableRow.addView(notificationText);
+            tableRow.addView(tableRow1);
             tableRow.addView(toggle);
+
 
             tableLayout.addView(tableRow);
         }

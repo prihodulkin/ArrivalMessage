@@ -2,7 +2,7 @@ package com.example.arrivalmessage;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
+import android.os.AsyncTask;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.SearchManager;
@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -33,12 +34,13 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.graphics.Bitmap;
 
-
+import com.example.arrivalmessage.DownloadImagesTask;
 import com.example.arrivalmessage.VK_Module.VKUser;
 import com.example.arrivalmessage.VK_Module.VK_Controller;
 import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Array;
 import java.util.ArrayList;
@@ -50,10 +52,13 @@ import java.util.List;
 public class SelectUserActivity extends AppCompatActivity {
 
 
+
+
     TableLayout tableLayout;
     List<VKUser> friends;
     List<VKUser> chosenFriends;
     int[] idsChosenFriends;
+    ImageView table;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +70,9 @@ public class SelectUserActivity extends AppCompatActivity {
         friends = VK_Controller.friends;
         chosenFriends = new ArrayList();
         tableLayout = findViewById(R.id.userList);
+        table=findViewById(R.id.users_table);
+
+
         createUserList();
     }
 
@@ -76,6 +84,7 @@ public class SelectUserActivity extends AppCompatActivity {
 
 
             CheckBox check = new CheckBox(this);
+            CheckBox check1 = new CheckBox(this);
 
             check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -89,13 +98,17 @@ public class SelectUserActivity extends AppCompatActivity {
                 }
             });
 
+
             CircularImageView avatar=new CircularImageView(this);
-            ImageManager.fetchImage(friend.photo,avatar);
-
-
-            tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT));
+            avatar.setImageDrawable(getResources().getDrawable( R.drawable.no_avatar ));
+            avatar.setTag(friend.photo);
+            DownloadImagesTask downloadImagesTask=new DownloadImagesTask();
+            downloadImagesTask.execute(avatar);
+            //tableRow.setLayoutParams(new TableLayout.LayoutParams(Math.round(((float)table.getWidth())*(float)0.5), Math.round(((float)table.getWidth())*(float)0.5)));
             tableRow.setMinimumHeight(170);
-            tableRow.setGravity(Gravity.TOP);
+
+
+            tableRow.setGravity(Gravity.CENTER_HORIZONTAL);
             fullName.setText(friend.firstname+' '+friend.lastname);
             fullName.setTextColor(-1);
             fullName.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -108,6 +121,11 @@ public class SelectUserActivity extends AppCompatActivity {
             tableRow.addView(avatar,150,150);
             tableRow.addView(fullName,450,50);
             tableRow.addView(check);
+
+            TableRow tableRow1 = new TableRow(this);
+
+
+
 
             tableLayout.addView(tableRow);
         }
@@ -160,3 +178,5 @@ public class SelectUserActivity extends AppCompatActivity {
     }
 
 }
+
+

@@ -10,17 +10,23 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.example.arrivalmessage.VK_Module.NotificationData;
 import com.example.arrivalmessage.VK_Module.VK_Controller;
+import com.google.android.gms.maps.model.LatLng;
 import com.vk.api.sdk.VK;
 import com.vk.api.sdk.auth.VKAccessToken;
 import com.vk.api.sdk.auth.VKAuthCallback;
@@ -31,16 +37,59 @@ import com.vk.api.sdk.ui.VKWebViewAuthActivity;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    VK_Controller controller;
+
+   public static List<NotificationData> datas;
+
+    //Переменная для работы с БД
+    private DatabaseHelper mDBHelper;
+    private SQLiteDatabase mDb;
+
+    public static VK_Controller controller;
 
     private  LocationManager manager;
     private LocationListener listener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
+            for(NotificationData d:datas)
+            {
+                if(d.isEnabled_==1){
+                    LatLng latLng= new LatLng(d.latitude_,d.longitude_);
+                    if(calculationByDistance(latLng,new LatLng(location.getLatitude(),location.getLongitude()))<=0.1)
+                    {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setTitle("Внимание!");
+                        builder.setMessage("Сообщение отправлено: "+d.writtenText_);
+                        builder.setCancelable(false);
+                        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() { // Кнопка ОК
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+
+                                //startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));// Отпускает диалоговое окно
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                        Log.i("Sent message", "Сообщение "+d.writtenText_+" отправлено!");
+                        for(int id:d.idChosenFriends_)
+                            controller.SendMessage(id,d.writtenText_);
+
+                        d.isEnabled_=0;
+
+                    }
+
+
+                }
+            }
         }
 
         @Override
@@ -50,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onProviderEnabled(String provider) {
+
         }
 
         @Override
@@ -70,6 +120,31 @@ public class MainActivity extends AppCompatActivity {
                 dialog.show();
         }
     };
+
+    public double calculationByDistance(LatLng StartP, LatLng EndP) {
+        int Radius = 6371;// radius of earth in Km
+        double lat1 = StartP.latitude;
+        double lat2 = EndP.latitude;
+        double lon1 = StartP.longitude;
+        double lon2 = EndP.longitude;
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(Math.toRadians(lat1))
+                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
+                * Math.sin(dLon / 2);
+        double c = 2 * Math.asin(Math.sqrt(a));
+        double valueResult = Radius * c;
+        double km = valueResult / 1;
+        DecimalFormat newFormat = new DecimalFormat("####");
+        int kmInDec = Integer.valueOf(newFormat.format(km));
+        double meter = valueResult % 1000;
+        int meterInDec = Integer.valueOf(newFormat.format(meter));
+        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
+                + " Meter   " + meterInDec);
+
+        return Radius * c;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,8 +172,11 @@ public class MainActivity extends AppCompatActivity {
         }
         //
 
+
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.start();
+
+
 
         controller = new VK_Controller(requestQueue, getResources().getString(R.string.Access_Key), getResources().getString(R.string.Group_id));
 
@@ -115,6 +193,41 @@ public class MainActivity extends AppCompatActivity {
 
         manager=(LocationManager) getSystemService(this.LOCATION_SERVICE);
         manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,listener);
+        mDBHelper = new DatabaseHelper(this);
+
+        /* try {
+            mDBHelper.updateDataBase();
+        } catch (IOException mIOException) {
+            throw new Error("UnableToUpdateDatabase");
+        }*/
+
+        try {
+            mDb = mDBHelper.getReadableDatabase();
+        } catch (SQLException mSQLException) {
+            throw mSQLException;
+        }
+        datas = new ArrayList();
+
+
+        Cursor cursor = mDb.rawQuery("SELECT * FROM users", null);
+        cursor.moveToFirst();
+
+
+        while (!cursor.isAfterLast()) {
+            String id = cursor.getString(0);
+            double latitude = cursor.getDouble(1);
+            double longitude = cursor.getDouble(2);
+            String message = cursor.getString(3);
+            int isEnabled = cursor.getInt(4);
+            String location = cursor.getString(5);
+
+            datas.add(new NotificationData(id, latitude, longitude, message, isEnabled, location));
+
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        ;
 
     }
     public void addListenerOnButton(){
