@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import androidx.core.app.ActivityCompat;
+
+import com.example.arrivalmessage.VK_Module.VKUser;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.GoogleMap;
@@ -47,6 +49,7 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
     private Marker SelectedPlaceMarker;
     private GoogleMap gmap;
     int[] idChosenFriends;
+    String[] displayFriends;
 
     public double calculationByDistance(LatLng StartP, LatLng EndP) {
         int Radius = 6371;// radius of earth in Km
@@ -91,6 +94,7 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
         setContentView(R.layout.activity_select_location);
         Bundle arguments = getIntent().getExtras();
         idChosenFriends = arguments.getIntArray("lst");
+        displayFriends = arguments.getStringArray("displayList");
         addListenerOnButton();
         mMapView = (MapView) findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);
@@ -203,6 +207,7 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
                         intent.putExtra("secondCoordinate", longitude);
                         intent.putExtra("lst1", idChosenFriends);
                         intent.putExtra("location", location);
+                        intent.putExtra("displayLst", displayFriends);
                         startActivity(intent);
                     }
                 }
