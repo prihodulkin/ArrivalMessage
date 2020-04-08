@@ -27,6 +27,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.arrivalmessage.VK_Module.NotificationData;
+
 import java.util.Locale;
 
 import java.io.IOException;
@@ -95,6 +97,8 @@ public class FinishActivity extends AppCompatActivity {
         cv.put("message", message);
         cv.put("isEnabled", 1);
         cv.put("location", location);
+
+        MainActivity.datas.add(new NotificationData(users_ids,latitude,longitude,message,1,location));
 
         mDb.insert("users", null, cv);
 
