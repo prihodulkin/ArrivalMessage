@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -280,6 +281,24 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("Выйти", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        mDb.execSQL("DELETE FROM" + " users");
+                        for(NotificationData d : datas)
+                        {
+                            ContentValues cv = new ContentValues();
+                            String users_ids = "";
+                            for (int id : d.idChosenFriends_) {
+                                users_ids += id + " ";
+                            }
+                            cv.put("users_ids", users_ids);
+                            cv.put("latitude", d.latitude_);
+                            cv.put("longitude", d.longitude_);
+                            cv.put("message", d.writtenText_);
+                            cv.put("isEnabled", d.isEnabled_);
+                            cv.put("location", d.location_);
+
+                            mDb.insert("users", null, cv);
+                        } 
+
                         finish();
                     }
                 })
