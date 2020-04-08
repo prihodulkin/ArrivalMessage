@@ -34,7 +34,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.graphics.Bitmap;
 
-import com.example.arrivalmessage.DownloadImagesTask;
+//import com.example.arrivalmessage.DownloadImagesTask;
 import com.example.arrivalmessage.VK_Module.VKUser;
 import com.example.arrivalmessage.VK_Module.VK_Controller;
 import com.squareup.picasso.Picasso;
