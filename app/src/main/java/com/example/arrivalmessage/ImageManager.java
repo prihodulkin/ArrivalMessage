@@ -49,6 +49,7 @@ public class ImageManager {
       // iView.setImageResource(R.drawable.icon);
         thread.setPriority(3);
         thread.start();
+
     }
 
     public static Bitmap downloadImage(String iUrl) {

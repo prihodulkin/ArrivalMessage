@@ -39,9 +39,11 @@ public class GetUserInfo extends ApiCommand<VKUser>
                 JSONArray arr = res.getJSONArray("response");
                 JSONObject o = (JSONObject) arr.get(0);
                 int id = o.getInt("id");
+                String last = o.getString("last_name");
 
                 VKUser user = new VKUser();
                 user.id=id;
+                user.lastname=last;
 
                 return user;
             }

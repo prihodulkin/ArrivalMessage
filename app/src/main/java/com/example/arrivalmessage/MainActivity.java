@@ -14,6 +14,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Debug;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -28,6 +30,7 @@ import com.vk.api.sdk.auth.VKAuthParams;
 import com.vk.api.sdk.auth.VKAuthResult;
 import com.vk.api.sdk.auth.VKScope;
 import com.vk.api.sdk.ui.VKWebViewAuthActivity;
+import com.vk.api.sdk.utils.VKUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -35,7 +38,7 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
-    VK_Controller controller;
+    public static VK_Controller controller;
 
     private  LocationManager manager;
     private LocationListener listener = new LocationListener() {
@@ -94,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
             });
             AlertDialog dialog = builder.create();
             dialog.show();
+
+
         }
         //
 
@@ -110,8 +115,6 @@ public class MainActivity extends AppCompatActivity {
             controller.UpdateFriends();
             controller.UpdateUserID();
         }
-
-
 
         manager=(LocationManager) getSystemService(this.LOCATION_SERVICE);
         manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,listener);
