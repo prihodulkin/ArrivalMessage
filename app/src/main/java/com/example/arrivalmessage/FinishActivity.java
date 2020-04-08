@@ -21,6 +21,9 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 import android.location.Geocoder;
+
+import com.example.arrivalmessage.VK_Module.NotificationData;
+
 import java.util.Locale;
 
 import java.io.IOException;
@@ -85,6 +88,7 @@ public class FinishActivity extends AppCompatActivity {
         cv.put("location", location);
 
         mDb.insert("users", null, cv);
+        MainActivity.datas.add(new NotificationData(users_ids,latitude,longitude,message,1,message));
 
     }
     public void addListenerOnButton() {
@@ -97,6 +101,7 @@ public class FinishActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
     @Override
     public void onBackPressed() {

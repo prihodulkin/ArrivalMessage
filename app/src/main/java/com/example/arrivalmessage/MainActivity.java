@@ -205,6 +205,8 @@ public class MainActivity extends AppCompatActivity {
         } catch (SQLException mSQLException) {
             throw mSQLException;
         }
+        if(datas!=null)
+            return;
         datas = new ArrayList();
 
 
