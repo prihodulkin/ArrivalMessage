@@ -59,6 +59,7 @@ public class SelectUserActivity extends AppCompatActivity {
     List<VKUser> chosenFriends;
     int[] idsChosenFriends;
     ImageView table;
+    String[] displayFriends;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,9 +169,15 @@ public class SelectUserActivity extends AppCompatActivity {
                             final VKUser chosenFriend = chosenFriends.get(j);
                             idsChosenFriends[j] = chosenFriend.id;
                         }
+                        displayFriends = new String[chosenFriends.size()];
+                        for (int j = 0; j < chosenFriends.size(); j++) {
+                            final VKUser chosenFriend = chosenFriends.get(j);
+                            displayFriends[j] = chosenFriend.firstname + " " + chosenFriend.lastname;
+                        }
                         Intent intent = new Intent(SelectUserActivity.this, SelectLocationActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra("lst", idsChosenFriends);
+                        intent.putExtra("displayList", displayFriends);
                         startActivity(intent);
                     }
                 }

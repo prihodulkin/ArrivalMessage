@@ -9,11 +9,13 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.database.Cursor;
@@ -21,8 +23,9 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 import android.location.Geocoder;
-
-import com.example.arrivalmessage.VK_Module.NotificationData;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import java.util.Locale;
 
@@ -34,13 +37,15 @@ import static android.os.Build.ID;
 public class FinishActivity extends AppCompatActivity {
 
     int[] idChosenFriends;
+    TableLayout tableLayout;
+    TableLayout tableInfo;
 
     String users_ids = "";
     double latitude;
     double longitude;
     String message;
     String location;
-
+    String[] displayFriends;
     //���������� ��� ������ � ��
     private DatabaseHelper mDBHelper;
     private SQLiteDatabase mDb;
@@ -58,7 +63,11 @@ public class FinishActivity extends AppCompatActivity {
         longitude = arguments.getDouble("secondCoordinate1");
         location = arguments.getString("location");
         message = arguments.getString("text");
-
+        displayFriends = arguments.getStringArray("display");
+        tableLayout = findViewById(R.id.userList);
+        tableInfo = findViewById(R.id.tableInfo);
+        createDisplayList();
+        createInfoTable();
 
         for (int id : idChosenFriends) {
             users_ids += id + " ";
@@ -88,7 +97,6 @@ public class FinishActivity extends AppCompatActivity {
         cv.put("location", location);
 
         mDb.insert("users", null, cv);
-        MainActivity.datas.add(new NotificationData(users_ids,latitude,longitude,message,1,message));
 
     }
     public void addListenerOnButton() {
@@ -101,13 +109,62 @@ public class FinishActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(FinishActivity.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    public void createDisplayList(){
+        for (int i = 0; i < displayFriends.length; i++){
+            final String friendName = displayFriends[i];
+            TableRow tableRow = new TableRow(this);
+            TextView fullName  = new TextView(this);
+
+
+
+            tableRow.setGravity(Gravity.CENTER_HORIZONTAL);
+            fullName.setText(friendName);
+            fullName.setTextColor(-1);
+            fullName.setGravity(Gravity.CENTER_HORIZONTAL);
+            fullName.setTypeface(null, Typeface.BOLD);
+
+
+            tableRow.addView(fullName,500,80);
+
+            tableLayout.addView(tableRow);
+        }
+    }
+    public void createInfoTable(){
+        TableRow tableRowAddress = new TableRow(this);
+        TableRow tableRowMessage = new TableRow(this);
+
+        TextView addressView  = new TextView(this);
+        TextView textMessageView  = new TextView(this);
+
+        String address = "Место отправки сообщения: " + location;
+        String textMessage = "Сообщение: " + message;
+
+        addressView.setText(address);
+        textMessageView.setText(textMessage);
+
+        addressView.setTextColor(-1);
+        addressView.setGravity(Gravity.CENTER_HORIZONTAL);
+        addressView.setTypeface(null, Typeface.BOLD);
+        textMessageView.setTextColor(-1);
+        textMessageView.setGravity(Gravity.CENTER_HORIZONTAL);
+        textMessageView.setTypeface(null, Typeface.BOLD);
+
+        tableRowAddress.setGravity(Gravity.CENTER_HORIZONTAL);
+        tableRowMessage.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        tableRowAddress.addView(addressView, 900,150);
+        tableRowMessage.addView(textMessageView,900,150);
+
+        tableInfo.addView(tableRowAddress);
+        tableInfo.addView(tableRowMessage);
     }
 
 }

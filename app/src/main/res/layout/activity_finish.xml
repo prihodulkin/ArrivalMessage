@@ -10,14 +10,15 @@
 
     <ImageView
         android:id="@+id/ready_upper"
-        android:layout_width="306dp"
-        android:layout_height="336dp"
+        android:layout_width="310dp"
+        android:layout_height="75dp"
         android:layout_marginBottom="328dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.566"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tableRow4"
+        app:layout_constraintVertical_bias="0.243"
         app:srcCompat="@drawable/ready_upper" />
 
     <TableRow
@@ -37,10 +38,84 @@
         android:id="@+id/main_menu_btn"
         android:layout_width="192dp"
         android:layout_height="54dp"
+        android:background="@drawable/button_to_main_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9"
-        android:background="@drawable/button_to_main_menu" />
+        app:layout_constraintVertical_bias="0.9" />
+
+
+    <ScrollView
+        android:id="@+id/scrollTable"
+        android:layout_width="299dp"
+        android:layout_height="313dp"
+        android:layout_marginBottom="132dp"
+        android:layout_weight="1"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:fadeScrollbars="false"
+        android:fillViewport="true"
+        android:foregroundGravity="top"
+        android:overScrollMode="never"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarSize="10dp"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbarThumbVertical="@color/cardview_light_background"
+        android:scrollbarTrackVertical="@color/BlueForLogo"
+        android:scrollbars="vertical"
+        android:verticalScrollbarPosition="right"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TableLayout
+            android:id="@+id/userList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="50dp"
+            android:alpha="0.55"
+            android:background="@color/Background"
+            android:fillViewport="true"
+            android:foregroundGravity="top"
+            android:isScrollContainer="true"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="@+id/users_table"
+            app:layout_constraintEnd_toEndOf="@+id/users_table"
+            app:layout_constraintStart_toStartOf="@+id/users_table"
+            app:layout_constraintTop_toTopOf="@+id/users_table">
+
+        </TableLayout>
+    </ScrollView>
+
+    <TableLayout
+        android:id="@+id/tableInfo"
+        android:layout_width="270dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="25dp"
+
+        android:alpha="0.55"
+        android:background="@color/Background"
+        android:foregroundGravity="top"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toTopOf="@+id/scrollTable"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.549"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ready_upper"
+        app:layout_constraintVertical_bias="1.0">
+
+    </TableLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
