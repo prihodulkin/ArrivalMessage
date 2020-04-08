@@ -172,13 +172,13 @@ public class MainActivity extends AppCompatActivity {
         }
         //
 
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.start();
+        //requestQueue.start();
 
 
-
-        controller = new VK_Controller(requestQueue, getResources().getString(R.string.Access_Key), getResources().getString(R.string.Group_id));
+        if(controller==null) {
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            controller = new VK_Controller(requestQueue, getResources().getString(R.string.Access_Key), getResources().getString(R.string.Group_id));
+        }
 
         if(!VK.isLoggedIn())
         {
@@ -188,7 +188,6 @@ public class MainActivity extends AppCompatActivity {
             controller.UpdateFriends();
             controller.UpdateUserID();
         }
-
 
 
         manager=(LocationManager) getSystemService(this.LOCATION_SERVICE);
@@ -227,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
         }
         cursor.close();
 
-        ;
+
 
     }
     public void addListenerOnButton(){
