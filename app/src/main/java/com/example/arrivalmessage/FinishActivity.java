@@ -142,23 +142,35 @@ public class FinishActivity extends AppCompatActivity {
         }
     }
     public void createInfoTable(){
+
         TableRow tableRowAddress = new TableRow(this);
+        TableRow addressT=getHeadRow("Адрес: ");
+        TableRow messageT=getHeadRow("Сообщение: ");
+        TableRow usersT=getHeadRow("Пользователи: ");
+
+
         TableRow tableRowMessage = new TableRow(this);
 
         TextView addressView  = new TextView(this);
         TextView textMessageView  = new TextView(this);
 
-        String address = "Место отправки сообщения: " + location;
-        String textMessage = "Сообщение: " + message;
 
-        addressView.setText(address);
-        textMessageView.setText(textMessage);
+        String address1 =  location;
+
+
+
+
+
+
+
+        addressView.setText(address1);
+        textMessageView.setText(this.message);
 
         addressView.setTextColor(-1);
-        addressView.setGravity(Gravity.CENTER_HORIZONTAL);
+        addressView.setGravity(Gravity.CENTER);
         addressView.setTypeface(null, Typeface.BOLD);
         textMessageView.setTextColor(-1);
-        textMessageView.setGravity(Gravity.CENTER_HORIZONTAL);
+        textMessageView.setGravity(Gravity.CENTER);
         textMessageView.setTypeface(null, Typeface.BOLD);
 
         tableRowAddress.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -167,8 +179,25 @@ public class FinishActivity extends AppCompatActivity {
         tableRowAddress.addView(addressView, 900,150);
         tableRowMessage.addView(textMessageView,900,150);
 
+        tableInfo.addView(addressT);
         tableInfo.addView(tableRowAddress);
+        tableInfo.addView(messageT);
         tableInfo.addView(tableRowMessage);
+        tableInfo.addView(usersT);
+    }
+
+    TableRow getHeadRow(String text){
+        TextView addressHeadView  = new TextView(this);
+        addressHeadView.setText(text);
+        addressHeadView.setTextColor(-1);
+        addressHeadView.setGravity(Gravity.CENTER_HORIZONTAL);
+        addressHeadView.setTypeface(null, Typeface.BOLD_ITALIC);
+        addressHeadView.setTextSize(20);
+        TableRow tableRowHeadAddress = new TableRow(this);
+        tableRowHeadAddress.setMinimumHeight(50);
+        tableRowHeadAddress.addView(addressHeadView);
+        return tableRowHeadAddress;
+
     }
 
 }

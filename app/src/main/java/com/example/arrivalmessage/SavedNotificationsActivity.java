@@ -50,6 +50,8 @@ public class SavedNotificationsActivity extends AppCompatActivity {
             tableRow1.setMinimumWidth(30);
             TableRow tableRow2 = new TableRow(this);
             tableRow2.setMinimumWidth(30);
+            TableRow tableRow3 = new TableRow(this);
+            tableRow3.setPadding(0,10,0,0);
             TextView notificationText = new TextView(this);
             Button imageButton=new Button(this);
             imageButton.setBackground(getResources().getDrawable(R.drawable.edit));
@@ -75,8 +77,10 @@ public class SavedNotificationsActivity extends AppCompatActivity {
             notificationText.setTypeface(null, Typeface.BOLD);
             tableRow.setGravity(Gravity.CENTER_HORIZONTAL);
             notificationText.setGravity(Gravity.CENTER_HORIZONTAL);
+            tableRow.setPadding(0,0,0,0);
 
-            tableRow.addView(imageButton,80,80);
+            tableRow3.addView(imageButton,100,100);
+            tableRow.addView(tableRow3);
             tableRow.addView(tableRow2);
             tableRow.addView(notificationText);
             tableRow.addView(tableRow1);

@@ -108,17 +108,11 @@ public class SelectUserActivity extends AppCompatActivity {
             //tableRow.setLayoutParams(new TableLayout.LayoutParams(Math.round(((float)table.getWidth())*(float)0.5), Math.round(((float)table.getWidth())*(float)0.5)));
             tableRow.setMinimumHeight(170);
 
-
             tableRow.setGravity(Gravity.CENTER_HORIZONTAL);
             fullName.setText(friend.firstname+' '+friend.lastname);
             fullName.setTextColor(-1);
             fullName.setGravity(Gravity.CENTER_HORIZONTAL);
             fullName.setTypeface(null, Typeface.BOLD);
-
-
-
-
-
             tableRow.addView(avatar,150,150);
             tableRow.addView(fullName,450,50);
             tableRow.addView(check);
