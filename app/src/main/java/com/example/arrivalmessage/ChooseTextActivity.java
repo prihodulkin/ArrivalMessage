@@ -35,6 +35,10 @@ public class ChooseTextActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choose_text);
         addListenerOnButton();
         textMessage = findViewById(R.id.text_message);
+        textMessage.setPadding(20,10,20,10);
+        textMessage.setTextColor(-1);
+
+
         Bundle arguments = getIntent().getExtras();
         idChosenFriends = arguments.getIntArray("lst1");
         latitude = arguments.getDouble("firstCoordinate");

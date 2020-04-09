@@ -37,8 +37,8 @@
 
         <ImageButton
             android:id="@+id/back_btn"
-            android:layout_width="35dp"
-            android:layout_height="51dp"
+            android:layout_width="27dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/done" />
 
@@ -59,8 +59,9 @@
 
 
 
-    <TableLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:background="@drawable/table"
+        android:foregroundGravity="center"
 
         android:layout_marginTop="150dp"
         android:layout_marginBottom="150dp"
@@ -76,24 +77,22 @@
 
         <TableLayout
             android:id="@+id/tableInfo"
-            android:layout_width="270dp"
-            android:layout_height="180dp"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="222dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginStart="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="25dp"
             android:foregroundGravity="top"
-            android:scaleType="fitXY">
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
         </TableLayout>
 
         <ScrollView
-            android:layout_gravity="center_horizontal"
             android:id="@+id/scrollTable"
-            android:layout_width="301dp"
-            android:layout_height="300dp"
-            android:layout_marginBottom="132dp"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
             android:layout_weight="1"
             android:clipChildren="false"
             android:clipToPadding="false"
@@ -102,24 +101,27 @@
             android:foregroundGravity="top"
             android:overScrollMode="never"
             android:scrollbarSize="10dp"
+            android:verticalScrollbarPosition="right"
             android:scrollbarStyle="insideOverlay"
             android:scrollbarThumbVertical="@color/cardview_light_background"
             android:scrollbarTrackVertical="@color/BlueForLogo"
             android:scrollbars="vertical"
-            android:verticalScrollbarPosition="right">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
 
             <TableLayout
                 android:id="@+id/userList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginRight="50dp"
-
-
+                android:layout_marginRight="10dp"
                 android:fillViewport="true"
                 android:foregroundGravity="top"
                 android:isScrollContainer="true"
@@ -128,8 +130,8 @@
             </TableLayout>
         </ScrollView>
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </TableLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,14 +41,12 @@ public class FinishActivity extends AppCompatActivity {
     int[] idChosenFriends;
     TableLayout tableLayout;
     TableLayout tableInfo;
-
     String users_ids = "";
     double latitude;
     double longitude;
     String message;
     String location;
     String[] displayFriends;
-    //���������� ��� ������ � ��
     private DatabaseHelper mDBHelper;
     private SQLiteDatabase mDb;
 
@@ -104,6 +102,16 @@ public class FinishActivity extends AppCompatActivity {
 
     }
     public void addListenerOnButton() {
+        ImageButton back_btn = findViewById(R.id.back_btn);
+        back_btn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(FinishActivity.this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+                });
         ImageButton main_menu_btn = findViewById(R.id.main_menu_btn);
         main_menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,10 +134,7 @@ public class FinishActivity extends AppCompatActivity {
             final String friendName = displayFriends[i];
             TableRow tableRow = new TableRow(this);
             TextView fullName  = new TextView(this);
-
-
-
-            tableRow.setGravity(Gravity.CENTER_HORIZONTAL);
+            tableRow.setGravity(Gravity.CENTER);
             fullName.setText(friendName);
             fullName.setTextColor(-1);
             fullName.setGravity(Gravity.CENTER_HORIZONTAL);

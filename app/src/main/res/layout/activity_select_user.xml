@@ -54,8 +54,8 @@
 
         <ImageButton
             android:id="@+id/back_btn"
-            android:layout_width="35dp"
-            android:layout_height="51dp"
+            android:layout_width="27dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/back" />
 
@@ -64,8 +64,8 @@
 
     <ScrollView
         android:id="@+id/scrollTable"
-        android:layout_width="299dp"
-        android:layout_height="313dp"
+        android:layout_width="322dp"
+        android:layout_height="320dp"
         android:layout_weight="1"
         android:clipChildren="false"
         android:clipToPadding="false"
@@ -73,13 +73,12 @@
         android:fillViewport="true"
         android:foregroundGravity="top"
         android:overScrollMode="never"
-        android:scrollbarAlwaysDrawVerticalTrack="true"
-        android:scrollbarSize="10dp"
-        android:verticalScrollbarPosition="right"
+        android:scrollbarSize="5dp"
         android:scrollbarStyle="insideOverlay"
         android:scrollbarThumbVertical="@color/cardview_light_background"
         android:scrollbarTrackVertical="@color/BlueForLogo"
         android:scrollbars="vertical"
+        android:verticalScrollbarPosition="right"
         app:layout_constraintBottom_toBottomOf="@+id/users_table"
         app:layout_constraintEnd_toEndOf="@+id/users_table"
         app:layout_constraintHorizontal_bias="0.515"

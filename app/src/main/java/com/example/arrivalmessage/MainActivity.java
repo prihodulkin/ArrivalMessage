@@ -189,11 +189,12 @@ public class MainActivity extends AppCompatActivity {
             controller.UpdateUserID();
         }
 
+        if(ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)==0) {
+            manager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
+            manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
 
-        manager=(LocationManager) getSystemService(this.LOCATION_SERVICE);
-        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,listener);
+        }
         mDBHelper = new DatabaseHelper(this);
-
         /* try {
             mDBHelper.updateDataBase();
         } catch (IOException mIOException) {
