@@ -48,8 +48,6 @@
             android:layout_width="10dp"
             android:layout_height="wrap_content"
             app:layout_constraintHorizontal_bias="0.496"
-
-
             />
 
         <ImageButton
@@ -61,7 +59,7 @@
 
 
     </TableRow>
-
+<!--
     <ScrollView
         android:id="@+id/scrollTable"
         android:layout_width="322dp"
@@ -106,7 +104,7 @@
             app:layout_constraintTop_toTopOf="@+id/users_table">
 
         </TableLayout>
-    </ScrollView>
+    </ScrollView>-->
 
     <SearchView
         android:id="@+id/searchView"
@@ -117,6 +115,25 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/users_table" />
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="311dp"
+        android:layout_height="323dp"
+        android:layout_marginBottom="52dp"
+        app:layout_constraintBottom_toBottomOf="@+id/users_table"
+        app:layout_constraintEnd_toEndOf="@+id/users_table"
+        app:layout_constraintStart_toStartOf="@+id/users_table"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        app:layout_constraintVertical_bias="0.0"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:fadeScrollbars="false"
+        android:scrollbarSize="5dp"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbarThumbVertical="@color/cardview_light_background"
+        android:scrollbarTrackVertical="@color/BlueForLogo"
+        android:scrollbars="vertical"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

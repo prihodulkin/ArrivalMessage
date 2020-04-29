@@ -200,7 +200,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException mIOException) {
             throw new Error("UnableToUpdateDatabase");
         }*/
-
         try {
             mDb = mDBHelper.getReadableDatabase();
         } catch (SQLException mSQLException) {
@@ -213,8 +212,6 @@ public class MainActivity extends AppCompatActivity {
 
         Cursor cursor = mDb.rawQuery("SELECT * FROM users", null);
         cursor.moveToFirst();
-
-
         while (!cursor.isAfterLast()) {
             String id = cursor.getString(0);
             double latitude = cursor.getDouble(1);
@@ -222,9 +219,7 @@ public class MainActivity extends AppCompatActivity {
             String message = cursor.getString(3);
             int isEnabled = cursor.getInt(4);
             String location = cursor.getString(5);
-
             datas.add(new NotificationData(id, latitude, longitude, message, isEnabled, location));
-
             cursor.moveToNext();
         }
         cursor.close();

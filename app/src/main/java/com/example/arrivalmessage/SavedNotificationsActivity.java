@@ -10,6 +10,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Size;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -31,13 +32,13 @@ public class SavedNotificationsActivity extends AppCompatActivity {
     NotificationData curData;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_notifications);
         addListenerOnButton();
-
         tableLayout = findViewById(R.id.notificationsList);
 
 
@@ -65,26 +66,23 @@ public class SavedNotificationsActivity extends AppCompatActivity {
                       datas.get((int)buttonView.getTag()).isEnabled_=0;
                   else
                       datas.get((int)buttonView.getTag()).isEnabled_=1;
-
-                    // @todo update isEnabled in DB
                 }
             });
-
-
-            notificationText.setText(MainActivity.datas.get(i).location_);
+            notificationText.setText(MainActivity.datas.get(i).location_+"\n");
             notificationText.setTextColor(-1);
             notificationText.setWidth(500);
             notificationText.setTypeface(null, Typeface.BOLD);
             tableRow.setGravity(Gravity.CENTER_HORIZONTAL);
             notificationText.setGravity(Gravity.CENTER_HORIZONTAL);
             tableRow.setPadding(0,0,0,0);
-
             tableRow3.addView(imageButton,100,100);
             tableRow.addView(tableRow3);
             tableRow.addView(tableRow2);
             tableRow.addView(notificationText);
             tableRow.addView(tableRow1);
             tableRow.addView(toggle);
+          //  tableRow2.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT,TableLayout.LayoutParams.WRAP_CONTENT));
+            tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.WRAP_CONTENT));
 
 
             tableLayout.addView(tableRow);
