@@ -34,6 +34,9 @@ import com.example.arrivalmessage.VK_Module.VK_Controller;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -47,6 +50,8 @@ public class SelectUserActivity extends AppCompatActivity {
     String[] displayFriends;
     SearchView searchView;
     ListView listView;
+    static HashMap<Integer, CircularImageView> images;
+
 
     private class UserAdapter extends ArrayAdapter<VKUser> {
         public UserAdapter(Context context) {
@@ -61,10 +66,15 @@ public class SelectUserActivity extends AppCompatActivity {
                         .inflate(R.layout.list_item, null);
             }
             CircularImageView avatar = (CircularImageView) convertView.findViewById(R.id.avatar);
-            avatar.setImageDrawable(getResources().getDrawable(R.drawable.no_avatar));
-            avatar.setTag(friend.photo);
-            DownloadImagesTask downloadImagesTask = new DownloadImagesTask();
-            downloadImagesTask.execute(avatar);
+
+            /*if(images.containsKey(friend.id))
+                avatar=images.get(friend.id);
+            else {*/
+                avatar.setImageDrawable(getResources().getDrawable(R.drawable.no_avatar));
+                avatar.setTag(friend.photo);
+                DownloadImagesTask downloadImagesTask = new DownloadImagesTask(friend.id);
+                downloadImagesTask.execute(avatar);
+          //  }
             TextView fullName = convertView.findViewById(R.id.full_name);
             fullName.setText(friend.firstname + ' ' + friend.lastname + '\n');
             fullName.setTextColor(-1);
@@ -81,7 +91,6 @@ public class SelectUserActivity extends AppCompatActivity {
                     }
                 }
             });
-
             return convertView;
         }
 
@@ -95,15 +104,14 @@ public class SelectUserActivity extends AppCompatActivity {
                     List<VKUser> tempList = new ArrayList<VKUser>();
                     //constraint is the result from text you want to filter against.
                     //objects is your data set you will filter from
-                    if (constraint != null && displayedFriends != null) {
-                        int length = displayedFriends.size();
+                    if (constraint != null && friends != null) {
+                        int length = friends.size();
                         int i = 0;
                         while (i < length) {
-                            VKUser item = displayedFriends.get(i);
+                            VKUser item = friends.get(i);
                             String fullName = item.firstname + ' ' + item.lastname;
                             if (fullName.contains(constraint))
                                 tempList.add(item);
-
                             i++;
                         }
                         //following two lines is very important
@@ -113,7 +121,6 @@ public class SelectUserActivity extends AppCompatActivity {
                     }
                     return filterResults;
                 }
-
                 @SuppressWarnings("unchecked")
                 @Override
                 protected void publishResults(CharSequence contraint, FilterResults results) {
@@ -158,6 +165,7 @@ public class SelectUserActivity extends AppCompatActivity {
         chosenFriends = new ArrayList();
         listView = findViewById(R.id.list_view);
         listView.setAdapter(adapter);
+        images=new HashMap<Integer, CircularImageView>();
 
 
         //  tableLayout = findViewById(R.id.userList);
@@ -257,6 +265,7 @@ public class SelectUserActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        images.containsKey(1);
                         if (chosenFriends.size() == 0) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(SelectUserActivity.this);
                             builder.setTitle("Внимание!");

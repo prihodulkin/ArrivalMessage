@@ -9,7 +9,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class DownloadImagesTask extends AsyncTask<CircularImageView, Void, Bitmap> {
+    private  int id;
 
+    public DownloadImagesTask(int id)
+    {
+        this.id=id;
+    }
     CircularImageView imageView = null;
 
     @Override
@@ -20,12 +25,15 @@ public class DownloadImagesTask extends AsyncTask<CircularImageView, Void, Bitma
 
     @Override
     protected void onPostExecute(Bitmap result) {
+
         imageView.setImageBitmap(result);
+        SelectUserActivity.images.put(id,imageView);
     }
 
 
 
     private Bitmap download_Image(String url) {
+
 
         Bitmap bmp =null;
         try{
