@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.Manifest;
@@ -39,6 +40,9 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 
+import android.view.View;
+import android.view.ViewGroup;
+
 
 public class SelectUserActivity extends AppCompatActivity {
     // TableLayout tableLayout;
@@ -52,6 +56,13 @@ public class SelectUserActivity extends AppCompatActivity {
     ListView listView;
     static HashMap<Integer, CircularImageView> images;
 
+    static class ViewHolder {
+        protected CircularImageView avatar;
+        protected CheckBox check;
+        protected TextView fullName;
+        protected  boolean isCheked;
+    }
+
 
     private class UserAdapter extends ArrayAdapter<VKUser> {
         public UserAdapter(Context context) {
@@ -60,39 +71,60 @@ public class SelectUserActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            View view = convertView;
             final VKUser friend = getItem(position);
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getContext())
+            if (view == null) {
+                view = LayoutInflater.from(getContext())
                         .inflate(R.layout.list_item, null);
-            }
-            CircularImageView avatar = (CircularImageView) convertView.findViewById(R.id.avatar);
+                final ViewHolder viewHolder = new ViewHolder();
+                viewHolder.avatar = (CircularImageView) view.findViewById(R.id.avatar);
 
             /*if(images.containsKey(friend.id))
                 avatar=images.get(friend.id);
             else {*/
-                avatar.setImageDrawable(getResources().getDrawable(R.drawable.no_avatar));
-                avatar.setTag(friend.photo);
-                DownloadImagesTask downloadImagesTask = new DownloadImagesTask(friend.id);
-                downloadImagesTask.execute(avatar);
-          //  }
-            TextView fullName = convertView.findViewById(R.id.full_name);
-            fullName.setText(friend.firstname + ' ' + friend.lastname + '\n');
-            fullName.setTextColor(-1);
-            fullName.setGravity(Gravity.CENTER_HORIZONTAL);
-            fullName.setTypeface(null, Typeface.BOLD);
-            CheckBox check = convertView.findViewById(R.id.checkbox);
-            check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        chosenFriends.add(friend);
-                    } else {
-                        chosenFriends.remove(friend);
+                viewHolder.fullName = view.findViewById(R.id.full_name);
+                viewHolder.check = view.findViewById(R.id.checkbox);
+                view.setTag(viewHolder);
+                viewHolder.check.setTag(displayedFriends.get(position));
+                viewHolder.check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        VKUser element = (VKUser) viewHolder.check
+                                .getTag();
+                        element.isCheked=buttonView.isChecked();
+                       /* if (isChecked) {
+                            viewHolder.isCheked=buttonView.isChecked();
+                           // friend.isCheked=true;
+                           // chosenFriends.add(friend);
+                          //  viewHolder.check.setTag(true);
+                        } else {
+                            viewHolder.isCheked=buttonView.isChecked();
+                           //friend.isCheked=false;
+                           // chosenFriends.remove(friend);
+                          //  viewHolder.check.setTag(false);
+                        }*/
                     }
-                }
-            });
-            return convertView;
+                });
+            } else {
+                view = convertView;
+                ((ViewHolder) view.getTag()).check.setTag(displayedFriends.get(position));
+            }
+            ViewHolder viewHolder = (ViewHolder) view.getTag();
+            viewHolder.fullName.setText(friend.firstname + ' ' + friend.lastname + '\n');
+            viewHolder.avatar.setImageDrawable(getResources().getDrawable(R.drawable.no_avatar));
+            viewHolder.avatar.setTag(friend.photo);
+               /*if(images.containsKey(friend.id))
+                avatar=images.get(friend.id);
+            else {*/
+            DownloadImagesTask downloadImagesTask = new DownloadImagesTask(friend.id);
+            downloadImagesTask.execute(viewHolder.avatar);
+            VKUser user = (VKUser) viewHolder.check.getTag();
+            viewHolder.check.setChecked(friend.isCheked);
+            //  }
+
+            return view;
         }
+
 
         @NonNull
         @Override
@@ -102,6 +134,7 @@ public class SelectUserActivity extends AppCompatActivity {
                 protected FilterResults performFiltering(CharSequence constraint) {
                     FilterResults filterResults = new FilterResults();
                     List<VKUser> tempList = new ArrayList<VKUser>();
+
                     //constraint is the result from text you want to filter against.
                     //objects is your data set you will filter from
                     if (constraint != null && friends != null) {
@@ -121,6 +154,7 @@ public class SelectUserActivity extends AppCompatActivity {
                     }
                     return filterResults;
                 }
+
                 @SuppressWarnings("unchecked")
                 @Override
                 protected void publishResults(CharSequence contraint, FilterResults results) {
@@ -157,7 +191,7 @@ public class SelectUserActivity extends AppCompatActivity {
             }
 
         };
-        displayedFriends=new ArrayList<VKUser>();
+        displayedFriends = new ArrayList<VKUser>();
         displayedFriends.addAll(friends);
 
 //        friends.sort(comparator);
@@ -165,7 +199,8 @@ public class SelectUserActivity extends AppCompatActivity {
         chosenFriends = new ArrayList();
         listView = findViewById(R.id.list_view);
         listView.setAdapter(adapter);
-        images=new HashMap<Integer, CircularImageView>();
+        listView.setChoiceMode(listView.CHOICE_MODE_MULTIPLE);
+        images = new HashMap<Integer, CircularImageView>();
 
 
         //  tableLayout = findViewById(R.id.userList);

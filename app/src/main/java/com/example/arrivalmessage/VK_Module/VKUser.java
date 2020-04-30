@@ -12,6 +12,7 @@ public class VKUser implements Parcelable {
     public String lastname ;
     public String photo ;
     public Boolean deactivated ;
+    public Boolean isCheked;
 
     VKUser()
     {
@@ -20,6 +21,7 @@ public class VKUser implements Parcelable {
         lastname = "";
         photo = "";
         deactivated = false;
+        isCheked=false;
     }
 
     VKUser(Parcel parcel)
@@ -29,6 +31,7 @@ public class VKUser implements Parcelable {
         lastname = parcel.readString();
         photo = parcel.readString();
         deactivated = parcel.readByte() != 0;
+        isCheked=false;
     }
 
     public static final Creator<VKUser> CREATOR = new Creator<VKUser>() {
