@@ -38,6 +38,7 @@ import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import android.view.View;
@@ -48,12 +49,13 @@ public class SelectUserActivity extends AppCompatActivity {
     // TableLayout tableLayout;
     List<VKUser> friends;
     List<VKUser> displayedFriends;
-    List<VKUser> chosenFriends;
+    HashSet<VKUser> chosenFriends;
     int[] idsChosenFriends;
     ImageView table;
     String[] displayFriends;
     SearchView searchView;
     ListView listView;
+
     static HashMap<Integer, CircularImageView> images;
 
     static class ViewHolder {
@@ -92,17 +94,9 @@ public class SelectUserActivity extends AppCompatActivity {
                         VKUser element = (VKUser) viewHolder.check
                                 .getTag();
                         element.isCheked=buttonView.isChecked();
-                       /* if (isChecked) {
-                            viewHolder.isCheked=buttonView.isChecked();
-                           // friend.isCheked=true;
-                           // chosenFriends.add(friend);
-                          //  viewHolder.check.setTag(true);
-                        } else {
-                            viewHolder.isCheked=buttonView.isChecked();
-                           //friend.isCheked=false;
-                           // chosenFriends.remove(friend);
-                          //  viewHolder.check.setTag(false);
-                        }*/
+
+
+
                     }
                 });
             } else {
@@ -196,7 +190,7 @@ public class SelectUserActivity extends AppCompatActivity {
 
 //        friends.sort(comparator);
         adapter = new UserAdapter(SelectUserActivity.this);
-        chosenFriends = new ArrayList();
+        chosenFriends = new HashSet<VKUser>();
         listView = findViewById(R.id.list_view);
         listView.setAdapter(adapter);
         listView.setChoiceMode(listView.CHOICE_MODE_MULTIPLE);
@@ -301,6 +295,14 @@ public class SelectUserActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         images.containsKey(1);
+
+
+
+
+                        for(VKUser user:friends)
+                            if(user.isCheked)
+                                chosenFriends.add(user);
+                            
                         if (chosenFriends.size() == 0) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(SelectUserActivity.this);
                             builder.setTitle("Внимание!");
@@ -316,17 +318,16 @@ public class SelectUserActivity extends AppCompatActivity {
                             dialog.show();
                             return;
                         }
-
+                        int j=0;
                         idsChosenFriends = new int[chosenFriends.size()];
-                        for (int j = 0; j < chosenFriends.size(); j++) {
-                            final VKUser chosenFriend = chosenFriends.get(j);
-                            idsChosenFriends[j] = chosenFriend.id;
-                        }
                         displayFriends = new String[chosenFriends.size()];
-                        for (int j = 0; j < chosenFriends.size(); j++) {
-                            final VKUser chosenFriend = chosenFriends.get(j);
+                        for (VKUser chosenFriend:chosenFriends) {
+                            idsChosenFriends[j] = chosenFriend.id;
                             displayFriends[j] = chosenFriend.firstname + " " + chosenFriend.lastname;
+                            j++;
                         }
+
+
                         Intent intent = new Intent(SelectUserActivity.this, SelectLocationActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra("lst", idsChosenFriends);
