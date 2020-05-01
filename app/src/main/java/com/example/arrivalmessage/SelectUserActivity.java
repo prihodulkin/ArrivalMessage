@@ -12,6 +12,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -32,6 +33,7 @@ import android.widget.TextView;
 //import com.example.arrivalmessage.DownloadImagesTask;
 import com.example.arrivalmessage.VK_Module.VKUser;
 import com.example.arrivalmessage.VK_Module.VK_Controller;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -58,6 +60,7 @@ public class SelectUserActivity extends AppCompatActivity {
 
     static HashMap<Integer, CircularImageView> images;
 
+
     static class ViewHolder {
         protected CircularImageView avatar;
         protected CheckBox check;
@@ -80,13 +83,10 @@ public class SelectUserActivity extends AppCompatActivity {
                         .inflate(R.layout.list_item, null);
                 final ViewHolder viewHolder = new ViewHolder();
                 viewHolder.avatar = (CircularImageView) view.findViewById(R.id.avatar);
-
-            /*if(images.containsKey(friend.id))
-                avatar=images.get(friend.id);
-            else {*/
                 viewHolder.fullName = view.findViewById(R.id.full_name);
                 viewHolder.check = view.findViewById(R.id.checkbox);
                 view.setTag(viewHolder);
+                viewHolder.fullName.setTag(friend);
                 viewHolder.check.setTag(displayedFriends.get(position));
                 viewHolder.check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -94,28 +94,35 @@ public class SelectUserActivity extends AppCompatActivity {
                         VKUser element = (VKUser) viewHolder.check
                                 .getTag();
                         element.isCheked=buttonView.isChecked();
-
-
-
-                    }
+                   }
                 });
             } else {
-                view = convertView;
                 ((ViewHolder) view.getTag()).check.setTag(displayedFriends.get(position));
+
             }
             ViewHolder viewHolder = (ViewHolder) view.getTag();
+            VKUser user=(VKUser) viewHolder.fullName.getTag();
             viewHolder.fullName.setText(friend.firstname + ' ' + friend.lastname + '\n');
-            viewHolder.avatar.setImageDrawable(getResources().getDrawable(R.drawable.no_avatar));
-            viewHolder.avatar.setTag(friend.photo);
-               /*if(images.containsKey(friend.id))
-                avatar=images.get(friend.id);
-            else {*/
-            DownloadImagesTask downloadImagesTask = new DownloadImagesTask(friend.id);
-            downloadImagesTask.execute(viewHolder.avatar);
-            VKUser user = (VKUser) viewHolder.check.getTag();
-            viewHolder.check.setChecked(friend.isCheked);
-            //  }
+            CircularImageView avatarCpy=new CircularImageView(getApplicationContext());
 
+            avatarCpy.setTag(friend);
+            if(!images.containsKey(friend.id))
+            {
+                images.put(friend.id,avatarCpy);
+                Picasso.Builder picassoBuilder = new Picasso.Builder(SelectUserActivity.this);
+                Picasso picasso = picassoBuilder.build();
+                if(images.get(friend.id).getDrawable()==null)
+                picasso.load(friend.photo).into(viewHolder.avatar);
+
+                picasso.load(friend.photo).into(avatarCpy);
+            }
+
+            if(avatarCpy.getTag()==null)
+            viewHolder.avatar.setTag(friend);
+            viewHolder.avatar.setImageDrawable(images.get(friend.id).getDrawable());
+            DownloadImagesTask downloadImagesTask=new DownloadImagesTask(avatarCpy);
+            downloadImagesTask.execute(viewHolder.avatar);
+            viewHolder.check.setChecked(friend.isCheked);
             return view;
         }
 
@@ -129,8 +136,7 @@ public class SelectUserActivity extends AppCompatActivity {
                     FilterResults filterResults = new FilterResults();
                     List<VKUser> tempList = new ArrayList<VKUser>();
 
-                    //constraint is the result from text you want to filter against.
-                    //objects is your data set you will filter from
+
                     if (constraint != null && friends != null) {
                         int length = friends.size();
                         int i = 0;
@@ -141,8 +147,7 @@ public class SelectUserActivity extends AppCompatActivity {
                                 tempList.add(item);
                             i++;
                         }
-                        //following two lines is very important
-                        //as publish result can only take FilterResults objects
+
                         filterResults.values = tempList;
                         filterResults.count = tempList.size();
                     }
@@ -189,18 +194,21 @@ public class SelectUserActivity extends AppCompatActivity {
         displayedFriends.addAll(friends);
 
 //        friends.sort(comparator);
-        adapter = new UserAdapter(SelectUserActivity.this);
-        chosenFriends = new HashSet<VKUser>();
-        listView = findViewById(R.id.list_view);
-        listView.setAdapter(adapter);
-        listView.setChoiceMode(listView.CHOICE_MODE_MULTIPLE);
-        images = new HashMap<Integer, CircularImageView>();
 
+        chosenFriends = new HashSet<VKUser>();
+
+        if(images==null) {
+            images = new HashMap<>();
+
+        }
 
         //  tableLayout = findViewById(R.id.userList);
         table = findViewById(R.id.users_table);
         searchView = findViewById(R.id.searchView);
-
+        adapter = new UserAdapter(SelectUserActivity.this);
+        listView = findViewById(R.id.list_view);
+        listView.setChoiceMode(listView.CHOICE_MODE_MULTIPLE);
+        listView.setAdapter(adapter);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -216,7 +224,7 @@ public class SelectUserActivity extends AppCompatActivity {
         });
 
 
-        createUserList();
+
     }
 
     @Override
@@ -224,58 +232,7 @@ public class SelectUserActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    public void createUserList() {
 
-
-
-
-       /* for (int i = 0; i < friends.size(); i++){
-            final VKUser friend = friends.get(i);
-            TableRow tableRow = new TableRow(this);
-            TextView fullName  = new TextView(this);
-
-
-            CheckBox check = new CheckBox(this);
-
-
-            check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked){
-                        chosenFriends.add(friend);
-                    }
-                    else {
-                        chosenFriends.remove(friend);
-                    }
-                }
-            });
-
-
-            CircularImageView avatar=new CircularImageView(this);
-            avatar.setImageDrawable(getResources().getDrawable( R.drawable.no_avatar ));
-            avatar.setTag(friend.photo);
-            DownloadImagesTask downloadImagesTask=new DownloadImagesTask();
-            downloadImagesTask.execute(avatar);
-            //tableRow.setLayoutParams(new TableLayout.LayoutParams(Math.round(((float)table.getWidth())*(float)0.5), Math.round(((float)table.getWidth())*(float)0.5)));
-            tableRow.setMinimumHeight(170);
-
-            tableRow.setGravity(Gravity.CENTER_HORIZONTAL);
-            fullName.setText(friend.firstname+' '+friend.lastname+'\n');
-            fullName.setTextColor(-1);
-            fullName.setGravity(Gravity.CENTER_HORIZONTAL);
-            fullName.setTypeface(null, Typeface.BOLD);
-            tableRow.addView(avatar,150,150);
-            tableRow.addView(fullName,450,150);
-            tableRow.addView(check);
-
-            TableRow tableRow1 = new TableRow(this);
-
-
-
-
-            tableLayout.addView(tableRow);
-        }*/
-    }
 
     public void addListenerOnButton() {
         ImageButton back_btn = findViewById(R.id.back_btn);
@@ -295,14 +252,10 @@ public class SelectUserActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         images.containsKey(1);
-
-
-
-
                         for(VKUser user:friends)
                             if(user.isCheked)
                                 chosenFriends.add(user);
-                            
+
                         if (chosenFriends.size() == 0) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(SelectUserActivity.this);
                             builder.setTitle("Внимание!");
@@ -326,8 +279,6 @@ public class SelectUserActivity extends AppCompatActivity {
                             displayFriends[j] = chosenFriend.firstname + " " + chosenFriend.lastname;
                             j++;
                         }
-
-
                         Intent intent = new Intent(SelectUserActivity.this, SelectLocationActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra("lst", idsChosenFriends);
