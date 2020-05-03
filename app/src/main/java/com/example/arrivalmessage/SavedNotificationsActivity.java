@@ -5,12 +5,8 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Size;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -23,12 +19,11 @@ import android.widget.TextView;
 
 import com.example.arrivalmessage.VK_Module.NotificationData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SavedNotificationsActivity extends AppCompatActivity {
     TableLayout tableLayout;
-    List<NotificationData> datas=MainActivity.datas;
+    List<NotificationData> datas=MainActivity.data;
     NotificationData curData;
 
 
@@ -44,7 +39,7 @@ public class SavedNotificationsActivity extends AppCompatActivity {
 
 
 
-        for (int i = 0; i < MainActivity.datas.size(); i++) {
+        for (int i = 0; i < MainActivity.data.size(); i++) {
             TableRow tableRow = new TableRow(this);
             tableRow.setMinimumHeight(170);
             TableRow tableRow1 = new TableRow(this);
@@ -68,7 +63,7 @@ public class SavedNotificationsActivity extends AppCompatActivity {
                       datas.get((int)buttonView.getTag()).isEnabled_=1;
                 }
             });
-            notificationText.setText(MainActivity.datas.get(i).location_+"\n");
+            notificationText.setText(MainActivity.data.get(i).location_+"\n");
             notificationText.setTextColor(-1);
             notificationText.setWidth(500);
             notificationText.setTypeface(null, Typeface.BOLD);

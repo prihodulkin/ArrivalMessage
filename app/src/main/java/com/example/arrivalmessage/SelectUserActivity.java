@@ -49,9 +49,9 @@ import android.view.ViewGroup;
 
 public class SelectUserActivity extends AppCompatActivity {
     // TableLayout tableLayout;
-    List<VKUser> friends;
+    static List<VKUser> friends;
     List<VKUser> displayedFriends;
-    HashSet<VKUser> chosenFriends;
+    static HashSet<VKUser> chosenFriends;
     int[] idsChosenFriends;
     ImageView table;
     String[] displayFriends;
@@ -65,7 +65,7 @@ public class SelectUserActivity extends AppCompatActivity {
         protected CircularImageView avatar;
         protected CheckBox check;
         protected TextView fullName;
-        protected  boolean isCheked;
+        protected boolean isCheked;
     }
 
 
@@ -93,35 +93,34 @@ public class SelectUserActivity extends AppCompatActivity {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         VKUser element = (VKUser) viewHolder.check
                                 .getTag();
-                        element.isCheked=buttonView.isChecked();
-                   }
+                        element.isCheked = buttonView.isChecked();
+                    }
                 });
             } else {
                 ((ViewHolder) view.getTag()).check.setTag(displayedFriends.get(position));
 
             }
             ViewHolder viewHolder = (ViewHolder) view.getTag();
-            VKUser user=(VKUser) viewHolder.fullName.getTag();
+            VKUser user = (VKUser) viewHolder.fullName.getTag();
             viewHolder.fullName.setText(friend.firstname + ' ' + friend.lastname + '\n');
-            CircularImageView avatarCpy=new CircularImageView(getApplicationContext());
+            CircularImageView avatarCpy = new CircularImageView(getApplicationContext());
 
             avatarCpy.setTag(friend);
-            if(!images.containsKey(friend.id))
-            {
-                images.put(friend.id,avatarCpy);
+            if (!images.containsKey(friend.id)) {
+                images.put(friend.id, avatarCpy);
                 Picasso.Builder picassoBuilder = new Picasso.Builder(SelectUserActivity.this);
                 Picasso picasso = picassoBuilder.build();
-                if(images.get(friend.id).getDrawable()==null)
-                picasso.load(friend.photo).into(viewHolder.avatar);
-
+                if (images.get(friend.id).getDrawable() == null)
+                    picasso.load(friend.photo).into(viewHolder.avatar);
                 picasso.load(friend.photo).into(avatarCpy);
             }
-
-            if(avatarCpy.getTag()==null)
-            viewHolder.avatar.setTag(friend);
+            if (avatarCpy.getTag() == null)
+                avatarCpy.setTag(friend);
             viewHolder.avatar.setImageDrawable(images.get(friend.id).getDrawable());
-            DownloadImagesTask downloadImagesTask=new DownloadImagesTask(avatarCpy);
-            downloadImagesTask.execute(viewHolder.avatar);
+            if (images.get(friend.id).getDrawable() == null) {
+                DownloadImagesTask downloadImagesTask = new DownloadImagesTask(avatarCpy);
+                downloadImagesTask.execute(viewHolder.avatar);
+            }
             viewHolder.check.setChecked(friend.isCheked);
             return view;
         }
@@ -135,8 +134,6 @@ public class SelectUserActivity extends AppCompatActivity {
                 protected FilterResults performFiltering(CharSequence constraint) {
                     FilterResults filterResults = new FilterResults();
                     List<VKUser> tempList = new ArrayList<VKUser>();
-
-
                     if (constraint != null && friends != null) {
                         int length = friends.size();
                         int i = 0;
@@ -176,13 +173,11 @@ public class SelectUserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_select_user);
         addListenerOnButton();
-
+       // if (friends == null)
         friends = VK_Controller.friends;
         Comparator<VKUser> comparator = new Comparator<VKUser>() {
             public int compare(VKUser o1, VKUser o2) {
@@ -191,13 +186,13 @@ public class SelectUserActivity extends AppCompatActivity {
 
         };
         displayedFriends = new ArrayList<VKUser>();
+      //  if (friends != null)
         displayedFriends.addAll(friends);
-
 //        friends.sort(comparator);
+        if (chosenFriends == null)
+            chosenFriends = new HashSet<VKUser>();
 
-        chosenFriends = new HashSet<VKUser>();
-
-        if(images==null) {
+        if (images == null) {
             images = new HashMap<>();
 
         }
@@ -224,14 +219,12 @@ public class SelectUserActivity extends AppCompatActivity {
         });
 
 
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return super.onCreateOptionsMenu(menu);
     }
-
 
 
     public void addListenerOnButton() {
@@ -251,9 +244,9 @@ public class SelectUserActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        images.containsKey(1);
-                        for(VKUser user:friends)
-                            if(user.isCheked)
+
+                        for (VKUser user : friends)
+                            if (user.isCheked)
                                 chosenFriends.add(user);
 
                         if (chosenFriends.size() == 0) {
@@ -271,10 +264,10 @@ public class SelectUserActivity extends AppCompatActivity {
                             dialog.show();
                             return;
                         }
-                        int j=0;
+                        int j = 0;
                         idsChosenFriends = new int[chosenFriends.size()];
                         displayFriends = new String[chosenFriends.size()];
-                        for (VKUser chosenFriend:chosenFriends) {
+                        for (VKUser chosenFriend : chosenFriends) {
                             idsChosenFriends[j] = chosenFriend.id;
                             displayFriends[j] = chosenFriend.firstname + " " + chosenFriend.lastname;
                             j++;

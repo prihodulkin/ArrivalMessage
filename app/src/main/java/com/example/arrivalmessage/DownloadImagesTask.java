@@ -28,8 +28,9 @@ public class DownloadImagesTask extends AsyncTask<CircularImageView, Void, Bitma
     @Override
     protected Bitmap doInBackground(CircularImageView... imageViews) {
         this.imageView = imageViews[0];
+        VKUser user=(VKUser)image.getTag();
         while (true) {
-            Log.i("Загрузка изображения", "Загрузка идёт");
+            Log.i("Загрузка изображения", "Загрузка идёт. Пользователь "+user.firstname+" "+user.lastname );
             if (image.getDrawable() != null) {
                 Log.i("Загрузка изображения", "Загрузка завершена");
                 break;

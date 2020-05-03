@@ -5,11 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,9 +18,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.arrivalmessage.VK_Module.NotificationData;
@@ -30,13 +27,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.vk.api.sdk.VK;
 import com.vk.api.sdk.auth.VKAccessToken;
 import com.vk.api.sdk.auth.VKAuthCallback;
-import com.vk.api.sdk.auth.VKAuthParams;
-import com.vk.api.sdk.auth.VKAuthResult;
 import com.vk.api.sdk.auth.VKScope;
-import com.vk.api.sdk.ui.VKWebViewAuthActivity;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,23 +38,21 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
 
-   public static List<NotificationData> datas;
+   public static List<NotificationData> data;
 
     //Переменная для работы с БД
     private DatabaseHelper mDBHelper;
     private SQLiteDatabase mDb;
-
     public static VK_Controller controller;
-
     private  LocationManager manager;
     private LocationListener listener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
-            for(NotificationData d:datas)
+            for(NotificationData d: data)
             {
                 if(d.isEnabled_==1){
                     LatLng latLng= new LatLng(d.latitude_,d.longitude_);
-                    if(calculationByDistance(latLng,new LatLng(location.getLatitude(),location.getLongitude()))<=0.1)
+                    if(calculationByDistance(latLng,new LatLng(location.getLatitude(),location.getLongitude()))<=0.01)
                     {
 
                        /* AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -86,25 +76,21 @@ public class MainActivity extends AppCompatActivity {
                         d.isEnabled_=0;
 
                     }
-
-
                 }
             }
         }
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
-
         }
 
         @Override
         public void onProviderEnabled(String provider) {
-
         }
+
 
         @Override
         public void onProviderDisabled(String provider) {
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Внимание!");
                 builder.setMessage("Включите передачу местоположения");
@@ -205,9 +191,10 @@ public class MainActivity extends AppCompatActivity {
         } catch (SQLException mSQLException) {
             throw mSQLException;
         }
-        if(datas!=null)
+
+        if(data!=null)
             return;
-        datas = new ArrayList();
+        data = new ArrayList();
 
 
         Cursor cursor = mDb.rawQuery("SELECT * FROM users", null);
@@ -219,10 +206,12 @@ public class MainActivity extends AppCompatActivity {
             String message = cursor.getString(3);
             int isEnabled = cursor.getInt(4);
             String location = cursor.getString(5);
-            datas.add(new NotificationData(id, latitude, longitude, message, isEnabled, location));
+            data.add(new NotificationData(id, latitude, longitude, message, isEnabled, location));
             cursor.moveToNext();
         }
         cursor.close();
+        data.contains(1);
+
 
 
 
@@ -272,18 +261,46 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
+
+        SelectUserActivity.friends.clear();
+        SelectUserActivity.chosenFriends.clear();
+        data.clear();
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Выход")
                 .setMessage("Вы действительно хотите выйти из приложения?")
                 .setPositiveButton("Выйти", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
+                        SelectUserActivity.chosenFriends.clear();
+                        SelectUserActivity.friends.clear();
+                        if(data.size()>0) {
+                            mDb.execSQL("DELETE FROM" + " users");
+                            for (NotificationData d : data) {
+                                ContentValues cv = new ContentValues();
+                                String users_ids = "";
+                                for (int id : d.idChosenFriends_) {
+                                    users_ids += id + " ";
+                                }
+                                cv.put("users_ids", users_ids);
+                                cv.put("latitude", d.latitude_);
+                                cv.put("longitude", d.longitude_);
+                                cv.put("message", d.writtenText_);
+                                cv.put("isEnabled", d.isEnabled_);
+                                cv.put("location", d.location_);
+                                mDb.insert("users", null, cv);
+                            }
+                        }
+                        data.clear();
+                        data=null;
+
                         finish();
                     }
                 })
                 .setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        data.contains(1);
                         dialog.cancel();
                     }
                 });

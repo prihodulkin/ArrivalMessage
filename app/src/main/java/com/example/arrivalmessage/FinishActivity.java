@@ -4,37 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
-import android.location.Address;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
-import android.database.Cursor;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
-import android.provider.BaseColumns;
-import android.location.Geocoder;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.arrivalmessage.VK_Module.NotificationData;
-
-import java.util.Locale;
-
-import java.io.IOException;
-import java.util.HashMap;
-
-import static android.os.Build.ID;
 
 public class FinishActivity extends AppCompatActivity {
 
@@ -96,7 +79,7 @@ public class FinishActivity extends AppCompatActivity {
         cv.put("isEnabled", 1);
         cv.put("location", location);
 
-        MainActivity.datas.add(new NotificationData(users_ids,latitude,longitude,message,1,location));
+        MainActivity.data.add(new NotificationData(users_ids,latitude,longitude,message,1,location));
 
         mDb.insert("users", null, cv);
 
@@ -161,13 +144,6 @@ public class FinishActivity extends AppCompatActivity {
 
 
         String address1 =  location;
-
-
-
-
-
-
-
         addressView.setText(address1);
         textMessageView.setText(this.message);
 
