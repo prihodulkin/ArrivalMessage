@@ -1,21 +1,29 @@
 package com.example.arrivalmessage.VK_Module;
-public class NotificationData {
-    public int[] idChosenFriends_;
-    public double latitude_;
-    public double longitude_;
-    public String writtenText_;
-    public String location_;
-    public int isEnabled_;
 
-    public NotificationData(String isCF, double lat, double longt, String wT, int isEn, String location) {
+public class NotificationData {
+    public int[] idChosenFriends;
+    public Double latitude;
+    public Double longitude;
+    public String writtenText;
+    public String location;
+    public int isEnabled;
+    public String[] displayFriends;
+
+    public NotificationData() {
+        idChosenFriends = new int[0];
+        writtenText = "";
+    }
+
+
+    public NotificationData(String isCF, double lat, double longt, String wT, int isEn, String loc) {
         String[] idss = isCF.split(" ");
-        idChosenFriends_ = new int[idss.length];
+        idChosenFriends = new int[idss.length];
         for (int i = 0; i < idss.length; i++)
-            idChosenFriends_[i] = Integer.parseInt(idss[i]);
-        latitude_ = lat;
-        longitude_ = longt;
-        writtenText_ = wT;
-        isEnabled_ = isEn;
-        location_ = location;
+            idChosenFriends[i] = Integer.parseInt(idss[i]);
+        latitude = lat;
+        longitude = longt;
+        writtenText = wT;
+        isEnabled = isEn;
+        location = loc;
     }
 }

@@ -23,6 +23,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.arrivalmessage.VK_Module.NotificationData;
 import com.example.arrivalmessage.VK_Module.VK_Controller;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.maps.model.LatLng;
 import com.vk.api.sdk.VK;
 import com.vk.api.sdk.auth.VKAccessToken;
@@ -39,20 +41,24 @@ public class MainActivity extends AppCompatActivity {
 
 
    public static List<NotificationData> data;
-
+    public static NotificationData curData=new NotificationData();
+    public static NotificationData reserveData;
     //Переменная для работы с БД
     private DatabaseHelper mDBHelper;
     private SQLiteDatabase mDb;
     public static VK_Controller controller;
     private  LocationManager manager;
+    private LocationCallback locationCallback;
+
     private LocationListener listener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
-            for(NotificationData d: data)
+            Log.i("Смена местоположения",location.getLatitude()+" "+location.getLongitude());
+            for(NotificationData d:data)
             {
-                if(d.isEnabled_==1){
-                    LatLng latLng= new LatLng(d.latitude_,d.longitude_);
-                    if(calculationByDistance(latLng,new LatLng(location.getLatitude(),location.getLongitude()))<=0.01)
+                if(d.isEnabled==1){
+                    LatLng latLng= new LatLng(d.latitude,d.longitude);
+                    if(calculationByDistance(latLng,new LatLng(location.getLatitude(),location.getLongitude()))<=0.1)
                     {
 
                        /* AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -63,21 +69,26 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
-
                                 //startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));// Отпускает диалоговое окно
                             }
                         });
                         AlertDialog dialog = builder.create();
                         dialog.show();*/
-                        Log.i("Sent message", "Сообщение "+d.writtenText_+" отправлено!");
-                        for(int id:d.idChosenFriends_)
-                            controller.SendMessage(id,d.writtenText_);
+                        Log.i("Sent message", "Сообщение "+d.writtenText+" отправлено!");
+                        for(int id:d.idChosenFriends)
+                            controller.SendMessage(id,d.writtenText);
 
-                        d.isEnabled_=0;
+                        d.isEnabled=0;
 
                     }
+
+
                 }
             }
+
+
+
+
         }
 
         @Override
@@ -215,6 +226,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
     }
     public void addListenerOnButton(){
         ImageButton create_btn = findViewById(R.id.create_btn);
@@ -222,7 +235,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SelectUserActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
 
             }
@@ -232,7 +244,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -241,7 +252,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SavedNotificationsActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -261,10 +271,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
-
-        SelectUserActivity.friends.clear();
-        SelectUserActivity.chosenFriends.clear();
-        data.clear();
+        curData.toString();
+        data.contains(1);
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Выход")
                 .setMessage("Вы действительно хотите выйти из приложения?")
@@ -272,22 +280,22 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        SelectUserActivity.chosenFriends.clear();
-                        SelectUserActivity.friends.clear();
+                       // SelectUserActivity.chosenFriends.clear();
+                      //  SelectUserActivity.friends.clear();
                         if(data.size()>0) {
                             mDb.execSQL("DELETE FROM" + " users");
                             for (NotificationData d : data) {
                                 ContentValues cv = new ContentValues();
                                 String users_ids = "";
-                                for (int id : d.idChosenFriends_) {
+                                for (int id : d.idChosenFriends) {
                                     users_ids += id + " ";
                                 }
                                 cv.put("users_ids", users_ids);
-                                cv.put("latitude", d.latitude_);
-                                cv.put("longitude", d.longitude_);
-                                cv.put("message", d.writtenText_);
-                                cv.put("isEnabled", d.isEnabled_);
-                                cv.put("location", d.location_);
+                                cv.put("latitude", d.latitude);
+                                cv.put("longitude", d.longitude);
+                                cv.put("message", d.writtenText);
+                                cv.put("isEnabled", d.isEnabled);
+                                cv.put("location", d.location);
                                 mDb.insert("users", null, cv);
                             }
                         }

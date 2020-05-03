@@ -18,41 +18,32 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.arrivalmessage.VK_Module.NotificationData;
+import com.example.arrivalmessage.VK_Module.VKUser;
 
 public class FinishActivity extends AppCompatActivity {
 
-    int[] idChosenFriends;
+
     TableLayout tableLayout;
     TableLayout tableInfo;
     String users_ids = "";
-    double latitude;
-    double longitude;
-    String message;
-    String location;
-    String[] displayFriends;
+
     private DatabaseHelper mDBHelper;
     private SQLiteDatabase mDb;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finish);
         addListenerOnButton();
         Bundle arguments = getIntent().getExtras();
-        idChosenFriends = arguments.getIntArray("lst2");
-        latitude = arguments.getDouble("firstCoordinate1");
-        longitude = arguments.getDouble("secondCoordinate1");
-        location = arguments.getString("location");
-        message = arguments.getString("text");
-        displayFriends = arguments.getStringArray("display");
         tableLayout = findViewById(R.id.userList);
         tableInfo = findViewById(R.id.tableInfo);
         createDisplayList();
         createInfoTable();
 
-        for (int id : idChosenFriends) {
+        for (int id : MainActivity.curData.idChosenFriends) {
             users_ids += id + " ";
         }
 
@@ -71,52 +62,70 @@ public class FinishActivity extends AppCompatActivity {
         }
 
         ContentValues cv = new ContentValues();
-
         cv.put("users_ids", users_ids);
-        cv.put("latitude", latitude);
-        cv.put("longitude", longitude);
-        cv.put("message", message);
+        cv.put("latitude", MainActivity.curData.latitude);
+        cv.put("longitude", MainActivity.curData.longitude);
+        cv.put("message", MainActivity.curData.writtenText);
         cv.put("isEnabled", 1);
-        cv.put("location", location);
+        cv.put("location", MainActivity.curData.location);
 
-        MainActivity.data.add(new NotificationData(users_ids,latitude,longitude,message,1,location));
+        MainActivity.data.add(new NotificationData(users_ids, MainActivity.curData.latitude, MainActivity.curData.longitude, MainActivity.curData.writtenText, 1, MainActivity.curData.location));
 
         mDb.insert("users", null, cv);
 
     }
+
     public void addListenerOnButton() {
         ImageButton back_btn = findViewById(R.id.back_btn);
         back_btn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(FinishActivity.this, MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+                        finish();
                     }
                 });
         ImageButton main_menu_btn = findViewById(R.id.main_menu_btn);
         main_menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FinishActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                finish();
+
+
             }
         });
     }
+
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(FinishActivity.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        FinishActivity.super.finish();
+        FinishManager.finishActivity(SelectUserActivity.class);
+        FinishManager.finishActivity(SelectLocationActivity.class);
+        FinishManager.finishActivity(ChooseTextActivity.class);
+        finish();
+
     }
 
-    public void createDisplayList(){
-        for (int i = 0; i < displayFriends.length; i++){
-            final String friendName = displayFriends[i];
+    public void finish() {
+        FinishActivity.super.finish();
+        FinishManager.finishActivity(SelectUserActivity.class);
+        FinishManager.finishActivity(SelectLocationActivity.class);
+        FinishManager.finishActivity(ChooseTextActivity.class);
+        if (MainActivity.reserveData == null)
+            MainActivity.curData = new NotificationData();
+        else
+        {
+            MainActivity.curData=MainActivity.reserveData;
+            MainActivity.reserveData=null;
+        }
+
+
+    }
+
+    public void createDisplayList() {
+        for (int i = 0; i < MainActivity.curData.displayFriends.length; i++) {
+            final String friendName = MainActivity.curData.displayFriends[i];
             TableRow tableRow = new TableRow(this);
-            TextView fullName  = new TextView(this);
+            TextView fullName = new TextView(this);
             tableRow.setGravity(Gravity.CENTER);
             fullName.setText(friendName);
             fullName.setTextColor(-1);
@@ -124,28 +133,29 @@ public class FinishActivity extends AppCompatActivity {
             fullName.setTypeface(null, Typeface.BOLD);
 
 
-            tableRow.addView(fullName,500,80);
+            tableRow.addView(fullName, 500, 80);
 
             tableLayout.addView(tableRow);
         }
     }
-    public void createInfoTable(){
+
+    public void createInfoTable() {
 
         TableRow tableRowAddress = new TableRow(this);
-        TableRow addressT=getHeadRow("Адрес: ");
-        TableRow messageT=getHeadRow("Сообщение: ");
-        TableRow usersT=getHeadRow("Пользователи: ");
+        TableRow addressT = getHeadRow("Адрес: ");
+        TableRow messageT = getHeadRow("Сообщение: ");
+        TableRow usersT = getHeadRow("Пользователи: ");
 
 
         TableRow tableRowMessage = new TableRow(this);
 
-        TextView addressView  = new TextView(this);
-        TextView textMessageView  = new TextView(this);
+        TextView addressView = new TextView(this);
+        TextView textMessageView = new TextView(this);
 
 
-        String address1 =  location;
+        String address1 = MainActivity.curData.location;
         addressView.setText(address1);
-        textMessageView.setText(this.message);
+        textMessageView.setText(MainActivity.curData.writtenText);
 
         addressView.setTextColor(-1);
         addressView.setGravity(Gravity.CENTER);
@@ -157,8 +167,8 @@ public class FinishActivity extends AppCompatActivity {
         tableRowAddress.setGravity(Gravity.CENTER_HORIZONTAL);
         tableRowMessage.setGravity(Gravity.CENTER_HORIZONTAL);
 
-        tableRowAddress.addView(addressView, 900,150);
-        tableRowMessage.addView(textMessageView,900,150);
+        tableRowAddress.addView(addressView, 900, 150);
+        tableRowMessage.addView(textMessageView, 900, 150);
 
         tableInfo.addView(addressT);
         tableInfo.addView(tableRowAddress);
@@ -167,8 +177,8 @@ public class FinishActivity extends AppCompatActivity {
         tableInfo.addView(usersT);
     }
 
-    TableRow getHeadRow(String text){
-        TextView addressHeadView  = new TextView(this);
+    TableRow getHeadRow(String text) {
+        TextView addressHeadView = new TextView(this);
         addressHeadView.setText(text);
         addressHeadView.setTextColor(-1);
         addressHeadView.setGravity(Gravity.CENTER_HORIZONTAL);

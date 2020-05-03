@@ -23,7 +23,7 @@ import java.util.List;
 
 public class SavedNotificationsActivity extends AppCompatActivity {
     TableLayout tableLayout;
-    List<NotificationData> datas=MainActivity.data;
+    List<NotificationData> data =MainActivity.data;
     NotificationData curData;
 
 
@@ -49,21 +49,31 @@ public class SavedNotificationsActivity extends AppCompatActivity {
             TableRow tableRow3 = new TableRow(this);
             tableRow3.setPadding(0,10,0,0);
             TextView notificationText = new TextView(this);
-            Button imageButton=new Button(this);
+            final Button imageButton=new Button(this);
+            imageButton.setTag(i);
             imageButton.setBackground(getResources().getDrawable(R.drawable.edit));
+            imageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(SavedNotificationsActivity.this, SelectUserActivity.class);
+                    MainActivity.reserveData=MainActivity.curData;
+                    MainActivity.curData=data.get((int)imageButton.getTag());
+                    startActivity(intent);
+                }
+            });
             final Switch toggle = new Switch(this);
             toggle.setTag(i);
-            toggle.setChecked(datas.get(i).isEnabled_==1);
+            toggle.setChecked(data.get(i).isEnabled==1);
             toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                  if(datas.get((int)buttonView.getTag()).isEnabled_==1)
-                      datas.get((int)buttonView.getTag()).isEnabled_=0;
+                  if(data.get((int)buttonView.getTag()).isEnabled==1)
+                      data.get((int)buttonView.getTag()).isEnabled=0;
                   else
-                      datas.get((int)buttonView.getTag()).isEnabled_=1;
+                      data.get((int)buttonView.getTag()).isEnabled=1;
                 }
             });
-            notificationText.setText(MainActivity.data.get(i).location_+"\n");
+            notificationText.setText(MainActivity.data.get(i).location+"\n");
             notificationText.setTextColor(-1);
             notificationText.setWidth(500);
             notificationText.setTypeface(null, Typeface.BOLD);
@@ -78,8 +88,6 @@ public class SavedNotificationsActivity extends AppCompatActivity {
             tableRow.addView(toggle);
           //  tableRow2.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT,TableLayout.LayoutParams.WRAP_CONTENT));
             tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.WRAP_CONTENT));
-
-
             tableLayout.addView(tableRow);
         }
     }
@@ -90,10 +98,7 @@ public class SavedNotificationsActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        Intent intent = new Intent(SavedNotificationsActivity.this, MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+                        SavedNotificationsActivity.super.finish();
                     }
                 }
         );

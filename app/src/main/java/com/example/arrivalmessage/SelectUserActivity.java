@@ -31,6 +31,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 //import com.example.arrivalmessage.DownloadImagesTask;
+import com.example.arrivalmessage.VK_Module.NotificationData;
 import com.example.arrivalmessage.VK_Module.VKUser;
 import com.example.arrivalmessage.VK_Module.VK_Controller;
 import com.squareup.picasso.Picasso;
@@ -52,7 +53,6 @@ public class SelectUserActivity extends AppCompatActivity {
     static List<VKUser> friends;
     List<VKUser> displayedFriends;
     static HashSet<VKUser> chosenFriends;
-    int[] idsChosenFriends;
     ImageView table;
     String[] displayFriends;
     SearchView searchView;
@@ -177,8 +177,18 @@ public class SelectUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_user);
         addListenerOnButton();
-       // if (friends == null)
-        friends = VK_Controller.friends;
+        if (chosenFriends != null)
+            chosenFriends.clear();
+        if (friends == null)
+            friends = VK_Controller.friends;
+        for (VKUser user : friends) {
+            user.isCheked = false;
+            for (int id : MainActivity.curData.idChosenFriends)
+                if (id == user.id) {
+                    user.isCheked = true;
+
+                }
+        }
         Comparator<VKUser> comparator = new Comparator<VKUser>() {
             public int compare(VKUser o1, VKUser o2) {
                 return o1.lastname.compareTo(o2.lastname);
@@ -186,7 +196,7 @@ public class SelectUserActivity extends AppCompatActivity {
 
         };
         displayedFriends = new ArrayList<VKUser>();
-      //  if (friends != null)
+        //  if (friends != null)
         displayedFriends.addAll(friends);
 //        friends.sort(comparator);
         if (chosenFriends == null)
@@ -233,11 +243,27 @@ public class SelectUserActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(SelectUserActivity.this, MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+                        for (VKUser user : friends)
+                            if (user.isCheked)
+                                chosenFriends.add(user);
+                        int j = 0;
+                        MainActivity.curData.idChosenFriends = new int[chosenFriends.size()];
+                        MainActivity.curData.displayFriends = new String[chosenFriends.size()];
+                        for (VKUser chosenFriend : chosenFriends) {
+                            MainActivity.curData.idChosenFriends[j] = chosenFriend.id;
+                            MainActivity.curData.displayFriends[j] = chosenFriend.firstname + " " + chosenFriend.lastname;
+                            j++;
+                        }
+                        if (MainActivity.reserveData != null) {
+                            MainActivity.curData = MainActivity.reserveData;
+                            MainActivity.reserveData = null;
+                        }
+                        // Intent intent = new Intent(SelectUserActivity.this, MainActivity.class);
+                        SelectUserActivity.super.finish();
+                        // startActivity(intent);
                     }
                 }
+
         );
         ImageButton next_btn = findViewById(R.id.next_btn);
         next_btn.setOnClickListener(
@@ -265,23 +291,40 @@ public class SelectUserActivity extends AppCompatActivity {
                             return;
                         }
                         int j = 0;
-                        idsChosenFriends = new int[chosenFriends.size()];
-                        displayFriends = new String[chosenFriends.size()];
+                        MainActivity.curData.idChosenFriends = new int[chosenFriends.size()];
+                        MainActivity.curData.displayFriends = new String[chosenFriends.size()];
                         for (VKUser chosenFriend : chosenFriends) {
-                            idsChosenFriends[j] = chosenFriend.id;
-                            displayFriends[j] = chosenFriend.firstname + " " + chosenFriend.lastname;
+                            MainActivity.curData.idChosenFriends[j] = chosenFriend.id;
+                            MainActivity.curData.displayFriends[j] = chosenFriend.firstname + " " + chosenFriend.lastname;
                             j++;
                         }
                         Intent intent = new Intent(SelectUserActivity.this, SelectLocationActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.putExtra("lst", idsChosenFriends);
-                        intent.putExtra("displayList", displayFriends);
+                        FinishManager.addActivity(SelectUserActivity.this);
                         startActivity(intent);
                     }
                 }
         );
     }
 
+    @Override
+    public void onBackPressed() {
+        for (VKUser user : friends)
+            if (user.isCheked)
+                chosenFriends.add(user);
+        int j = 0;
+        MainActivity.curData.idChosenFriends = new int[chosenFriends.size()];
+        MainActivity.curData.displayFriends = new String[chosenFriends.size()];
+        for (VKUser chosenFriend : chosenFriends) {
+            MainActivity.curData.idChosenFriends[j] = chosenFriend.id;
+            MainActivity.curData.displayFriends[j] = chosenFriend.firstname + " " + chosenFriend.lastname;
+            j++;
+        }
+        if (MainActivity.reserveData != null) {
+            MainActivity.curData = MainActivity.reserveData;
+            MainActivity.reserveData = null;
+        }
+        super.onBackPressed();
+    }
 }
 
 
