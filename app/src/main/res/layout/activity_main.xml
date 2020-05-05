@@ -8,20 +8,28 @@
     android:background="@drawable/map"
     tools:context=".MainActivity">
 
-    <ImageButton
+
+    <Button
         android:id="@+id/change_acc_btn"
         android:layout_width="120dp"
         android:layout_height="20dp"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/change"
+        android:alpha="0.5"
+        android:background="#000000"
+        android:fontFamily="@font/centurygothicbold"
+        android:text="Сменить аккаунт"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="13dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageButton
+    <Button
         android:id="@+id/create_btn"
         android:layout_width="220dp"
         android:layout_height="60dp"
@@ -30,7 +38,14 @@
         android:layout_marginTop="76dp"
         android:layout_marginEnd="73dp"
         android:layout_marginRight="73dp"
-        android:background="@drawable/button_change"
+        android:background="@drawable/button_create"
+        android:fontFamily="@font/centurygothicbold"
+        android:gravity="center_horizontal|center_vertical"
+        android:lineSpacingExtra="-10dp"
+        android:text="Создать\nуведомление"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,8 +53,8 @@
 
     <ImageButton
         android:id="@+id/settings_btn"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginTop="3dp"
         android:layout_marginEnd="3dp"
         android:layout_marginRight="3dp"
@@ -59,12 +74,19 @@
         app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/logo" />
 
-    <ImageButton
+    <Button
         android:id="@+id/saved_btn"
         android:layout_width="220dp"
         android:layout_height="60dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/button_saved_change"
+        android:background="@drawable/button_create"
+        android:fontFamily="@font/centurygothicbold"
+        android:gravity="center_horizontal|center_vertical"
+        android:lineSpacingExtra="-10dp"
+        android:text="Мои\nуведомления"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"

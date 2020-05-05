@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void addListenerOnButton(){
-        ImageButton create_btn = findViewById(R.id.create_btn);
+        Button create_btn = findViewById(R.id.create_btn);
         create_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        ImageButton saved_btn = findViewById(R.id.saved_btn);
+        Button saved_btn = findViewById(R.id.saved_btn);
         saved_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -256,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        ImageButton change_acc_btn = findViewById(R.id.change_acc_btn);
+        Button change_acc_btn = findViewById(R.id.change_acc_btn);
         change_acc_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

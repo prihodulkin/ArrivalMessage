@@ -17,6 +17,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -112,7 +113,7 @@ public class FinishActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
-        ImageButton main_menu_btn = findViewById(R.id.main_menu_btn);
+        Button main_menu_btn = findViewById(R.id.main_menu_btn);
         main_menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

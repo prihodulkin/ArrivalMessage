@@ -18,13 +18,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableRow2"
-        app:srcCompat="@drawable/settings_table" />
+        app:srcCompat="@drawable/table_blue"
+        android:alpha="0.6"/>
 
     <TableRow
         android:id="@+id/tableRow2"
         android:layout_width="match_parent"
         android:layout_height="65dp"
-        android:background="@drawable/settings_upper"
+        android:background="@drawable/table_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,6 +48,73 @@
             android:layout_gravity="center_vertical"
             android:background="@drawable/back" />
 
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="296dp"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/centurygothicbold"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="Настройки"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="35dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </TableRow>
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/centurygothicbold"
+        android:gravity="fill_horizontal|center_vertical"
+        android:lineSpacingExtra="-10dp"
+        android:text="Геолокация по умолчанию:"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="21dp"
+        app:layout_constraintBottom_toBottomOf="@+id/choice_table"
+        app:layout_constraintEnd_toEndOf="@+id/choice_table"
+        app:layout_constraintHorizontal_bias="0.205"
+        app:layout_constraintStart_toStartOf="@+id/choice_table"
+        app:layout_constraintTop_toTopOf="@+id/choice_table"
+        app:layout_constraintVertical_bias="0.042" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="320dp"
+        android:layout_height="58dp"
+        android:fontFamily="@font/centurygothicbold"
+        android:gravity="fill_horizontal|center_vertical"
+        android:lineSpacingExtra="-10dp"
+        android:text="Текст сообщения по умолчанию:"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="21dp"
+        app:layout_constraintBottom_toBottomOf="@+id/choice_table"
+        app:layout_constraintEnd_toEndOf="@+id/choice_table"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/choice_table"
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        app:layout_constraintVertical_bias="0.29" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="306dp"
+        android:layout_height="53dp"
+        android:fontFamily="@font/centurygothicbold"
+        android:gravity="fill_horizontal|center_vertical"
+        android:lineSpacingExtra="-10dp"
+        android:text="Повторный запуск по умолчанию через:"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="21dp"
+        app:layout_constraintBottom_toBottomOf="@+id/choice_table"
+        app:layout_constraintEnd_toEndOf="@+id/choice_table"
+        app:layout_constraintStart_toStartOf="@+id/choice_table"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
 </androidx.constraintlayout.widget.ConstraintLayout>

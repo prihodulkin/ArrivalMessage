@@ -21,7 +21,8 @@
         android:layout_marginRight="15dp"
 
 
-        android:background="@drawable/background_text"
+        android:background="@drawable/table_blue"
+        android:alpha="0.6"
         app:layout_constraintBottom_toTopOf="@+id/ready_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,22 +32,41 @@
     <ImageView
         android:id="@+id/choose_text_upper"
         android:layout_width="284dp"
-        android:layout_height="180dp"
+        android:layout_height="40dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="308dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:alpha="0.6"
+        android:text="Введите текст сообщения"
+        app:layout_constraintBottom_toTopOf="@+id/text_message"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_table_row"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/choose_text_upper" />
+        app:layout_constraintVertical_bias="0.610"
+        app:srcCompat="@drawable/table_blue" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="284dp"
+        android:layout_height="40dp"
+        android:fontFamily="@font/centurygothicbold"
+        android:gravity="center_horizontal|center_vertical"
+        android:lineSpacingExtra="-10dp"
+        android:text="Введите текст сообщения"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/text_message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_table_row"
+        app:layout_constraintVertical_bias="0.625" />
 
     <TableRow
         android:id="@+id/text_table_row"
         android:layout_width="match_parent"
         android:layout_height="65dp"
-        android:background="@drawable/create_upper"
+        android:background="@drawable/table_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,19 +89,40 @@
             android:layout_gravity="center_vertical"
             android:background="@drawable/back" />
 
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:fontFamily="@font/centurygothicbold"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="Создать уведомление"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="27dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </TableRow>
 
-    <ImageButton
+    <Button
         android:id="@+id/ready_btn"
         android:layout_width="192dp"
         android:layout_height="57dp"
-        android:background="@drawable/button_ready"
+        android:text="Готово"
+        android:fontFamily="@font/centurygothicbold"
+        android:gravity="center_horizontal|center_vertical"
+        android:lineSpacingExtra="-10dp"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="40dp"
+        android:background="@drawable/table_blue"
+        android:alpha="0.6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.9" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

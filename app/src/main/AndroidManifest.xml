@@ -33,6 +33,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCBGwiNfmddXZ1tROGG3BzVqJsDxGb_aF0" />
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+
         <activity
             android:name=".SavedNotificationsActivity"
             android:screenOrientation="portrait" />
