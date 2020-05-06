@@ -11,6 +11,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.database.SQLException;
 import android.widget.TableLayout;
@@ -84,7 +85,7 @@ public class FinishActivity extends AppCompatActivity {
                         finish();
                     }
                 });
-        ImageButton main_menu_btn = findViewById(R.id.main_menu_btn);
+        Button main_menu_btn = findViewById(R.id.main_menu_btn);
         main_menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

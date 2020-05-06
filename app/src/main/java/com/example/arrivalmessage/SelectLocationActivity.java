@@ -8,6 +8,7 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import androidx.core.app.ActivityCompat;
 import com.example.arrivalmessage.VK_Module.VKUser;
@@ -172,7 +173,7 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
                     }
                 }
         );
-        ImageButton next_btn = findViewById(R.id.next_btn);
+        Button next_btn = findViewById(R.id.next_btn);
 
         final Context context = this;
         next_btn.bringToFront();

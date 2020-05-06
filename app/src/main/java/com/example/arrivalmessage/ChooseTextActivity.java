@@ -13,6 +13,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -59,7 +60,7 @@ public class ChooseTextActivity extends AppCompatActivity {
                     }
                 }
         );
-        ImageButton ready_btn = findViewById(R.id.ready_btn);
+        Button ready_btn = findViewById(R.id.ready_btn);
         ready_btn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override

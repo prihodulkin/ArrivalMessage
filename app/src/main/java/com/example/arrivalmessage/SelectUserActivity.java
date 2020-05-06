@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Filter;
@@ -265,7 +266,7 @@ public class SelectUserActivity extends AppCompatActivity {
                 }
 
         );
-        ImageButton next_btn = findViewById(R.id.next_btn);
+        Button next_btn = findViewById(R.id.next_btn);
         next_btn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
