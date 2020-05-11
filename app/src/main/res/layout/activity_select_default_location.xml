@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/select_location_act"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SelectLocationActivity">
+
+    <TableRow
+        android:id="@+id/tableRow3"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@drawable/table_up"
+        android:gravity="top"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/icon_white"
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintHorizontal_bias="0.496"
+
+
+            />
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="27dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/back" />
+
+
+        <TextView
+            android:id="@+id/textView4"
+            android:text="Создать уведомление"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:fontFamily="@font/centurygothicbold"
+            android:gravity="center_horizontal|center_vertical"
+            android:lineSpacingExtra="-10dp"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="27dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+    </TableRow>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/map"
+        app:layout_constraintStart_toStartOf="@+id/map"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <fragment
+            android:id="@+id/autocomplete_fragment"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteY="95dp" />
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/next_btn"
+        android:layout_width="179dp"
+        android:layout_height="51dp"
+        android:layout_alignStart="@+id/map"
+        android:layout_alignLeft="@+id/map"
+        android:layout_alignEnd="@+id/map"
+        android:layout_alignRight="@+id/map"
+        android:layout_alignBottom="@+id/map"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/table_blue"
+        android:fontFamily="@font/centurygothicbold"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="Выбрать"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="33dp"
+        app:layout_constraintBottom_toBottomOf="@+id/map"
+        app:layout_constraintEnd_toEndOf="@+id/map"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="@+id/map" />
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/map"
+
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:filterTouchesWhenObscured="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableRow3"></com.google.android.gms.maps.MapView>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
