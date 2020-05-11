@@ -12,7 +12,8 @@
         android:layout_height="50sp"></com.example.arrivalmessage.CircularImageView>
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="150px"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:padding="5px"
         >
         <TextView
@@ -21,7 +22,7 @@
             android:textColor="@color/quantum_white_text"
             android:textFontWeight="800"
             android:layout_weight="1"
-            android:layout_height="50sp"></TextView>
+            ></TextView>
         <CheckBox
             android:id="@+id/checkbox"
             android:layout_marginLeft="2dp"

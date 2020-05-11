@@ -9,8 +9,10 @@ import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -140,10 +142,12 @@ public class SavedNotificationsActivity extends AppCompatActivity {
          //   notificationText.setTypeface(face);
             tableRow.setGravity(Gravity.CENTER_HORIZONTAL);
             notificationText.setGravity(Gravity.CENTER_HORIZONTAL);
-            tableRow.setPadding(0, 0, 0, 0);
-            actionsRow.addView(editButton, 80, 80);
-            actionsRow.addView(space, 30, 30);
-            actionsRow.addView(deleteButton, 80, 80);
+
+            Resources r = getResources();
+            int px = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, r.getDisplayMetrics());
+            actionsRow.addView(editButton, px, px);
+            actionsRow.addView(space, px/3, px/3);
+            actionsRow.addView(deleteButton, px, px);
             actionsRow.setLayoutParams(new TableRow.LayoutParams(
                     TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT, 2f));
