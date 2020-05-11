@@ -6,7 +6,18 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/BlueForLogo</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/centurygothic</item>
         <item name="android:colorControlActivated">@color/colorAccent</item>
+        <item name="android:textFontWeight">800</item>
+    </style>
+
+    <style name="alertDialogTheme">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/BlueForLogo</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/centurygothic</item>
+        <item name="android:colorControlActivated">@color/colorAccent</item>
+        <item name="android:textFontWeight">300</item>
     </style>
 
 </resources>

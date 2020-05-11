@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -49,6 +50,12 @@ public class ChooseTextActivity extends AppCompatActivity {
         MainActivity.reserveData = null;
     }
 
+    @Override
+    public void onBackPressed() {
+        MainActivity.curData.writtenText = textMessage.getText().toString();
+        ChooseTextActivity.super.finish();
+    }
+
 
     public void addListenerOnButton() {
         ImageButton back_btn = findViewById(R.id.back_btn);
@@ -78,6 +85,8 @@ public class ChooseTextActivity extends AppCompatActivity {
                             });
                             AlertDialog dialog = builder.create();
                             dialog.show();
+                            TextView aText = dialog.findViewById(android.R.id.message);
+                            aText.setTypeface(Typeface.createFromAsset(getAssets(), "font/centurygothic.ttf"));
                         } else {
                             if (MainActivity.reserveData != null) {
                                 finish();

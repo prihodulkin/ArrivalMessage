@@ -133,7 +133,7 @@ public class FinishActivity extends AppCompatActivity {
             fullName.setText(friendName);
             fullName.setTextColor(-1);
             fullName.setGravity(Gravity.CENTER_HORIZONTAL);
-            fullName.setTypeface(null, Typeface.BOLD);
+            //fullName.setTypeface(null, Typeface.BOLD);
             tableRow.addView(fullName, ActionBar.LayoutParams.WRAP_CONTENT);
             tableLayout.addView(tableRow);
         }
@@ -145,6 +145,7 @@ public class FinishActivity extends AppCompatActivity {
         TableRow addressT = getHeadRow("Адрес: ");
         TableRow messageT = getHeadRow("Сообщение: ");
         TableRow usersT = getHeadRow("Пользователи: ");
+
 
 
         TableRow tableRowMessage = new TableRow(this);
@@ -159,10 +160,10 @@ public class FinishActivity extends AppCompatActivity {
 
         addressView.setTextColor(-1);
         addressView.setGravity(Gravity.CENTER);
-        addressView.setTypeface(null, Typeface.BOLD);
+        //addressView.setTypeface(null, Typeface.BOLD);
         textMessageView.setTextColor(-1);
         textMessageView.setGravity(Gravity.CENTER);
-        textMessageView.setTypeface(null, Typeface.BOLD);
+      //  textMessageView.setTypeface(null, Typeface.BOLD);
 
         tableRowAddress.setGravity(Gravity.CENTER_HORIZONTAL);
         tableRowMessage.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -182,7 +183,7 @@ public class FinishActivity extends AppCompatActivity {
         addressHeadView.setText(text);
         addressHeadView.setTextColor(-1);
         addressHeadView.setGravity(Gravity.CENTER_HORIZONTAL);
-        addressHeadView.setTypeface(null, Typeface.BOLD_ITALIC);
+      //  addressHeadView.setTypeface(null, Typeface.BOLD_ITALIC);
         addressHeadView.setTextSize(20);
         TableRow tableRowHeadAddress = new TableRow(this);
         tableRowHeadAddress.setMinimumHeight(50);

@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.graphics.fonts.FontStyle;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -141,7 +142,7 @@ public class SelectUserActivity extends AppCompatActivity {
                         while (i < length) {
                             VKUser item = friends.get(i);
                             String fullName = item.firstname + ' ' + item.lastname;
-                            if (fullName.contains(constraint))
+                            if (fullName.toLowerCase().contains(constraint.toString().toLowerCase()))
                                 tempList.add(item);
                             i++;
                         }
@@ -290,6 +291,8 @@ public class SelectUserActivity extends AppCompatActivity {
                             });
                             AlertDialog dialog = builder.create();
                             dialog.show();
+                            TextView aText = dialog.findViewById(android.R.id.message);
+                            aText.setTypeface(Typeface.createFromAsset(getAssets(), "font/centurygothic.ttf"));
                             return;
                         }
                         int j = 0;

@@ -5,6 +5,9 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -27,6 +30,7 @@ public class SavedNotificationsActivity extends AppCompatActivity {
     TableLayout tableLayout;
     List<NotificationData> data = MainActivity.data;
     NotificationData curData;
+    TextView nothingText;
 
 
     @Override
@@ -36,14 +40,28 @@ public class SavedNotificationsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_saved_notifications);
         addListenerOnButton();
         tableLayout = findViewById(R.id.notificationsList);
+        nothingText=new TextView(this);
+        nothingText.setText("Созданных уведомлений нет");
+        nothingText.setTextColor(-1);
+        nothingText.setTextSize(20);
 
 
+        //nothingText.setTypeface(T);
+        nothingText.setGravity(Gravity.CENTER_HORIZONTAL);
+        nothingText.setGravity(Gravity.CENTER_HORIZONTAL);
+
+
+        if(data.size()==0)
+        {
+            tableLayout.addView(nothingText);
+
+        }
         for (int i = 0; i < MainActivity.data.size(); i++) {
-            TableRow tableRow = new TableRow(this);
+            final TableRow tableRow = new TableRow(this);
             tableRow.setMinimumHeight(170);
             TableRow actionsRow = new TableRow(this);
             actionsRow.setPadding(0, 10, 0, 0);
-            TextView notificationText = new TextView(this);
+            final TextView notificationText = new TextView(this);
             final Button editButton = new Button(this);
             editButton.setTag(i);
             editButton.setBackground(getResources().getDrawable(R.drawable.edit));
@@ -59,6 +77,42 @@ public class SavedNotificationsActivity extends AppCompatActivity {
             TableRow space = new TableRow(this);
             final Button deleteButton = new Button(this);
             deleteButton.setBackground(getResources().getDrawable(R.drawable.delete));
+            deleteButton.setTag(i);
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View view) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SavedNotificationsActivity.this);
+                    builder
+                            .setMessage("Вы действительно хотите удалить уведомление?")
+                            .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    // SelectUserActivity.chosenFriends.clear();
+                                    //  SelectUserActivity.friends.clear();
+                                    data.remove((int)view.getTag());
+                                    tableLayout.removeViewAt((int)view.getTag());
+                                    if(data.isEmpty())
+                                      tableLayout.addView(nothingText);
+                                    dialog.cancel();
+                                }
+                            })
+                            .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    TextView aText= alertDialog.findViewById(android.R.id.message);
+                    aText.setTypeface(Typeface.createFromAsset(getAssets(),"font/centurygothic.ttf"));
+
+                }
+            }
+
+
+            );
             final Switch toggle = new Switch(this);
 
             toggle.setTag(i);
@@ -83,7 +137,7 @@ public class SavedNotificationsActivity extends AppCompatActivity {
             notificationText.setText(MainActivity.data.get(i).location + "\n");
             notificationText.setTextColor(-1);
             notificationText.setWidth(500);
-            notificationText.setTypeface(null, Typeface.BOLD);
+         //   notificationText.setTypeface(face);
             tableRow.setGravity(Gravity.CENTER_HORIZONTAL);
             notificationText.setGravity(Gravity.CENTER_HORIZONTAL);
             tableRow.setPadding(0, 0, 0, 0);
