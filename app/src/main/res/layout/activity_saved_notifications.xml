@@ -66,8 +66,9 @@
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="30dp"
-        android:background="@drawable/table_blue"
-        android:alpha="0.6"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbarThumbVertical="@color/Thumb"
+        android:scrollbarTrackVertical="@color/Track"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -75,6 +76,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tableRow">
 
         <TableLayout
+            android:background="#990089BA"
             android:paddingTop="30dp"
             android:padding="5dp"
             android:id="@+id/notificationsList"

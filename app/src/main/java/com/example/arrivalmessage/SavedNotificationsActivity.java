@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -23,9 +25,8 @@ import java.util.List;
 
 public class SavedNotificationsActivity extends AppCompatActivity {
     TableLayout tableLayout;
-    List<NotificationData> data =MainActivity.data;
+    List<NotificationData> data = MainActivity.data;
     NotificationData curData;
-
 
 
     @Override
@@ -37,57 +38,66 @@ public class SavedNotificationsActivity extends AppCompatActivity {
         tableLayout = findViewById(R.id.notificationsList);
 
 
-
-
         for (int i = 0; i < MainActivity.data.size(); i++) {
             TableRow tableRow = new TableRow(this);
             tableRow.setMinimumHeight(170);
-            TableRow tableRow1 = new TableRow(this);
-            tableRow1.setMinimumWidth(30);
-            TableRow tableRow2 = new TableRow(this);
-            tableRow2.setMinimumWidth(30);
-            TableRow tableRow3 = new TableRow(this);
-            tableRow3.setPadding(0,10,0,0);
+            TableRow actionsRow = new TableRow(this);
+            actionsRow.setPadding(0, 10, 0, 0);
             TextView notificationText = new TextView(this);
-            final Button imageButton=new Button(this);
-            imageButton.setTag(i);
-            imageButton.setBackground(getResources().getDrawable(R.drawable.edit));
-            imageButton.setOnClickListener(new View.OnClickListener() {
+            final Button editButton = new Button(this);
+            editButton.setTag(i);
+            editButton.setBackground(getResources().getDrawable(R.drawable.edit));
+            editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(SavedNotificationsActivity.this, SelectUserActivity.class);
-                    MainActivity.reserveData=MainActivity.curData;
-                    MainActivity.curData=data.get((int)imageButton.getTag());
+                    MainActivity.reserveData = MainActivity.curData;
+                    MainActivity.curData = data.get((int) editButton.getTag());
                     startActivity(intent);
                 }
             });
+            TableRow space = new TableRow(this);
+            final Button deleteButton = new Button(this);
+            deleteButton.setBackground(getResources().getDrawable(R.drawable.delete));
             final Switch toggle = new Switch(this);
+
             toggle.setTag(i);
-            toggle.setChecked(data.get(i).isEnabled==1);
+            toggle.setChecked(data.get(i).isEnabled == 1);
             toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                  if(data.get((int)buttonView.getTag()).isEnabled==1)
-                      data.get((int)buttonView.getTag()).isEnabled=0;
-                  else
-                      data.get((int)buttonView.getTag()).isEnabled=1;
+                    if (data.get((int) buttonView.getTag()).isEnabled == 1) {
+                        data.get((int) buttonView.getTag()).isEnabled = 0;
+
+                    } else {
+                        data.get((int) buttonView.getTag()).isEnabled = 1;
+
+                    }
                 }
             });
-            notificationText.setText(MainActivity.data.get(i).location+"\n");
+
+            notificationText.setLayoutParams(new TableRow.LayoutParams(
+                    TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT, 5f));
+
+            notificationText.setText(MainActivity.data.get(i).location + "\n");
             notificationText.setTextColor(-1);
             notificationText.setWidth(500);
             notificationText.setTypeface(null, Typeface.BOLD);
             tableRow.setGravity(Gravity.CENTER_HORIZONTAL);
             notificationText.setGravity(Gravity.CENTER_HORIZONTAL);
-            tableRow.setPadding(0,0,0,0);
-            tableRow3.addView(imageButton,100,100);
-            tableRow.addView(tableRow3);
-            tableRow.addView(tableRow2);
-            tableRow.addView(notificationText);
-            tableRow.addView(tableRow1);
+            tableRow.setPadding(0, 0, 0, 0);
+            actionsRow.addView(editButton, 80, 80);
+            actionsRow.addView(space, 30, 30);
+            actionsRow.addView(deleteButton, 80, 80);
+            actionsRow.setLayoutParams(new TableRow.LayoutParams(
+                    TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT, 2f));
+
             tableRow.addView(toggle);
-          //  tableRow2.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT,TableLayout.LayoutParams.WRAP_CONTENT));
-            tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.WRAP_CONTENT));
+            tableRow.addView(notificationText);
+            tableRow.addView(actionsRow);
+            tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
             tableLayout.addView(tableRow);
         }
     }

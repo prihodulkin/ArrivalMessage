@@ -214,6 +214,7 @@ public class SelectUserActivity extends AppCompatActivity {
         adapter = new UserAdapter(SelectUserActivity.this);
         listView = findViewById(R.id.list_view);
         listView.setChoiceMode(listView.CHOICE_MODE_MULTIPLE);
+        listView.smoothScrollToPosition(-21);
         listView.setAdapter(adapter);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

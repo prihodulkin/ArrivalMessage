@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true"
-        android:drawable="@drawable/edit_onclick">
+        android:drawable="@drawable/ic_edit_off">
     </item>
     <item android:state_focused="true"
-        android:drawable="@drawable/edit_onclick">
+        android:drawable="@drawable/ic_edit_off">
     </item>
     <item
-        android:drawable="@drawable/edit_n">
+        android:drawable="@drawable/ic_edit_on">
     </item>
 </selector>

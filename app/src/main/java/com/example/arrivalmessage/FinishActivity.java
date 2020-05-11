@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 
 import com.example.arrivalmessage.VK_Module.NotificationData;
 import com.example.arrivalmessage.VK_Module.VKUser;
+import com.google.android.gms.maps.model.LatLng;
 
 public class FinishActivity extends AppCompatActivity {
 
@@ -132,10 +134,7 @@ public class FinishActivity extends AppCompatActivity {
             fullName.setTextColor(-1);
             fullName.setGravity(Gravity.CENTER_HORIZONTAL);
             fullName.setTypeface(null, Typeface.BOLD);
-
-
-            tableRow.addView(fullName, 500, 80);
-
+            tableRow.addView(fullName, ActionBar.LayoutParams.WRAP_CONTENT);
             tableLayout.addView(tableRow);
         }
     }

@@ -6,4 +6,6 @@
     <color name="colorUpperLogo">#008DC2</color>
     <color name="BlueForLogo">#008ABD</color>
     <color name="Background">#0075A2</color>
+    <color name="Track">#3329424C</color>
+    <color name="Thumb">#80FFFFFF</color>
 </resources>

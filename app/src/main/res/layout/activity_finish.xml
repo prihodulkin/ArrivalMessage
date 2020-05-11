@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tableRow4"
         app:srcCompat="@drawable/table_blue"
-        android:alpha="0.6"/>
+        />
 
     <TextView
         android:id="@+id/textView3"
@@ -89,7 +89,6 @@
         android:textColor="#FFFFFF"
         android:textSize="23dp"
         android:background="@drawable/table_blue"
-        android:alpha="0.6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,9 +97,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:background="@drawable/table_blue"
-        android:alpha="0.6"
         android:foregroundGravity="center"
-
         android:layout_marginTop="150dp"
         android:layout_marginBottom="150dp"
         android:layout_width="match_parent"
@@ -130,7 +127,10 @@
         <ScrollView
             android:id="@+id/scrollTable"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="200dp"
             android:layout_weight="1"
             android:clipChildren="false"
             android:clipToPadding="false"
@@ -138,11 +138,11 @@
             android:fillViewport="true"
             android:foregroundGravity="top"
             android:overScrollMode="never"
-            android:scrollbarSize="10dp"
-            android:verticalScrollbarPosition="right"
+            android:scrollbarSize="5dp"
             android:scrollbarStyle="insideOverlay"
-            android:scrollbarThumbVertical="@color/cardview_light_background"
-            android:scrollbarTrackVertical="@color/BlueForLogo"
+            android:scrollbarThumbVertical="@color/Thumb"
+            android:scrollbarTrackVertical="@color/Track"
+            android:verticalScrollbarPosition="right"
             android:scrollbars="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
