@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:paddingTop="10px"
     android:paddingBottom="10px"
-    android:layout_height="170px">
+    android:layout_height="170px"
+    android:gravity="center_vertical">
 
     <com.example.arrivalmessage.CircularImageView
         android:id="@+id/avatar"
@@ -16,15 +17,15 @@
         >
         <TextView
             android:id="@+id/full_name"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:textColor="@color/quantum_white_text"
             android:textFontWeight="800"
             android:layout_weight="1"
             android:layout_height="50sp"></TextView>
         <CheckBox
             android:id="@+id/checkbox"
-            android:layout_marginLeft="10px"
-            android:layout_marginRight="10px"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
             android:layout_weight="5"
             android:layout_gravity="center"
       ></CheckBox>
