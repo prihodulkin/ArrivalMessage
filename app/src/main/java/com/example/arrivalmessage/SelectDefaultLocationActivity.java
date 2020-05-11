@@ -103,21 +103,7 @@ public class SelectDefaultLocationActivity extends AppCompatActivity implements 
         ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.INTERNET},1
         );
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(SelectDefaultLocationActivity.this);
-            builder.setTitle("Важное сообщение!")
-                    .setMessage("Необходим доступ к местоположению!")
-                    .setNegativeButton("ОК",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-            AlertDialog alert = builder.create();
-            alert.show();
-            return;
 
-        }
 
 
 
@@ -167,8 +153,8 @@ public class SelectDefaultLocationActivity extends AppCompatActivity implements 
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.curData.longitude=longitude;
-                        MainActivity.curData.latitude=latitude;
+                        MainActivity.defLatitude=latitude;
+                        MainActivity.defLongitude=longitude;
                         SelectDefaultLocationActivity.super.finish();
                     }
                 }
@@ -199,9 +185,9 @@ public class SelectDefaultLocationActivity extends AppCompatActivity implements 
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        MainActivity.curData.location=location;
-                        MainActivity.curData.latitude=latitude;
-                        MainActivity.curData.longitude=longitude;
+
+                        MainActivity.defLatitude=latitude;
+                        MainActivity.defLongitude=longitude;
                         Intent intent = new Intent(SelectDefaultLocationActivity.this, ChooseTextActivity.class);
                         FinishManager.addActivity(SelectDefaultLocationActivity.this);
                         startActivity(intent);
@@ -216,8 +202,8 @@ public class SelectDefaultLocationActivity extends AppCompatActivity implements 
 
     @Override
     public void onBackPressed() {
-        MainActivity.curData.longitude=longitude;
-        MainActivity.curData.latitude=latitude;
+        MainActivity.defLatitude=latitude;
+        MainActivity.defLongitude=longitude;
         super.onBackPressed();
     }
 

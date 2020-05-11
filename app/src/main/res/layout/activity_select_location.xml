@@ -39,7 +39,7 @@
 
         <TextView
             android:id="@+id/textView4"
-            android:text="Создать уведомление"
+            android:text="Местоположение по умолчанию"
             android:layout_width="match_parent"
             android:layout_height="65dp"
             android:fontFamily="@font/centurygothicbold"

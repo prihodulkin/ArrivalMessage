@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase mDb;
     public static VK_Controller controller;
     public static double defLatitude=47.216724;
-    public static double defLongitude;
+    public static double defLongitude=39.628510;
     private LocationManager manager;
     private LocationCallback locationCallback;
 

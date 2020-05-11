@@ -43,8 +43,8 @@ import java.lang.Object;
 public class SelectLocationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private MapView mMapView;
-    private double latitude=47.216724;
-    private double longitude=39.628510;
+    private double latitude=MainActivity.defLatitude;
+    private double longitude=MainActivity.defLongitude;
     private String location;
     private Marker SelectedPlaceMarker;
     private GoogleMap gmap;

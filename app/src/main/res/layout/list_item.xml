@@ -7,8 +7,8 @@
 
     <com.example.arrivalmessage.CircularImageView
         android:id="@+id/avatar"
-        android:layout_width="150px"
-        android:layout_height="150px"></com.example.arrivalmessage.CircularImageView>
+        android:layout_width="50sp"
+        android:layout_height="50sp"></com.example.arrivalmessage.CircularImageView>
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="150px"
@@ -20,7 +20,7 @@
             android:textColor="@color/quantum_white_text"
             android:textFontWeight="800"
             android:layout_weight="1"
-            android:layout_height="150px"></TextView>
+            android:layout_height="50sp"></TextView>
         <CheckBox
             android:id="@+id/checkbox"
             android:layout_marginLeft="10px"
