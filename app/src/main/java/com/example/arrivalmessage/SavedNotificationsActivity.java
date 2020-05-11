@@ -135,16 +135,16 @@ public class SavedNotificationsActivity extends AppCompatActivity {
             notificationText.setLayoutParams(new TableRow.LayoutParams(
                     TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT, 5f));
-
+            Resources r = getResources();
+            int px = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, r.getDisplayMetrics());
             notificationText.setText(MainActivity.data.get(i).location + "\n");
             notificationText.setTextColor(-1);
-            notificationText.setWidth(500);
+            notificationText.setWidth(px*8);
          //   notificationText.setTypeface(face);
             tableRow.setGravity(Gravity.CENTER_HORIZONTAL);
             notificationText.setGravity(Gravity.CENTER_HORIZONTAL);
 
-            Resources r = getResources();
-            int px = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, r.getDisplayMetrics());
+
             actionsRow.addView(editButton, px, px);
             actionsRow.addView(space, px/3, px/3);
             actionsRow.addView(deleteButton, px, px);
