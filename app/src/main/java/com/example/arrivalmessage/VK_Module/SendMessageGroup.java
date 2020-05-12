@@ -35,8 +35,6 @@ public class SendMessageGroup {
         querly=querly + "&v=5.67";
         querly=querly + "&access_token="+acceskey;
 
-        if(prev!=null)
-            prev.cancel();
         String ans=null;
 
 

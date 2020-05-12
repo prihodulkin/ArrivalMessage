@@ -23,6 +23,9 @@
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".SavedNotificationsActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -46,7 +49,7 @@
             android:name=".SettingsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MainActivity"
+            android:name=".AuthActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

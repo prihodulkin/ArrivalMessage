@@ -4,11 +4,14 @@ package com.example.arrivalmessage.VK_Module;
 import com.android.volley.RequestQueue;
 import com.vk.api.sdk.VK;
 import com.vk.api.sdk.VKApiCallback;
+import com.vk.api.sdk.exceptions.VKApiException;
 import com.vk.api.sdk.exceptions.VKApiExecutionException;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +31,10 @@ public class VK_Controller {
 
     public VK_Controller(RequestQueue queue, String key, String group_id)
     {
+        UserID = 0;
+        FirstName=" ";
+        SecondName = " ";
+        friends = new ArrayList<VKUser>();
         friendsRequest = new VKFriendsRequest();
         sendMessageGroup = new SendMessageGroup(key,queue);
         vkcheckid = new VKCheckMessagesAllowed(key,group_id, queue);
@@ -40,8 +47,7 @@ public class VK_Controller {
         return friends;
     }
 
-    public void UpdateUserID()
-    {
+    public void UpdateUserID()  {
         VKApiCallback<VKUser> callback = new VKApiCallback<VKUser>() {
             @Override
             public void success(VKUser vkUser) {
@@ -55,6 +61,7 @@ public class VK_Controller {
 
             }
         };
+        //VKUser t = VK.executeSync(userInfo);
         VK.execute(userInfo, callback);
     }
 
