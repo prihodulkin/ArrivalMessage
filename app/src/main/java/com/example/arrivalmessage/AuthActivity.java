@@ -60,7 +60,6 @@ public class AuthActivity extends AppCompatActivity {
                     }
                     catch (InterruptedException e)
                     {
-                        // TODO: автоматически сгенерированный блок catch.
                         e.printStackTrace();
                     }
                     finally
@@ -95,9 +94,32 @@ public class AuthActivity extends AppCompatActivity {
                 //VK_Controller.UserID = vkAccessToken.getUserId();
                 controller.UpdateFriends();
                 controller.UpdateUserID();
-                Intent intent = new Intent(AuthActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                Thread logoTimer = new Thread()
+                {
+                    public void run()
+                    {
+                        try
+                        {
+                            int logoTimer = 0;
+                            while(logoTimer < 5000)
+                            {
+                                sleep(100);
+                                logoTimer = logoTimer +100;
+                            };
+                            Intent intent = new Intent(AuthActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                        catch (InterruptedException e)
+                        {
+                            e.printStackTrace();
+                        }
+                        finally
+                        {
+                            finish();
+                        }
+                    }
+                };
+                logoTimer.start();
             }
 
             @Override
