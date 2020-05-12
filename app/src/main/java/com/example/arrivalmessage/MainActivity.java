@@ -57,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
     public static double defLongitude=39.628510;
     public static String defMessage="";
     public static String defLocation="улица Мильчакова 8А, Ростов-на-Дону";
+    public static int defDays = 0;
+    public static int defHours = 0;
+    public static int defMinutes = 0;
     private LocationManager manager;
     private LocationCallback locationCallback;
 
@@ -237,6 +240,20 @@ public class MainActivity extends AppCompatActivity {
         cursor.close();
         data.contains(1);
 
+        Cursor cursor1 = mDb.rawQuery("SELECT * FROM settings", null);
+        cursor1.moveToFirst();
+        while (!cursor1.isAfterLast()) {
+            defLatitude = cursor1.getDouble(0);
+            defLongitude = cursor1.getDouble(1);
+            defMessage = cursor1.getString(2);
+            defLocation = cursor1.getString(3);
+            defDays = cursor1.getInt(4);
+            defHours = cursor1.getInt(5);
+            defMinutes = cursor1.getInt(6);
+            cursor1.moveToNext();
+        }
+        cursor1.close();
+
 
     }
 
@@ -320,6 +337,17 @@ public class MainActivity extends AppCompatActivity {
                         }
                         data.clear();
                         data = null;
+
+                        ContentValues cv1 = new ContentValues();
+                        cv1.put("defLatitude", defLatitude);
+                        cv1.put("defLongitude", defLongitude);
+                        cv1.put("defMessage", defMessage);
+                        cv1.put("defLocation", defLocation);
+                        cv1.put("defDays", defDays);
+                        cv1.put("defHours", defHours);
+                        cv1.put("defMinutes", defMinutes);
+
+                        mDb.insert("settings", null, cv1);
 
                         finish();
                     }
