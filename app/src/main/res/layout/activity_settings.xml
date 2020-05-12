@@ -195,12 +195,14 @@
             android:orientation="vertical">
 
             <Button
+                android:id="@+id/daysplus"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:width="40dp"
                 android:background="@drawable/ic_expand_less24dp"></Button>
 
             <TextView
+                android:id="@+id/days"
                 android:layout_width="match_parent"
                 android:layout_height="19dp"
                 android:height="30dp"
@@ -208,6 +210,7 @@
                 android:text="10"></TextView>
 
             <Button
+                android:id="@+id/daysminus"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:background="@drawable/ic_expand_more"></Button>
@@ -228,21 +231,24 @@
             android:layout_width="30dp"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            >
+
 
             <Button
+                android:id="@+id/hoursplus"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:width="40dp"
                 android:background="@drawable/ic_expand_less24dp"></Button>
 
             <TextView
+                android:id="@+id/hours"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
                 android:text="10"></TextView>
 
             <Button
+                android:id="@+id/hoursminus"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:background="@drawable/ic_expand_more"></Button>
@@ -264,26 +270,29 @@
             android:layout_width="30dp"
             android:layout_height="50dp"
             android:orientation="vertical">
-            >
+
 
             <Button
+                android:id="@+id/minplus"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:width="40dp"
                 android:background="@drawable/ic_expand_less24dp"></Button>
 
             <TextView
+                android:id="@+id/mins"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
                 android:text="10"></TextView>
 
             <Button
+                android:id="@+id/minmin"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:background="@drawable/ic_expand_more"></Button>
 
         </LinearLayout>
     </TableRow>>
-    >
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,6 +33,12 @@ public class SettingsActivity extends AppCompatActivity {
         defLocationText.setText(MainActivity.defLocation);
         defMessage=findViewById(R.id.defMessage);
         defMessage.setText(MainActivity.defMessage);
+        TextView days = findViewById(R.id.days);
+        days.setText(MainActivity.days+" ");
+        TextView hours = findViewById(R.id.hours);
+        hours.setText(MainActivity.hours+" ");
+        TextView mins = findViewById(R.id.mins);
+        mins.setText(MainActivity.minutes+" ");
 
         addListenerOnButton();
 
@@ -45,6 +51,96 @@ public class SettingsActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         MainActivity.defMessage=defMessage.getText().toString();
                         SettingsActivity.super.finish();
+                    }
+                }
+        );
+
+        Button days_plus_btn = findViewById(R.id.daysplus);
+        days_plus_btn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        TextView days = findViewById(R.id.days);
+                        String str = days.getText().toString();
+                        int dayscount = Integer.parseInt(str.substring(0,str.length()-1));
+                        dayscount++;
+                        MainActivity.days = dayscount;
+                        days.setText(dayscount+" ");
+                    }
+                }
+        );
+
+        Button days_min_btn = findViewById(R.id.daysminus);
+        days_min_btn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        TextView days = findViewById(R.id.days);
+                        String str = days.getText().toString();
+                        int dayscount = Integer.parseInt(str.substring(0,str.length()-1));
+                        dayscount--;
+                        MainActivity.days = dayscount;
+                        days.setText(dayscount+" ");
+                    }
+                }
+        );
+
+        Button hours_plus_btn = findViewById(R.id.hoursplus);
+        hours_plus_btn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        TextView days = findViewById(R.id.hours);
+                        String str = days.getText().toString();
+                        int hourcount = Integer.parseInt(str.substring(0,str.length()-1));
+                        hourcount++;
+                        MainActivity.hours = hourcount;
+                        days.setText(hourcount+" ");
+                    }
+                }
+        );
+
+        Button hours_minus_btn = findViewById(R.id.hoursminus);
+        hours_minus_btn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        TextView days = findViewById(R.id.hours);
+                        String str = days.getText().toString();
+                        int hourscount = Integer.parseInt(str.substring(0,str.length()-1));
+                        hourscount--;
+                        MainActivity.hours = hourscount;
+                        days.setText(hourscount+" ");
+                    }
+                }
+        );
+
+        Button min_plus_btn = findViewById(R.id.minplus);
+        min_plus_btn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        TextView days = findViewById(R.id.mins);
+                        String str = days.getText().toString();
+                        int mincount = Integer.parseInt(str.substring(0,str.length()-1));
+                        mincount++;
+                        MainActivity.minutes = mincount;
+                        days.setText(mincount+" ");
+                    }
+                }
+        );
+
+        Button mins_min_btn = findViewById(R.id.minmin);
+        mins_min_btn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        TextView days = findViewById(R.id.mins);
+                        String str = days.getText().toString();
+                        int mincount = Integer.parseInt(str.substring(0,str.length()-1));
+                        mincount--;
+                        MainActivity.minutes = mincount;
+                        days.setText(mincount+" ");
                     }
                 }
         );
