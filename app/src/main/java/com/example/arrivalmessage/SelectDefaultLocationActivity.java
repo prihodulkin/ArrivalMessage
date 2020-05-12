@@ -59,28 +59,18 @@ public class SelectDefaultLocationActivity extends AppCompatActivity implements 
             latitude=MainActivity.curData.latitude;
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_location);
+        setContentView(R.layout.activity_select_default_location);
         Bundle arguments = getIntent().getExtras();
         addListenerOnButton();
         mMapView = (MapView) findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
-        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.INTERNET},1
-        );
-
-
-
-
-
         if(!Places.isInitialized())
         {
             Places.initialize(this,getString(R.string.api_key));
         }
         Places.createClient(this);
         setAutocompleteSupportFragment();
-
-
-
     }
 
 
@@ -94,6 +84,7 @@ public class SelectDefaultLocationActivity extends AppCompatActivity implements 
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
+                final Geocoder geocoder = new Geocoder(SelectDefaultLocationActivity.this, new Locale("ru", "RU"));
                 SelectedPlaceMarker.remove();
                 latitude =place.getLatLng().latitude;
                 longitude=place.getLatLng().longitude;
@@ -101,6 +92,24 @@ public class SelectDefaultLocationActivity extends AppCompatActivity implements 
                 gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),16f));
                 SelectedPlaceMarker =gmap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).icon(
                         BitmapDescriptorFactory.fromResource(R.drawable.marker)));
+                Address address;
+                try {
+                    address = geocoder.getFromLocation(latitude, longitude, 1).get(0);
+
+                    final String street = address.getThoroughfare() != null ? address.getThoroughfare() : "";
+                    final String house = address.getSubThoroughfare() != null ? address.getSubThoroughfare() : "";
+                    final String city = address.getLocality() != null ? address.getLocality() : "";
+
+                    location = street + " " + house + ", " + city;
+
+                    if (location.equals(" , ")) {
+                        location = "Unknown location";
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                MainActivity.defLocation=location;
+                SettingsActivity.defLocationText.setText(location);
 
 
             }
@@ -132,25 +141,6 @@ public class SelectDefaultLocationActivity extends AppCompatActivity implements 
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final Geocoder geocoder = new Geocoder(context, new Locale("ru", "RU"));
-
-                        Address address;
-                        try {
-                            address = geocoder.getFromLocation(latitude, longitude, 1).get(0);
-
-                            final String street = address.getThoroughfare() != null ? address.getThoroughfare() : "";
-                            final String house = address.getSubThoroughfare() != null ? address.getSubThoroughfare() : "";
-                            final String city = address.getLocality() != null ? address.getLocality() : "";
-
-                            location = street + " " + house + ", " + city;
-
-                            if (location.equals(" , ")) {
-                                location = "Unknown location";
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
                         MainActivity.defLatitude=latitude;
                         MainActivity.defLongitude=longitude;
                         Intent intent = new Intent(SelectDefaultLocationActivity.this, ChooseTextActivity.class);
@@ -176,8 +166,6 @@ public class SelectDefaultLocationActivity extends AppCompatActivity implements 
     protected void onResume() {
         super.onResume();
         mMapView.onResume();
-
-
     }
 
     @Override

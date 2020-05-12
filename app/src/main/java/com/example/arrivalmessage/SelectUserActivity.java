@@ -108,7 +108,7 @@ public class SelectUserActivity extends AppCompatActivity {
             CircularImageView avatarCpy = new CircularImageView(getApplicationContext());
 
             avatarCpy.setTag(friend);
-            if (!images.containsKey(friend.id)) {
+          /*  if (!images.containsKey(friend.id)) {
                 images.put(friend.id, avatarCpy);
                 Picasso.Builder picassoBuilder = new Picasso.Builder(SelectUserActivity.this);
                 Picasso picasso = picassoBuilder.build();
@@ -122,7 +122,10 @@ public class SelectUserActivity extends AppCompatActivity {
             if (images.get(friend.id).getDrawable() == null) {
                 DownloadImagesTask downloadImagesTask = new DownloadImagesTask(avatarCpy);
                 downloadImagesTask.execute(viewHolder.avatar);
-            }
+            }*/
+            Picasso.Builder picassoBuilder = new Picasso.Builder(SelectUserActivity.this);
+            Picasso picasso = picassoBuilder.build();
+            picasso.load(friend.photo).into(viewHolder.avatar);
             viewHolder.check.setChecked(friend.isCheked);
             return view;
         }

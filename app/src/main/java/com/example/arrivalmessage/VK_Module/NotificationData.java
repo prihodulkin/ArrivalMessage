@@ -8,6 +8,10 @@ public class NotificationData {
     public String location;
     public int isEnabled;
     public String[] displayFriends;
+    public int hours;
+    public int minutes;
+    public int days;
+    public int flag;
 
     public NotificationData() {
         idChosenFriends = new int[0];
@@ -25,5 +29,10 @@ public class NotificationData {
         writtenText = wT;
         isEnabled = isEn;
         location = loc;
+        days=1;
+        hours=0;
+        minutes=0;
+        flag=1;
+
     }
 }

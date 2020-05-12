@@ -26,7 +26,6 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.arrivalmessage.VK_Module.NotificationData;
-import com.example.arrivalmessage.VK_Module.VKUser;
 import com.example.arrivalmessage.VK_Module.VK_Controller;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationResult;
@@ -53,9 +52,11 @@ public class MainActivity extends AppCompatActivity {
     //Переменная для работы с БД
     private DatabaseHelper mDBHelper;
     private SQLiteDatabase mDb;
-    //public static VK_Controller controller;
+    public static VK_Controller controller;
     public static double defLatitude=47.216724;
     public static double defLongitude=39.628510;
+    public static String defMessage="";
+    public static String defLocation="улица Мильчакова 8А, Ростов-на-Дону";
     private LocationManager manager;
     private LocationCallback locationCallback;
 
@@ -179,20 +180,19 @@ public class MainActivity extends AppCompatActivity {
 
         //requestQueue.start();
 
-/*
-        if (AuthActivity.controller == null) {
+
+        /*if (controller == null) {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
-            AuthActivity.controller = new VK_Controller(requestQueue, getResources().getString(R.string.Access_Key), getResources().getString(R.string.Group_id));
+            controller = new VK_Controller(requestQueue, getResources().getString(R.string.Access_Key), getResources().getString(R.string.Group_id));
         }
 
         if (!VK.isLoggedIn()) {
             VK.login(this, Arrays.asList(VKScope.FRIENDS));
         } else {
-            AuthActivity.controller.UpdateFriends();
-            AuthActivity.controller.UpdateUserID();
-        }*/
-
-
+            controller.UpdateFriends();
+            controller.UpdateUserID();
+        }
+*/
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == 0) {
             manager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
             manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
@@ -325,6 +325,27 @@ public class MainActivity extends AppCompatActivity {
         aText.setTypeface(Typeface.createFromAsset(getAssets(), "font/centurygothic.ttf"));
     }
 
+ /*   @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if (data == null || !VK.onActivityResult(requestCode, resultCode, data, new VKAuthCallback() {
+            @Override
+            public void onLogin(@NotNull VKAccessToken vkAccessToken) {
+                VK_Controller.UserID = vkAccessToken.getUserId();
+                controller.UpdateUserID();
+                controller.UpdateFriends();
+            }
+
+            @Override
+            public void onLoginFailed(int i) {
+                Intent n = getIntent();
+                finish();
+                startActivity(n);
+            }
+        })) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }*/
 
 
 }

@@ -60,9 +60,10 @@ public class SavedNotificationsActivity extends AppCompatActivity {
         }
         for (int i = 0; i < MainActivity.data.size(); i++) {
             final TableRow tableRow = new TableRow(this);
-            tableRow.setMinimumHeight(170);
+           // tableRow.setMinimumHeight(170);
             TableRow actionsRow = new TableRow(this);
-            actionsRow.setPadding(0, 10, 0, 0);
+            actionsRow.setGravity(Gravity.CENTER);
+           // actionsRow.setPadding(0, 10, 0, 0);
             final TextView notificationText = new TextView(this);
             final Button editButton = new Button(this);
             editButton.setTag(i);
@@ -116,8 +117,11 @@ public class SavedNotificationsActivity extends AppCompatActivity {
 
             );
             final Switch toggle = new Switch(this);
+            Resources r = getResources();
+            int px = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, r.getDisplayMetrics());
 
             toggle.setTag(i);
+            toggle.setWidth(px);
             toggle.setChecked(data.get(i).isEnabled == 1);
             toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -135,8 +139,7 @@ public class SavedNotificationsActivity extends AppCompatActivity {
             notificationText.setLayoutParams(new TableRow.LayoutParams(
                     TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT, 5f));
-            Resources r = getResources();
-            int px = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, r.getDisplayMetrics());
+
             notificationText.setText(MainActivity.data.get(i).location + "\n");
             notificationText.setTextColor(-1);
             notificationText.setWidth(px*8);
@@ -150,9 +153,9 @@ public class SavedNotificationsActivity extends AppCompatActivity {
             actionsRow.addView(deleteButton, px, px);
             actionsRow.setLayoutParams(new TableRow.LayoutParams(
                     TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT, 2f));
+                    TableRow.LayoutParams.MATCH_PARENT, 2f));
 
-            tableRow.addView(toggle);
+            tableRow.addView(toggle,px*2,px*2);
             tableRow.addView(notificationText);
             tableRow.addView(actionsRow);
             tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));

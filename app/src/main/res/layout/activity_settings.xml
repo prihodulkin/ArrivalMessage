@@ -16,10 +16,11 @@
         android:layout_marginBottom="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableRow2"
-        app:srcCompat="@drawable/table_blue"
-        android:alpha="0.6"/>
+        app:layout_constraintVertical_bias="0.447"
+        app:srcCompat="@drawable/table_blue" />
 
     <TableRow
         android:id="@+id/tableRow2"
@@ -32,21 +33,18 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <ImageView
-            android:id="@+id/icon_white"
-            android:layout_width="10dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintHorizontal_bias="0.496"
-
-
-            />
-
         <ImageButton
             android:id="@+id/back_btn"
             android:layout_width="27dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/back" />
+
+        <ImageView
+            android:id="@+id/icon_white"
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintHorizontal_bias="0.496" />
 
         <TextView
             android:id="@+id/textView6"
@@ -66,23 +64,44 @@
 
     </TableRow>
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
+    <TableRow
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/centurygothicbold"
-        android:gravity="fill_horizontal|center_vertical"
-        android:lineSpacingExtra="-10dp"
-        android:text="Геолокация по умолчанию:"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="21dp"
-        app:layout_constraintBottom_toBottomOf="@+id/choice_table"
-        app:layout_constraintEnd_toEndOf="@+id/choice_table"
-        app:layout_constraintHorizontal_bias="0.205"
-        app:layout_constraintStart_toStartOf="@+id/choice_table"
-        app:layout_constraintTop_toTopOf="@+id/choice_table"
-        app:layout_constraintVertical_bias="0.042" />
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="40dp"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="@+id/textView10"
+        app:layout_constraintStart_toStartOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@+id/textView9">
+
+        <TextView
+            android:textSize="16dp"
+            android:padding="5dp"
+            android:layout_weight="1"
+            android:id="@+id/cur_def_loc"
+            android:textColor="#FFFFFF"
+            ></TextView>
+
+        <Button
+            android:id="@+id/change_def_loc"
+            android:layout_weight="3"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="13dp"
+            android:text="Изменить"
+            android:background="#99A6C9D6"
+            android:fontFamily="@font/centurygothicbold"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            >
+
+
+        </Button>
+
+
+    </TableRow>
 
     <TextView
         android:id="@+id/textView10"
@@ -117,4 +136,133 @@
         app:layout_constraintEnd_toEndOf="@+id/choice_table"
         app:layout_constraintStart_toStartOf="@+id/choice_table"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/centurygothicbold"
+        android:gravity="fill_horizontal|center_vertical"
+        android:lineSpacingExtra="-10dp"
+        android:text="Геолокация по умолчанию:"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="21dp"
+        app:layout_constraintBottom_toBottomOf="@+id/choice_table"
+        app:layout_constraintEnd_toEndOf="@+id/choice_table"
+        app:layout_constraintHorizontal_bias="0.205"
+        app:layout_constraintStart_toStartOf="@+id/choice_table"
+        app:layout_constraintTop_toTopOf="@+id/choice_table"
+        app:layout_constraintVertical_bias="0.042" />
+
+    <EditText
+        android:id="@+id/defMessage"
+        android:background="@color/quantum_white_100"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:textColor="@color/colorAccent"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="@+id/choice_table"
+        app:layout_constraintStart_toStartOf="@+id/choice_table"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" >
+        <TextView
+            android:textSize="16dp"
+            android:padding="5dp"
+            android:layout_weight="1"
+            android:text="Дни:"
+            android:textColor="#FFFFFF" >
+
+        </TextView>
+        <TableRow
+
+            android:layout_weight="2"
+            android:layout_gravity="left"
+            android:orientation="vertical"
+             >
+            <Button
+                android:layout_height="15dp"
+                android:background="@drawable/ic_expand_less24dp">
+            </Button>
+            <TextView
+                android:layout_height="15dp"
+                android:layout_width="20dp">
+            </TextView>
+            <Button
+                android:background="@drawable/ic_expand_more"
+                android:layout_height="15dp">
+            </Button>
+
+        </TableRow>
+        <TextView
+            android:textSize="16dp"
+            android:padding="5dp"
+            android:layout_weight="1"
+            android:text="Дни:"
+            android:textColor="#FFFFFF" >
+
+        </TextView>
+        <TableRow
+
+            android:layout_weight="2"
+            android:layout_gravity="left"
+            android:orientation="vertical"
+            >
+            <Button
+                android:layout_height="15dp"
+                android:background="@drawable/ic_expand_less24dp">
+            </Button>
+            <TextView
+                android:layout_height="15dp"
+                android:layout_width="20dp">
+            </TextView>
+            <Button
+                android:background="@drawable/ic_expand_more"
+                android:layout_height="15dp">
+            </Button>
+
+        </TableRow>
+        <TextView
+            android:textSize="16dp"
+            android:padding="5dp"
+            android:layout_weight="1"
+            android:text="Дни:"
+            android:textColor="#FFFFFF" >
+
+        </TextView>
+        <TableRow
+
+            android:layout_weight="2"
+            android:layout_gravity="left"
+            android:orientation="vertical"
+            >
+            <Button
+                android:layout_height="15dp"
+                android:background="@drawable/ic_expand_less24dp">
+            </Button>
+            <TextView
+                android:layout_height="15dp"
+                android:layout_width="20dp">
+            </TextView>
+            <Button
+                android:background="@drawable/ic_expand_more"
+                android:layout_height="15dp">
+            </Button>
+
+        </TableRow>
+    </TableRow>>
+    >
 </androidx.constraintlayout.widget.ConstraintLayout>

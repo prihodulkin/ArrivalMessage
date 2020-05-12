@@ -50,7 +50,7 @@ public class AuthActivity extends AppCompatActivity {
                     try
                     {
                         int logoTimer = 0;
-                        while(logoTimer < 5000)
+                        while(logoTimer < 3000)
                         {
                             sleep(100);
                             logoTimer = logoTimer +100;
@@ -101,7 +101,7 @@ public class AuthActivity extends AppCompatActivity {
                         try
                         {
                             int logoTimer = 0;
-                            while(logoTimer < 5000)
+                            while(logoTimer < 3000)
                             {
                                 sleep(100);
                                 logoTimer = logoTimer +100;
