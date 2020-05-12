@@ -37,7 +37,7 @@ public class ChooseTextActivity extends AppCompatActivity {
         textMessage = findViewById(R.id.text_message);
         textMessage.setPadding(20, 10, 20, 10);
         textMessage.setTextColor(-1);
-        textMessage.setText(MainActivity.curData.writtenText);
+        textMessage.setText(MainActivity.defMessage);
         Bundle arguments = getIntent().getExtras();
 
     }

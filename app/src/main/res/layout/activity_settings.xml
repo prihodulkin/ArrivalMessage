@@ -170,99 +170,120 @@
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_width="310dp"
+        android:layout_height="50dp"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="80dp"
-        android:layout_marginRight="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" >
+        app:layout_constraintTop_toBottomOf="@+id/textView11">
+
         <TextView
-            android:textSize="16dp"
-            android:padding="5dp"
+            android:layout_width="272dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:padding="5dp"
             android:text="Дни:"
-            android:textColor="#FFFFFF" >
+            android:textColor="#FFFFFF"
+            android:textSize="16dp">
 
         </TextView>
-        <TableRow
 
-            android:layout_weight="2"
-            android:layout_gravity="left"
-            android:orientation="vertical"
-             >
+        <LinearLayout
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            android:orientation="vertical">
+
             <Button
+                android:layout_width="match_parent"
                 android:layout_height="15dp"
-                android:background="@drawable/ic_expand_less24dp">
-            </Button>
+                android:width="40dp"
+                android:background="@drawable/ic_expand_less24dp"></Button>
+
             <TextView
-                android:layout_height="15dp"
-                android:layout_width="20dp">
-            </TextView>
-            <Button
-                android:background="@drawable/ic_expand_more"
-                android:layout_height="15dp">
-            </Button>
+                android:layout_width="match_parent"
+                android:layout_height="19dp"
+                android:height="30dp"
+                android:background="#FFFFFF"
+                android:text="10"></TextView>
 
-        </TableRow>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="@drawable/ic_expand_more"></Button>
+        </LinearLayout>
+
         <TextView
-            android:textSize="16dp"
-            android:padding="5dp"
+            android:layout_width="279dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Дни:"
-            android:textColor="#FFFFFF" >
+            android:padding="5dp"
+            android:text="Часы:"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp">
 
         </TextView>
-        <TableRow
 
-            android:layout_weight="2"
-            android:layout_gravity="left"
-            android:orientation="vertical"
+        <LinearLayout
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
             >
-            <Button
-                android:layout_height="15dp"
-                android:background="@drawable/ic_expand_less24dp">
-            </Button>
-            <TextView
-                android:layout_height="15dp"
-                android:layout_width="20dp">
-            </TextView>
-            <Button
-                android:background="@drawable/ic_expand_more"
-                android:layout_height="15dp">
-            </Button>
 
-        </TableRow>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:width="40dp"
+                android:background="@drawable/ic_expand_less24dp"></Button>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:text="10"></TextView>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="@drawable/ic_expand_more"></Button>
+
+        </LinearLayout>
+
         <TextView
-            android:textSize="16dp"
-            android:padding="5dp"
+            android:layout_width="283dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Дни:"
-            android:textColor="#FFFFFF" >
+            android:padding="5dp"
+            android:text="Минуты:"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp">
 
         </TextView>
-        <TableRow
 
-            android:layout_weight="2"
-            android:layout_gravity="left"
-            android:orientation="vertical"
+        <LinearLayout
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            android:orientation="vertical">
             >
-            <Button
-                android:layout_height="15dp"
-                android:background="@drawable/ic_expand_less24dp">
-            </Button>
-            <TextView
-                android:layout_height="15dp"
-                android:layout_width="20dp">
-            </TextView>
-            <Button
-                android:background="@drawable/ic_expand_more"
-                android:layout_height="15dp">
-            </Button>
 
-        </TableRow>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:width="40dp"
+                android:background="@drawable/ic_expand_less24dp"></Button>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:text="10"></TextView>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="@drawable/ic_expand_more"></Button>
+
+        </LinearLayout>
     </TableRow>>
     >
 </androidx.constraintlayout.widget.ConstraintLayout>
