@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.example.arrivalmessage.VK_Module.NotificationData;
 import com.example.arrivalmessage.VK_Module.VKUser;
+import com.example.arrivalmessage.VK_Module.VK_Controller;
 import com.google.android.gms.maps.model.LatLng;
 
 public class FinishActivity extends AppCompatActivity {
@@ -72,7 +73,7 @@ public class FinishActivity extends AppCompatActivity {
         cv.put("isEnabled", 1);
         cv.put("location", MainActivity.curData.location);
 
-        MainActivity.data.add(new NotificationData(users_ids, MainActivity.curData.latitude, MainActivity.curData.longitude, MainActivity.curData.writtenText, 1, MainActivity.curData.location));
+        MainActivity.data.add(new NotificationData(users_ids, MainActivity.curData.latitude, MainActivity.curData.longitude, MainActivity.curData.writtenText, 1, MainActivity.curData.location, VK_Controller.UserID, MainActivity.curData.days, MainActivity.curData.hours, MainActivity.curData.minutes, MainActivity.curData.flag));
 
         mDb.insert("users", null, cv);
 

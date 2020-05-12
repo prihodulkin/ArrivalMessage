@@ -216,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         Cursor cursor = mDb.rawQuery("SELECT * FROM users", null);
+        //mDb.execSQL("DELETE FROM" + " users");
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             String id = cursor.getString(0);
@@ -224,7 +225,13 @@ public class MainActivity extends AppCompatActivity {
             String message = cursor.getString(3);
             int isEnabled = cursor.getInt(4);
             String location = cursor.getString(5);
-            data.add(new NotificationData(id, latitude, longitude, message, isEnabled, location));
+            int user_id = cursor.getInt(6);
+            int days = cursor.getInt(7);
+            int hours = cursor.getInt(8);
+            int minutes = cursor.getInt(9);
+            int flag = cursor.getInt(10);
+            if (user_id == VK_Controller.UserID)
+                data.add(new NotificationData(id, latitude, longitude, message, isEnabled, location, user_id, days, hours, minutes, flag));
             cursor.moveToNext();
         }
         cursor.close();
@@ -303,6 +310,11 @@ public class MainActivity extends AppCompatActivity {
                                 cv.put("message", d.writtenText);
                                 cv.put("isEnabled", d.isEnabled);
                                 cv.put("location", d.location);
+                                cv.put("user_id", d.user_id);
+                                cv.put("days", d.days);
+                                cv.put("hours", d.hours);
+                                cv.put("minutes", d.minutes);
+                                cv.put("flag", d.flag);
                                 mDb.insert("users", null, cv);
                             }
                         }

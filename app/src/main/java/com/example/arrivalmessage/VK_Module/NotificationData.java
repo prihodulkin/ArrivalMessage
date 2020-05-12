@@ -8,6 +8,7 @@ public class NotificationData {
     public String location;
     public int isEnabled;
     public String[] displayFriends;
+    public int user_id;
     public int hours;
     public int minutes;
     public int days;
@@ -19,7 +20,7 @@ public class NotificationData {
     }
 
 
-    public NotificationData(String isCF, double lat, double longt, String wT, int isEn, String loc) {
+    public NotificationData(String isCF, double lat, double longt, String wT, int isEn, String loc, int us_id, int d, int h, int m, int f) {
         String[] idss = isCF.split(" ");
         idChosenFriends = new int[idss.length];
         for (int i = 0; i < idss.length; i++)
@@ -29,10 +30,11 @@ public class NotificationData {
         writtenText = wT;
         isEnabled = isEn;
         location = loc;
-        days=1;
-        hours=0;
-        minutes=0;
-        flag=1;
+        user_id = us_id;
+        days = d;
+        hours = h;
+        minutes = m;
+        flag = f;
 
     }
 }
