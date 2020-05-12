@@ -59,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
     public static String defLocation="улица Мильчакова 8А, Ростов-на-Дону";
     private LocationManager manager;
     private LocationCallback locationCallback;
+    public static int days = 10;
+    public static int hours = 10;
+    public static int minutes = 10;
 
     private LocationListener listener = new LocationListener() {
         @Override
