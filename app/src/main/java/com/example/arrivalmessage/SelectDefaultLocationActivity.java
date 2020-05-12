@@ -143,9 +143,7 @@ public class SelectDefaultLocationActivity extends AppCompatActivity implements 
                     public void onClick(View v) {
                         MainActivity.defLatitude=latitude;
                         MainActivity.defLongitude=longitude;
-                        Intent intent = new Intent(SelectDefaultLocationActivity.this, ChooseTextActivity.class);
-                        FinishManager.addActivity(SelectDefaultLocationActivity.this);
-                        startActivity(intent);
+                        SelectDefaultLocationActivity.super.finish();
                     }
                 }
 
