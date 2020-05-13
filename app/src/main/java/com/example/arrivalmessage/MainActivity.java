@@ -45,7 +45,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-
     public static List<NotificationData> data;
     public static NotificationData curData = new NotificationData();
     public static NotificationData reserveData;
@@ -298,6 +297,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        Button info_btn = findViewById(R.id.info_btn);
+        info_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, InfoActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -364,6 +371,8 @@ public class MainActivity extends AppCompatActivity {
         TextView aText = alertDialog.findViewById(android.R.id.message);
         aText.setTypeface(Typeface.createFromAsset(getAssets(), "font/centurygothic.ttf"));
     }
+
+
 
  /*   @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

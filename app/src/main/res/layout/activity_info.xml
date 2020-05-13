@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/map"
+    tools:context=".InfoActivity">
+
+    <TableRow
+        android:id="@+id/tableRow"
+
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@drawable/table_up"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/icon_white"
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintHorizontal_bias="0.496"
+
+
+            />
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="27dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/back" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:text="Руководство пользователя"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:fontFamily="@font/centurygothicbold"
+            android:gravity="center_horizontal|center_vertical"
+            android:lineSpacingExtra="-10dp"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="23dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+    </TableRow>
+
+    <ScrollView
+        android:layout_width="339dp"
+        android:layout_height="488dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableRow"
+        app:layout_constraintVertical_bias="0.494">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/table_blue"
+            android:fontFamily="@font/centurygothic"
+            android:paddingStart="13dp"
+            android:paddingLeft="13dp"
+            android:paddingTop="13dp"
+            android:paddingEnd="13dp"
+            android:paddingRight="13dp"
+            android:paddingBottom="13dp"
+            android:text="• Чтобы создать уведомление, нажмите \''Создать уведомление\''. Далее выберите друзей, геолокацию и введите текст сообщения. \n\n• Созданные уведомления хранятся во вкладке \''Мои уведомления\''. Там Вы можете включать/выключать, редактировать, удалять уведомления. \n\n• Во вкладке \''Настройки\'' Вы можете определить время повторного запуска, геолокацию и текст сообщения по умолчанию. \n\n• Если вы хотите сменить свой аккаунт ВКонтакте, нажмите \''Сменить аккаунт\''."
+            android:textColor="#ffff"
+            android:textSize="19dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tableRow" />
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
