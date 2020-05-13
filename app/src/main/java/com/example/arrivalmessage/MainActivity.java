@@ -57,11 +57,12 @@ public class MainActivity extends AppCompatActivity {
     public static double defLongitude=39.628510;
     public static String defMessage="";
     public static String defLocation="улица Мильчакова 8А, Ростов-на-Дону";
+
     private LocationManager manager;
     private LocationCallback locationCallback;
-    public static int days = 10;
-    public static int hours = 10;
-    public static int minutes = 10;
+    public static int defDays = 10;
+    public static int defHours = 10;
+    public static int defMinutes = 10;
 
     private LocationListener listener = new LocationListener() {
         @Override
@@ -219,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         Cursor cursor = mDb.rawQuery("SELECT * FROM users", null);
+        //mDb.execSQL("DELETE FROM" + " users");
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             String id = cursor.getString(0);
@@ -227,11 +229,32 @@ public class MainActivity extends AppCompatActivity {
             String message = cursor.getString(3);
             int isEnabled = cursor.getInt(4);
             String location = cursor.getString(5);
-            data.add(new NotificationData(id, latitude, longitude, message, isEnabled, location));
+            int user_id = cursor.getInt(6);
+            int days = cursor.getInt(7);
+            int hours = cursor.getInt(8);
+            int minutes = cursor.getInt(9);
+            int flag = cursor.getInt(10);
+            if (user_id == VK_Controller.UserID)
+                data.add(new NotificationData(id, latitude, longitude, message, isEnabled, location, user_id, days, hours, minutes, flag));
             cursor.moveToNext();
         }
         cursor.close();
         data.contains(1);
+
+
+        Cursor cursor1 = mDb.rawQuery("SELECT * FROM settings", null);
+        cursor1.moveToFirst();
+        while (!cursor1.isAfterLast()) {
+            defLatitude = cursor1.getDouble(0);
+            defLongitude = cursor1.getDouble(1);
+            defMessage = cursor1.getString(2);
+            defLocation = cursor1.getString(3);
+            defDays = cursor1.getInt(4);
+            defHours = cursor1.getInt(5);
+            defMinutes = cursor1.getInt(6);
+            cursor1.moveToNext();
+        }
+        cursor1.close();
 
     }
 
@@ -280,6 +303,86 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        mDb.execSQL("DELETE FROM" + " users");
+        if (data.size() > 0) {
+            for (NotificationData d : data) {
+                ContentValues cv = new ContentValues();
+                String users_ids = "";
+                for (int id : d.idChosenFriends) {
+                    users_ids += id + " ";
+                }
+                cv.put("users_ids", users_ids);
+                cv.put("latitude", d.latitude);
+                cv.put("longitude", d.longitude);
+                cv.put("message", d.writtenText);
+                cv.put("isEnabled", d.isEnabled);
+                cv.put("location", d.location);
+                cv.put("user_id", d.user_id);
+                cv.put("days", d.days);
+                cv.put("hours", d.hours);
+                cv.put("minutes", d.minutes);
+                cv.put("flag", d.flag);
+                mDb.insert("users", null, cv);
+            }
+        }
+
+        ContentValues cv1 = new ContentValues();
+        cv1.put("defLatitude", defLatitude);
+        cv1.put("defLongitude", defLongitude);
+        cv1.put("defMessage", defMessage);
+        cv1.put("defLocation", defLocation);
+        cv1.put("defDays", defDays);
+        cv1.put("defHours", defHours);
+        cv1.put("defMinutes", defMinutes);
+
+        mDb.insert("settings", null, cv1);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mDb.execSQL("DELETE FROM" + " users");
+        if (data.size() > 0) {
+            for (NotificationData d : data) {
+                ContentValues cv = new ContentValues();
+                String users_ids = "";
+                for (int id : d.idChosenFriends) {
+                    users_ids += id + " ";
+                }
+                cv.put("users_ids", users_ids);
+                cv.put("latitude", d.latitude);
+                cv.put("longitude", d.longitude);
+                cv.put("message", d.writtenText);
+                cv.put("isEnabled", d.isEnabled);
+                cv.put("location", d.location);
+                cv.put("user_id", d.user_id);
+                cv.put("days", d.days);
+                cv.put("hours", d.hours);
+                cv.put("minutes", d.minutes);
+                cv.put("flag", d.flag);
+                mDb.insert("users", null, cv);
+            }
+        }
+        data.clear();
+        data = null;
+
+        ContentValues cv1 = new ContentValues();
+        cv1.put("defLatitude", defLatitude);
+        cv1.put("defLongitude", defLongitude);
+        cv1.put("defMessage", defMessage);
+        cv1.put("defLocation", defLocation);
+        cv1.put("defDays", defDays);
+        cv1.put("defHours", defHours);
+        cv1.put("defMinutes", defMinutes);
+
+        mDb.insert("settings", null, cv1);
+
+        finish();
+    }
+
+    @Override
     public void onBackPressed() {
         curData.toString();
         data.contains(1);
@@ -294,7 +397,6 @@ public class MainActivity extends AppCompatActivity {
                         //  SelectUserActivity.friends.clear();
                         mDb.execSQL("DELETE FROM" + " users");
                         if (data.size() > 0) {
-
                             for (NotificationData d : data) {
                                 ContentValues cv = new ContentValues();
                                 String users_ids = "";
@@ -307,11 +409,27 @@ public class MainActivity extends AppCompatActivity {
                                 cv.put("message", d.writtenText);
                                 cv.put("isEnabled", d.isEnabled);
                                 cv.put("location", d.location);
+                                cv.put("user_id", d.user_id);
+                                cv.put("days", d.days);
+                                cv.put("hours", d.hours);
+                                cv.put("minutes", d.minutes);
+                                cv.put("flag", d.flag);
                                 mDb.insert("users", null, cv);
                             }
                         }
                         data.clear();
                         data = null;
+
+                        ContentValues cv1 = new ContentValues();
+                        cv1.put("defLatitude", defLatitude);
+                        cv1.put("defLongitude", defLongitude);
+                        cv1.put("defMessage", defMessage);
+                        cv1.put("defLocation", defLocation);
+                        cv1.put("defDays", defDays);
+                        cv1.put("defHours", defHours);
+                        cv1.put("defMinutes", defMinutes);
+
+                        mDb.insert("settings", null, cv1);
 
                         finish();
                     }

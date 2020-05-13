@@ -43,8 +43,8 @@ import java.lang.Object;
 public class SelectDefaultLocationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private MapView mMapView;
-    private double latitude=47.216724;
-    private double longitude=39.628510;
+    private double latitude=MainActivity.defLatitude;
+    private double longitude=MainActivity.defLongitude;
     private String location;
     private Marker SelectedPlaceMarker;
     private GoogleMap gmap;
@@ -184,6 +184,25 @@ public class SelectDefaultLocationActivity extends AppCompatActivity implements 
                         BitmapDescriptorFactory.fromResource(R.drawable.marker)));
                 latitude = latLng.latitude;
                 longitude=latLng.longitude;
+                Address address;
+                try {
+                    final Geocoder geocoder = new Geocoder(SelectDefaultLocationActivity.this, new Locale("ru", "RU"));
+                    address = geocoder.getFromLocation(latitude, longitude, 1).get(0);
+
+                    final String street = address.getThoroughfare() != null ? address.getThoroughfare() : "";
+                    final String house = address.getSubThoroughfare() != null ? address.getSubThoroughfare() : "";
+                    final String city = address.getLocality() != null ? address.getLocality() : "";
+
+                    location = street + " " + house + ", " + city;
+
+                    if (location.equals(" , ")) {
+                        location = "Unknown location";
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                MainActivity.defLocation=location;
+                SettingsActivity.defLocationText.setText(location);
             }
         });
 

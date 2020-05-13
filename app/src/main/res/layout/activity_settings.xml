@@ -16,7 +16,7 @@
         android:layout_marginBottom="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableRow2"
         app:layout_constraintVertical_bias="0.447"
@@ -65,37 +65,35 @@
     </TableRow>
 
     <TableRow
-        android:layout_width="match_parent"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
+        android:layout_marginStart="55dp"
         android:layout_marginTop="20dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginEnd="55dp"
         android:gravity="center_vertical"
-        app:layout_constraintEnd_toEndOf="@+id/textView10"
-        app:layout_constraintStart_toStartOf="@+id/textView10"
+        app:layout_constraintEnd_toEndOf="@+id/choice_table"
+        app:layout_constraintStart_toStartOf="@+id/choice_table"
         app:layout_constraintTop_toBottomOf="@+id/textView9">
 
         <TextView
-            android:textSize="16dp"
-            android:padding="5dp"
-            android:layout_weight="1"
             android:id="@+id/cur_def_loc"
+            android:layout_weight="1"
+            android:padding="5dp"
             android:textColor="#FFFFFF"
-            ></TextView>
+            android:textSize="16dp"></TextView>
 
         <Button
             android:id="@+id/change_def_loc"
-            android:layout_weight="3"
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:textSize="13dp"
-            android:text="Изменить"
+            android:layout_weight="3"
             android:background="#99A6C9D6"
             android:fontFamily="@font/centurygothicbold"
+            android:text="Изменить"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            >
+            android:textSize="13dp">
 
 
         </Button>
@@ -105,8 +103,10 @@
 
     <TextView
         android:id="@+id/textView10"
-        android:layout_width="320dp"
+        android:layout_width="306dp"
         android:layout_height="58dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="80dp"
         android:fontFamily="@font/centurygothicbold"
         android:gravity="fill_horizontal|center_vertical"
         android:lineSpacingExtra="-10dp"
@@ -116,7 +116,7 @@
         android:textSize="21dp"
         app:layout_constraintBottom_toBottomOf="@+id/choice_table"
         app:layout_constraintEnd_toEndOf="@+id/choice_table"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="@+id/choice_table"
         app:layout_constraintTop_toBottomOf="@+id/textView9"
         app:layout_constraintVertical_bias="0.29" />
@@ -157,21 +157,22 @@
 
     <EditText
         android:id="@+id/defMessage"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="176dp"
         android:background="@color/quantum_white_100"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="80dp"
-        android:layout_marginRight="80dp"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:textColor="@color/colorAccent"
         android:text=""
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/choice_table"
         app:layout_constraintEnd_toEndOf="@+id/choice_table"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="@+id/choice_table"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <TableRow
+        android:id="@+id/tableRow5"
         android:layout_width="310dp"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -181,7 +182,9 @@
         <TextView
             android:layout_width="272dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
+            android:gravity="center"
             android:padding="5dp"
             android:text="Дни:"
             android:textColor="#FFFFFF"
@@ -191,13 +194,14 @@
 
         <LinearLayout
             android:layout_width="30dp"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
+
             android:orientation="vertical">
 
             <Button
                 android:id="@+id/daysplus"
                 android:layout_width="match_parent"
-                android:layout_height="15dp"
+                android:layout_height="25dp"
                 android:width="40dp"
                 android:background="@drawable/ic_expand_less24dp"></Button>
 
@@ -207,12 +211,13 @@
                 android:layout_height="19dp"
                 android:height="30dp"
                 android:background="#FFFFFF"
+                android:gravity="center"
                 android:text="10"></TextView>
 
             <Button
                 android:id="@+id/daysminus"
                 android:layout_width="match_parent"
-                android:layout_height="15dp"
+                android:layout_height="25dp"
                 android:background="@drawable/ic_expand_more"></Button>
         </LinearLayout>
 
@@ -220,6 +225,7 @@
             android:layout_width="279dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center"
             android:padding="5dp"
             android:text="Часы:"
             android:textColor="#FFFFFF"
@@ -236,7 +242,7 @@
             <Button
                 android:id="@+id/hoursplus"
                 android:layout_width="match_parent"
-                android:layout_height="15dp"
+                android:layout_height="25dp"
                 android:width="40dp"
                 android:background="@drawable/ic_expand_less24dp"></Button>
 
@@ -245,12 +251,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
+                android:gravity="center"
                 android:text="10"></TextView>
 
             <Button
                 android:id="@+id/hoursminus"
                 android:layout_width="match_parent"
-                android:layout_height="15dp"
+                android:layout_height="25dp"
                 android:background="@drawable/ic_expand_more"></Button>
 
         </LinearLayout>
@@ -259,6 +266,7 @@
             android:layout_width="283dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center"
             android:padding="5dp"
             android:text="Минуты:"
             android:textColor="#FFFFFF"
@@ -268,14 +276,14 @@
 
         <LinearLayout
             android:layout_width="30dp"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:orientation="vertical">
 
 
             <Button
                 android:id="@+id/minplus"
                 android:layout_width="match_parent"
-                android:layout_height="15dp"
+                android:layout_height="25dp"
                 android:width="40dp"
                 android:background="@drawable/ic_expand_less24dp"></Button>
 
@@ -284,15 +292,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
+                android:gravity="center"
                 android:text="10"></TextView>
 
             <Button
                 android:id="@+id/minmin"
                 android:layout_width="match_parent"
-                android:layout_height="15dp"
+                android:layout_height="25dp"
                 android:background="@drawable/ic_expand_more"></Button>
 
         </LinearLayout>
-    </TableRow>>
+    </TableRow>
+    >
 
 </androidx.constraintlayout.widget.ConstraintLayout>
