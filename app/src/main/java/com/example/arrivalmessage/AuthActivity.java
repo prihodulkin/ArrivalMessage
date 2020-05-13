@@ -88,6 +88,11 @@ public class AuthActivity extends AppCompatActivity {
                         {
                             sleep(100);
                             logoTimer = logoTimer +100;
+                            if(logoTimer==1000)
+                            {
+                                controller.UpdateFriends();
+                                logoTimer = 0;
+                            }
                         };
                         Intent intent = new Intent(AuthActivity.this, MainActivity.class);
                         startActivity(intent);

@@ -233,7 +233,6 @@ public class MainActivity extends AppCompatActivity {
         cursor.close();
         data.contains(1);
 
-
     }
 
     public void addListenerOnButton() {
