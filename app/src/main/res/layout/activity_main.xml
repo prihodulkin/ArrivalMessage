@@ -33,11 +33,7 @@
         android:id="@+id/create_btn"
         android:layout_width="220dp"
         android:layout_height="60dp"
-        android:layout_marginStart="73dp"
-        android:layout_marginLeft="73dp"
         android:layout_marginTop="76dp"
-        android:layout_marginEnd="73dp"
-        android:layout_marginRight="73dp"
         android:background="@drawable/button_create"
         android:fontFamily="@font/centurygothicbold"
         android:gravity="center_horizontal|center_vertical"
@@ -47,7 +43,6 @@
         android:textColor="#FFFFFF"
         android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo" />
 
@@ -88,7 +83,6 @@
         android:textColor="#FFFFFF"
         android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/create_btn" />
 
