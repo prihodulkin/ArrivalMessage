@@ -301,6 +301,86 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        mDb.execSQL("DELETE FROM" + " users");
+        if (data.size() > 0) {
+            for (NotificationData d : data) {
+                ContentValues cv = new ContentValues();
+                String users_ids = "";
+                for (int id : d.idChosenFriends) {
+                    users_ids += id + " ";
+                }
+                cv.put("users_ids", users_ids);
+                cv.put("latitude", d.latitude);
+                cv.put("longitude", d.longitude);
+                cv.put("message", d.writtenText);
+                cv.put("isEnabled", d.isEnabled);
+                cv.put("location", d.location);
+                cv.put("user_id", d.user_id);
+                cv.put("days", d.days);
+                cv.put("hours", d.hours);
+                cv.put("minutes", d.minutes);
+                cv.put("flag", d.flag);
+                mDb.insert("users", null, cv);
+            }
+        }
+
+        ContentValues cv1 = new ContentValues();
+        cv1.put("defLatitude", defLatitude);
+        cv1.put("defLongitude", defLongitude);
+        cv1.put("defMessage", defMessage);
+        cv1.put("defLocation", defLocation);
+        cv1.put("defDays", defDays);
+        cv1.put("defHours", defHours);
+        cv1.put("defMinutes", defMinutes);
+        Log.i("PPSH", "SHUE");
+        mDb.insert("settings", null, cv1);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mDb.execSQL("DELETE FROM" + " users");
+        if (data.size() > 0) {
+            for (NotificationData d : data) {
+                ContentValues cv = new ContentValues();
+                String users_ids = "";
+                for (int id : d.idChosenFriends) {
+                    users_ids += id + " ";
+                }
+                cv.put("users_ids", users_ids);
+                cv.put("latitude", d.latitude);
+                cv.put("longitude", d.longitude);
+                cv.put("message", d.writtenText);
+                cv.put("isEnabled", d.isEnabled);
+                cv.put("location", d.location);
+                cv.put("user_id", d.user_id);
+                cv.put("days", d.days);
+                cv.put("hours", d.hours);
+                cv.put("minutes", d.minutes);
+                cv.put("flag", d.flag);
+                mDb.insert("users", null, cv);
+            }
+        }
+        data.clear();
+        data = null;
+
+        ContentValues cv1 = new ContentValues();
+        cv1.put("defLatitude", defLatitude);
+        cv1.put("defLongitude", defLongitude);
+        cv1.put("defMessage", defMessage);
+        cv1.put("defLocation", defLocation);
+        cv1.put("defDays", defDays);
+        cv1.put("defHours", defHours);
+        cv1.put("defMinutes", defMinutes);
+
+        mDb.insert("settings", null, cv1);
+
+        finish();
+    }
+
+    @Override
     public void onBackPressed() {
         curData.toString();
         data.contains(1);
