@@ -57,14 +57,12 @@ public class MainActivity extends AppCompatActivity {
     public static double defLongitude=39.628510;
     public static String defMessage="";
     public static String defLocation="улица Мильчакова 8А, Ростов-на-Дону";
-    public static int defDays = 0;
-    public static int defHours = 0;
-    public static int defMinutes = 0;
+
     private LocationManager manager;
     private LocationCallback locationCallback;
-    public static int days = 10;
-    public static int hours = 10;
-    public static int minutes = 10;
+    public static int defDays = 10;
+    public static int defHours = 10;
+    public static int defMinutes = 10;
 
     private LocationListener listener = new LocationListener() {
         @Override
@@ -317,7 +315,6 @@ public class MainActivity extends AppCompatActivity {
                         //  SelectUserActivity.friends.clear();
                         mDb.execSQL("DELETE FROM" + " users");
                         if (data.size() > 0) {
-
                             for (NotificationData d : data) {
                                 ContentValues cv = new ContentValues();
                                 String users_ids = "";

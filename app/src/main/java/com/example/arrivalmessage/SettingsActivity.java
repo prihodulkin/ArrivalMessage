@@ -4,12 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -34,11 +29,11 @@ public class SettingsActivity extends AppCompatActivity {
         defMessage=findViewById(R.id.defMessage);
         defMessage.setText(MainActivity.defMessage);
         TextView days = findViewById(R.id.days);
-        days.setText(MainActivity.days+" ");
+        days.setText(MainActivity.defDays +" ");
         TextView hours = findViewById(R.id.hours);
-        hours.setText(MainActivity.hours+" ");
+        hours.setText(MainActivity.defHours +" ");
         TextView mins = findViewById(R.id.mins);
-        mins.setText(MainActivity.minutes+" ");
+        mins.setText(MainActivity.defMinutes +" ");
 
         addListenerOnButton();
 
@@ -64,7 +59,7 @@ public class SettingsActivity extends AppCompatActivity {
                         String str = days.getText().toString();
                         int dayscount = Integer.parseInt(str.substring(0,str.length()-1));
                         dayscount++;
-                        MainActivity.days = dayscount;
+                        MainActivity.defDays = dayscount;
                         days.setText(dayscount+" ");
                     }
                 }
@@ -79,7 +74,7 @@ public class SettingsActivity extends AppCompatActivity {
                         String str = days.getText().toString();
                         int dayscount = Integer.parseInt(str.substring(0,str.length()-1));
                         dayscount--;
-                        MainActivity.days = dayscount;
+                        MainActivity.defDays = dayscount;
                         days.setText(dayscount+" ");
                     }
                 }
@@ -94,7 +89,7 @@ public class SettingsActivity extends AppCompatActivity {
                         String str = days.getText().toString();
                         int hourcount = Integer.parseInt(str.substring(0,str.length()-1));
                         hourcount++;
-                        MainActivity.hours = hourcount;
+                        MainActivity.defHours = hourcount;
                         days.setText(hourcount+" ");
                     }
                 }
@@ -109,7 +104,7 @@ public class SettingsActivity extends AppCompatActivity {
                         String str = days.getText().toString();
                         int hourscount = Integer.parseInt(str.substring(0,str.length()-1));
                         hourscount--;
-                        MainActivity.hours = hourscount;
+                        MainActivity.defHours = hourscount;
                         days.setText(hourscount+" ");
                     }
                 }
@@ -124,7 +119,7 @@ public class SettingsActivity extends AppCompatActivity {
                         String str = days.getText().toString();
                         int mincount = Integer.parseInt(str.substring(0,str.length()-1));
                         mincount++;
-                        MainActivity.minutes = mincount;
+                        MainActivity.defMinutes = mincount;
                         days.setText(mincount+" ");
                     }
                 }
@@ -139,7 +134,7 @@ public class SettingsActivity extends AppCompatActivity {
                         String str = days.getText().toString();
                         int mincount = Integer.parseInt(str.substring(0,str.length()-1));
                         mincount--;
-                        MainActivity.minutes = mincount;
+                        MainActivity.defMinutes = mincount;
                         days.setText(mincount+" ");
                     }
                 }
@@ -149,10 +144,16 @@ public class SettingsActivity extends AppCompatActivity {
         chadneDefLoc.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+
                 Intent intent=new Intent(SettingsActivity.this,SelectDefaultLocationActivity.class);
                 startActivity(intent);
             }
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        MainActivity.defMessage=defMessage.getText().toString();
+        super.onBackPressed();
+    }
 }

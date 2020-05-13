@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -53,25 +54,27 @@ import android.view.ViewGroup;
 public class SelectUserActivity extends AppCompatActivity {
     // TableLayout tableLayout;
     static List<VKUser> friends;
-    List<VKUser> displayedFriends;
+    static  List<VKUser> displayedFriends;
     static HashSet<VKUser> chosenFriends;
     ImageView table;
     String[] displayFriends;
     SearchView searchView;
-    ListView listView;
+    RecyclerView listView;
 
     static HashMap<Integer, CircularImageView> images;
 
 
-    static class ViewHolder {
+
+
+   /* static class ViewHolder {
         protected CircularImageView avatar;
         protected CheckBox check;
         protected TextView fullName;
         protected boolean isCheked;
-    }
+    }*/
 
 
-    private class UserAdapter extends ArrayAdapter<VKUser> {
+   /* private class UserAdapter extends ArrayAdapter<VKUser> {
         public UserAdapter(Context context) {
             super(context, R.layout.list_item, displayedFriends);
         }
@@ -108,7 +111,7 @@ public class SelectUserActivity extends AppCompatActivity {
             CircularImageView avatarCpy = new CircularImageView(getApplicationContext());
 
             avatarCpy.setTag(friend);
-          /*  if (!images.containsKey(friend.id)) {
+          *//*  if (!images.containsKey(friend.id)) {
                 images.put(friend.id, avatarCpy);
                 Picasso.Builder picassoBuilder = new Picasso.Builder(SelectUserActivity.this);
                 Picasso picasso = picassoBuilder.build();
@@ -122,16 +125,16 @@ public class SelectUserActivity extends AppCompatActivity {
             if (images.get(friend.id).getDrawable() == null) {
                 DownloadImagesTask downloadImagesTask = new DownloadImagesTask(avatarCpy);
                 downloadImagesTask.execute(viewHolder.avatar);
-            }*/
+            }*//*
             Picasso.Builder picassoBuilder = new Picasso.Builder(SelectUserActivity.this);
             Picasso picasso = picassoBuilder.build();
             picasso.load(friend.photo).into(viewHolder.avatar);
             viewHolder.check.setChecked(friend.isCheked);
             return view;
-        }
+        }*/
 
 
-        @NonNull
+      /*  @NonNull
         @Override
         public Filter getFilter() {
             Filter myFilter = new Filter() {
@@ -171,7 +174,7 @@ public class SelectUserActivity extends AppCompatActivity {
             return myFilter;
         }
     }
-
+*/
     UserAdapter adapter;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -212,14 +215,19 @@ public class SelectUserActivity extends AppCompatActivity {
 
         }
 
-        //  tableLayout = findViewById(R.id.userList);
+        
         table = findViewById(R.id.users_table);
         searchView = findViewById(R.id.searchView);
-        adapter = new UserAdapter(SelectUserActivity.this);
+        adapter = new UserAdapter(SelectUserActivity.this){
+        };
         listView = findViewById(R.id.list_view);
-        listView.setChoiceMode(listView.CHOICE_MODE_MULTIPLE);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        listView.setLayoutManager(layoutManager);
+        //listView.setChoiceMode(listView.CHOICE_MODE_MULTIPLE);
         listView.smoothScrollToPosition(-21);
         listView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {

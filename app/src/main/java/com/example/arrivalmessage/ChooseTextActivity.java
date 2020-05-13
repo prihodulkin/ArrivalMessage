@@ -37,7 +37,8 @@ public class ChooseTextActivity extends AppCompatActivity {
         textMessage = findViewById(R.id.text_message);
         textMessage.setPadding(20, 10, 20, 10);
         textMessage.setTextColor(-1);
-        textMessage.setText(MainActivity.defMessage);
+
+        textMessage.setText(MainActivity.reserveData==null? MainActivity.defMessage:MainActivity.curData.writtenText);
         Bundle arguments = getIntent().getExtras();
 
     }
@@ -72,6 +73,8 @@ public class ChooseTextActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        MainActivity.curData.writtenText = textMessage.getText().toString();
+
                         if (textMessage.getText().toString().equals("")) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(ChooseTextActivity.this);
                             builder.setTitle("Внимание!");
@@ -93,7 +96,6 @@ public class ChooseTextActivity extends AppCompatActivity {
                                 return;
                             }
                             Intent intent = new Intent(ChooseTextActivity.this, FinishActivity.class);
-                            MainActivity.curData.writtenText = textMessage.getText().toString();
                             FinishManager.addActivity(ChooseTextActivity.this);
                             startActivity(intent);
                         }
