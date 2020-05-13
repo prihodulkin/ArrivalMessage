@@ -85,10 +85,15 @@ public class AuthActivity extends AppCompatActivity {
                     try
                     {
                         int logoTimer = 0;
-                        while(logoTimer < 3000)
+                        while(VK_Controller.friends.size()==0)
                         {
                             sleep(100);
                             logoTimer = logoTimer +100;
+                            if(logoTimer==1000)
+                            {
+                                controller.UpdateFriends();
+                                logoTimer = 0;
+                            }
                         };
                         Intent intent = new Intent(AuthActivity.this, MainActivity.class);
                         startActivity(intent);
