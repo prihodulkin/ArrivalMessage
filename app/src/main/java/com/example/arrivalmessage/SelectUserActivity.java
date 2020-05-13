@@ -63,118 +63,6 @@ public class SelectUserActivity extends AppCompatActivity {
 
     static HashMap<Integer, CircularImageView> images;
 
-
-
-
-   /* static class ViewHolder {
-        protected CircularImageView avatar;
-        protected CheckBox check;
-        protected TextView fullName;
-        protected boolean isCheked;
-    }*/
-
-
-   /* private class UserAdapter extends ArrayAdapter<VKUser> {
-        public UserAdapter(Context context) {
-            super(context, R.layout.list_item, displayedFriends);
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view = convertView;
-            final VKUser friend = getItem(position);
-            if (view == null) {
-                view = LayoutInflater.from(getContext())
-                        .inflate(R.layout.list_item, null);
-                final ViewHolder viewHolder = new ViewHolder();
-                viewHolder.avatar = (CircularImageView) view.findViewById(R.id.avatar);
-                viewHolder.fullName = view.findViewById(R.id.full_name);
-                viewHolder.check = view.findViewById(R.id.checkbox);
-                view.setTag(viewHolder);
-                viewHolder.fullName.setTag(friend);
-                viewHolder.check.setTag(displayedFriends.get(position));
-                viewHolder.check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        VKUser element = (VKUser) viewHolder.check
-                                .getTag();
-                        element.isCheked = buttonView.isChecked();
-                    }
-                });
-            } else {
-                ((ViewHolder) view.getTag()).check.setTag(displayedFriends.get(position));
-
-            }
-            ViewHolder viewHolder = (ViewHolder) view.getTag();
-            VKUser user = (VKUser) viewHolder.fullName.getTag();
-            viewHolder.fullName.setText(friend.firstname + ' ' + friend.lastname + '\n');
-            CircularImageView avatarCpy = new CircularImageView(getApplicationContext());
-
-            avatarCpy.setTag(friend);
-          *//*  if (!images.containsKey(friend.id)) {
-                images.put(friend.id, avatarCpy);
-                Picasso.Builder picassoBuilder = new Picasso.Builder(SelectUserActivity.this);
-                Picasso picasso = picassoBuilder.build();
-                if (images.get(friend.id).getDrawable() == null)
-                    picasso.load(friend.photo).into(viewHolder.avatar);
-                picasso.load(friend.photo).into(avatarCpy);
-            }
-            if (avatarCpy.getTag() == null)
-                avatarCpy.setTag(friend);
-            viewHolder.avatar.setImageDrawable(images.get(friend.id).getDrawable());
-            if (images.get(friend.id).getDrawable() == null) {
-                DownloadImagesTask downloadImagesTask = new DownloadImagesTask(avatarCpy);
-                downloadImagesTask.execute(viewHolder.avatar);
-            }*//*
-            Picasso.Builder picassoBuilder = new Picasso.Builder(SelectUserActivity.this);
-            Picasso picasso = picassoBuilder.build();
-            picasso.load(friend.photo).into(viewHolder.avatar);
-            viewHolder.check.setChecked(friend.isCheked);
-            return view;
-        }*/
-
-
-      /*  @NonNull
-        @Override
-        public Filter getFilter() {
-            Filter myFilter = new Filter() {
-                @Override
-                protected FilterResults performFiltering(CharSequence constraint) {
-                    FilterResults filterResults = new FilterResults();
-                    List<VKUser> tempList = new ArrayList<VKUser>();
-                    if (constraint != null && friends != null) {
-                        int length = friends.size();
-                        int i = 0;
-                        while (i < length) {
-                            VKUser item = friends.get(i);
-                            String fullName = item.firstname + ' ' + item.lastname;
-                            if (fullName.toLowerCase().contains(constraint.toString().toLowerCase()))
-                                tempList.add(item);
-                            i++;
-                        }
-
-                        filterResults.values = tempList;
-                        filterResults.count = tempList.size();
-                    }
-                    return filterResults;
-                }
-
-                @SuppressWarnings("unchecked")
-                @Override
-                protected void publishResults(CharSequence contraint, FilterResults results) {
-                    displayedFriends.clear();
-                    displayedFriends.addAll((ArrayList<VKUser>) results.values);
-                    if (results.count > 0) {
-                        notifyDataSetChanged();
-                    } else {
-                        notifyDataSetInvalidated();
-                    }
-                }
-            };
-            return myFilter;
-        }
-    }
-*/
     UserAdapter adapter;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -204,12 +92,8 @@ public class SelectUserActivity extends AppCompatActivity {
 
         };
         displayedFriends = new ArrayList<VKUser>();
-        //  if (friends != null)
         displayedFriends.addAll(friends);
-//        friends.sort(comparator);
-        if (chosenFriends == null)
-            chosenFriends = new HashSet<VKUser>();
-
+        chosenFriends = new HashSet<VKUser>();
         if (images == null) {
             images = new HashMap<>();
 
@@ -218,6 +102,12 @@ public class SelectUserActivity extends AppCompatActivity {
         
         table = findViewById(R.id.users_table);
         searchView = findViewById(R.id.searchView);
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchView.setIconified(false);
+            }
+        });
         adapter = new UserAdapter(SelectUserActivity.this){
         };
         listView = findViewById(R.id.list_view);
@@ -272,6 +162,7 @@ public class SelectUserActivity extends AppCompatActivity {
                             MainActivity.curData = MainActivity.reserveData;
                             MainActivity.reserveData = null;
                         }
+                        chosenFriends.clear();
                         // Intent intent = new Intent(SelectUserActivity.this, MainActivity.class);
                         SelectUserActivity.super.finish();
                         // startActivity(intent);
@@ -288,7 +179,6 @@ public class SelectUserActivity extends AppCompatActivity {
                         for (VKUser user : friends)
                             if (user.isCheked)
                                 chosenFriends.add(user);
-
                         if (chosenFriends.size() == 0) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(SelectUserActivity.this);
                             builder.setTitle("Внимание!");
@@ -316,6 +206,7 @@ public class SelectUserActivity extends AppCompatActivity {
                         }
                         Intent intent = new Intent(SelectUserActivity.this, SelectLocationActivity.class);
                         FinishManager.addActivity(SelectUserActivity.this);
+                        chosenFriends.clear();
                         startActivity(intent);
                     }
                 }
@@ -339,6 +230,7 @@ public class SelectUserActivity extends AppCompatActivity {
             MainActivity.curData = MainActivity.reserveData;
             MainActivity.reserveData = null;
         }
+        chosenFriends.clear();
         super.onBackPressed();
     }
 }

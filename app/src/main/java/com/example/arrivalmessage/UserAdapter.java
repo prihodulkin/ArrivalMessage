@@ -52,14 +52,10 @@ class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> implement
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 VKUser element = (VKUser) viewHolder.check
                         .getTag();
-                element.isCheked = buttonView.isChecked();
+                element.isCheked = !element.isCheked;
             }
         });
-      /*  viewHolder.fullName.setText(friend.firstname + ' ' + friend.lastname + '\n');
-        Picasso.Builder picassoBuilder = new Picasso.Builder(context);
-        Picasso picasso = picassoBuilder.build();
-        picasso.load(friend.photo).into(viewHolder.avatar);*/
-        viewHolder.check.setChecked(friend.isCheked);
+
         CircularImageView avatarCpy = new CircularImageView(context);
         viewHolder.fullName.setText(friend.firstname + ' ' + friend.lastname + '\n');
 

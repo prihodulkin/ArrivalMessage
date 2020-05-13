@@ -58,6 +58,7 @@
 
     <ScrollView
         android:id="@+id/ScrollTable"
+        android:background="@drawable/table_blue"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="20dp"
@@ -76,7 +77,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tableRow">
 
         <TableLayout
-            android:background="#990089BA"
+
             android:paddingTop="30dp"
             android:padding="5dp"
             android:id="@+id/notificationsList"

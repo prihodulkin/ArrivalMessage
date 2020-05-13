@@ -31,6 +31,7 @@ import java.util.Arrays;
 public class AuthActivity extends AppCompatActivity {
 
     public static VK_Controller controller;
+    AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class AuthActivity extends AppCompatActivity {
         setContentView(R.layout.auth);
         //addListenerOnButton();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder = new AlertDialog.Builder(this);
         builder.setTitle("Внимание!");
         builder.setMessage("Для работы приложения нужен доступ к интернету");
         builder.setCancelable(false);
@@ -94,7 +95,9 @@ public class AuthActivity extends AppCompatActivity {
                     }
                     catch (InterruptedException e)
                     {
-                        e.printStackTrace();
+                        builder.setMessage(e.getStackTrace().toString());
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
                     }
                     finally
                     {
@@ -173,6 +176,9 @@ public class AuthActivity extends AppCompatActivity {
                         }
                         catch (InterruptedException e)
                         {
+                            builder.setMessage(e.getStackTrace().toString());
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
                             e.printStackTrace();
                         }
                         finally

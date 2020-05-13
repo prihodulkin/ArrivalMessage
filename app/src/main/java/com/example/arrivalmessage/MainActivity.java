@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     public static int defDays = 10;
     public static int defHours = 10;
     public static int defMinutes = 10;
+    public static double  ACCURACY=0.1;
 
     private LocationListener listener = new LocationListener() {
         @Override
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             for (NotificationData d : data) {
                 if (d.isEnabled == 1) {
                     LatLng latLng = new LatLng(d.latitude, d.longitude);
-                    if (calculationByDistance(latLng, new LatLng(location.getLatitude(), location.getLongitude())) <= 0.1) {
+                    if (calculationByDistance(latLng, new LatLng(location.getLatitude(), location.getLongitude())) <= ACCURACY) {
 
                        /* AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                         builder.setTitle("Внимание!");
@@ -89,9 +90,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.i("Sent message", "Сообщение " + d.writtenText + " отправлено!");
                         for (int id : d.idChosenFriends)
                             AuthActivity.controller.SendMessage(id, d.writtenText);
-
                         d.isEnabled = 0;
-
                     }
 
 
@@ -301,6 +300,44 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        mDb.execSQL("DELETE FROM" + " users");
+        if (data.size() > 0) {
+            for (NotificationData d : data) {
+                ContentValues cv = new ContentValues();
+                String users_ids = "";
+                for (int id : d.idChosenFriends) {
+                    users_ids += id + " ";
+                }
+                cv.put("users_ids", users_ids);
+                cv.put("latitude", d.latitude);
+                cv.put("longitude", d.longitude);
+                cv.put("message", d.writtenText);
+                cv.put("isEnabled", d.isEnabled);
+                cv.put("location", d.location);
+                cv.put("user_id", d.user_id);
+                cv.put("days", d.days);
+                cv.put("hours", d.hours);
+                cv.put("minutes", d.minutes);
+                cv.put("flag", d.flag);
+                mDb.insert("users", null, cv);
+            }
+        }
+        data.clear();
+        data = null;
+        ContentValues cv1 = new ContentValues();
+        cv1.put("defLatitude", defLatitude);
+        cv1.put("defLongitude", defLongitude);
+        cv1.put("defMessage", defMessage);
+        cv1.put("defLocation", defLocation);
+        cv1.put("defDays", defDays);
+        cv1.put("defHours", defHours);
+        cv1.put("defMinutes", defMinutes);
+        mDb.insert("settings", null, cv1);
+        super.onDestroy();
+    }
+
+    @Override
     public void onBackPressed() {
         curData.toString();
         data.contains(1);
@@ -313,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
 
                         // SelectUserActivity.chosenFriends.clear();
                         //  SelectUserActivity.friends.clear();
-                        mDb.execSQL("DELETE FROM" + " users");
+                       /* mDb.execSQL("DELETE FROM" + " users");
                         if (data.size() > 0) {
                             for (NotificationData d : data) {
                                 ContentValues cv = new ContentValues();
@@ -347,7 +384,7 @@ public class MainActivity extends AppCompatActivity {
                         cv1.put("defHours", defHours);
                         cv1.put("defMinutes", defMinutes);
 
-                        mDb.insert("settings", null, cv1);
+                        mDb.insert("settings", null, cv1);*/
 
                         finish();
                     }
