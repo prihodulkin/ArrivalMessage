@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onProviderDisabled(String provider) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+          /*  AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("Внимание!");
             builder.setMessage("Включите передачу местоположения");
             builder.setCancelable(false);
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
             dialog.show();
             TextView aText = dialog.findViewById(android.R.id.message);
-            aText.setTypeface(Typeface.createFromAsset(getAssets(), "font/centurygothic.ttf"));
+            aText.setTypeface(Typeface.createFromAsset(getAssets(), "font/centurygothic.ttf"));*/
         }
     };
 

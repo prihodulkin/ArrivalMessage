@@ -28,12 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
         defLocationText.setText(MainActivity.defLocation);
         defMessage=findViewById(R.id.defMessage);
         defMessage.setText(MainActivity.defMessage);
-        TextView days = findViewById(R.id.days);
-        days.setText(MainActivity.defDays +" ");
-        TextView hours = findViewById(R.id.hours);
-        hours.setText(MainActivity.defHours +" ");
-        TextView mins = findViewById(R.id.mins);
-        mins.setText(MainActivity.defMinutes +" ");
+
         addListenerOnButton();
 
     }
@@ -49,7 +44,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
         );
 
-        Button days_plus_btn = findViewById(R.id.daysplus);
+        /*Button days_plus_btn = findViewById(R.id.daysplus);
         days_plus_btn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -145,9 +140,9 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent=new Intent(SettingsActivity.this,SelectDefaultLocationActivity.class);
-                startActivity(intent);
-            }
-        });
+                startActivity(intent);*/
+           // }
+        //});
     }
 
     @Override

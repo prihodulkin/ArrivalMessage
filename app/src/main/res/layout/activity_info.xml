@@ -62,12 +62,12 @@
         app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableRow"
+        android:background="@drawable/table_blue"
         app:layout_constraintVertical_bias="0.494">
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/table_blue"
             android:fontFamily="@font/centurygothic"
             android:paddingStart="13dp"
             android:paddingLeft="13dp"
@@ -75,7 +75,7 @@
             android:paddingEnd="13dp"
             android:paddingRight="13dp"
             android:paddingBottom="13dp"
-            android:text="• Чтобы создать уведомление, нажмите \''Создать уведомление\''. Далее выберите друзей, геолокацию и введите текст сообщения. \n\n• Созданные уведомления хранятся во вкладке \''Мои уведомления\''. Там Вы можете включать/выключать, редактировать, удалять уведомления. \n\n• Во вкладке \''Настройки\'' Вы можете определить время повторного запуска, геолокацию и текст сообщения по умолчанию. \n\n• Если вы хотите сменить свой аккаунт ВКонтакте, нажмите \''Сменить аккаунт\''."
+            android:text="• Чтобы создать уведомление, нажмите \''Создать уведомление\''. Далее выберите друзей, геолокацию и введите текст сообщения. \n\n• Созданные уведомления хранятся во вкладке \''Мои уведомления\''. Там Вы можете включать/выключать, редактировать, удалять уведомления. \n\n• Во вкладке \''Настройки\'' Вы можете определить  геолокацию и текст сообщения по умолчанию. \n\n• Если вы хотите сменить свой аккаунт ВКонтакте, нажмите \''Сменить аккаунт\''."
             android:textColor="#ffff"
             android:textSize="19dp"
             app:layout_constraintBottom_toBottomOf="parent"
