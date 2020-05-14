@@ -74,7 +74,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
     </TableRow>
 
     <Button
@@ -96,41 +95,29 @@
         app:layout_constraintVertical_bias="0.9" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@drawable/table_blue"
-        android:foregroundGravity="center"
-        android:layout_marginTop="150dp"
-        android:layout_marginBottom="150dp"
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_marginLeft="30dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginBottom="150dp"
         android:layout_marginRight="30dp"
+        android:background="@drawable/table_blue"
+        android:foregroundGravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableRow4">
 
-
-        <TableLayout
-            android:id="@+id/tableInfo"
-            android:padding="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="222dp"
-            android:layout_gravity="center_horizontal"
-            android:foregroundGravity="top"
-            android:scaleType="fitXY"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </TableLayout>
-
         <ScrollView
             android:id="@+id/scrollTable"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="203dp"
+            android:layout_height="124dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="200dp"
             android:layout_weight="1"
             android:clipChildren="false"
             android:clipToPadding="false"
@@ -142,14 +129,11 @@
             android:scrollbarStyle="insideOverlay"
             android:scrollbarThumbVertical="@color/Thumb"
             android:scrollbarTrackVertical="@color/Track"
-            android:verticalScrollbarPosition="right"
             android:scrollbars="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:verticalScrollbarPosition="right"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0">
+            app:layout_constraintTop_toBottomOf="@+id/textView16">
 
             <TableLayout
                 android:id="@+id/userList"
@@ -168,9 +152,93 @@
             </TableLayout>
         </ScrollView>
 
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/centurygothicbold"
+            android:gravity="fill_horizontal|center_vertical"
+            android:lineSpacingExtra="-10dp"
+            android:text="Сообщение: "
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="21dp"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout"
+            app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="170dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/centurygothicbold"
+            android:gravity="fill_horizontal|center_vertical"
+            android:lineSpacingExtra="-10dp"
+            android:text="Пользователи: "
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="21dp"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout"
+            app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="363dp"
+            android:layout_height="49dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="7dp"
+            android:fontFamily="@font/centurygothic"
+            android:gravity="center_horizontal|center_vertical"
+            android:lineSpacingExtra="-10dp"
+            android:text="(для адреса) "
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="15dp"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout"
+            app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/centurygothicbold"
+            android:gravity="center"
+            android:lineSpacingExtra="-10dp"
+            android:text="Адрес:"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="21dp"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout"
+            app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="407dp"
+            android:layout_height="72dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="7dp"
+            android:fontFamily="@font/centurygothic"
+            android:gravity="center_horizontal|center_vertical"
+            android:lineSpacingExtra="-10dp"
+            android:text="(для сообщения) "
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="15dp"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout"
+            app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

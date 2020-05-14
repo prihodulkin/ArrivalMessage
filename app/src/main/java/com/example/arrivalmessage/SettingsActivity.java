@@ -26,6 +26,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         defLocationText=findViewById(R.id.cur_def_loc);
         defLocationText.setText(MainActivity.defLocation);
+        
         defMessage=findViewById(R.id.defMessage);
         defMessage.setText(MainActivity.defMessage);
 

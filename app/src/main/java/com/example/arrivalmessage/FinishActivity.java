@@ -29,14 +29,12 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class FinishActivity extends AppCompatActivity {
 
-
     TableLayout tableLayout;
     TableLayout tableInfo;
     String users_ids = "";
 
     private DatabaseHelper mDBHelper;
     private SQLiteDatabase mDb;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +44,9 @@ public class FinishActivity extends AppCompatActivity {
         addListenerOnButton();
         Bundle arguments = getIntent().getExtras();
         tableLayout = findViewById(R.id.userList);
-        tableInfo = findViewById(R.id.tableInfo);
+//tableInfo = findViewById(R.id.tableInfo);
         createDisplayList();
-        createInfoTable();
+//createInfoTable();
         for (int id : MainActivity.curData.idChosenFriends) {
             users_ids += id + " ";
         }
@@ -66,6 +64,10 @@ public class FinishActivity extends AppCompatActivity {
         cv.put("message", MainActivity.curData.writtenText);
         cv.put("isEnabled", 1);
         cv.put("location", MainActivity.curData.location);
+        TextView address=findViewById(R.id.textView13);
+        address.setText(MainActivity.curData.location);
+        TextView message=findViewById(R.id.textView15);
+        message.setText(MainActivity.curData.writtenText);
 
         MainActivity.data.add(new NotificationData(users_ids, MainActivity.curData.latitude, MainActivity.curData.longitude, MainActivity.curData.writtenText, 1, MainActivity.curData.location, VK_Controller.UserID, MainActivity.curData.days, MainActivity.curData.hours, MainActivity.curData.minutes, MainActivity.curData.flag));
 
@@ -87,7 +89,6 @@ public class FinishActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
-
 
             }
         });
@@ -117,7 +118,6 @@ public class FinishActivity extends AppCompatActivity {
             MainActivity.reserveData=null;
         }
 
-
     }
 
     public void createDisplayList() {
@@ -138,48 +138,46 @@ public class FinishActivity extends AppCompatActivity {
             tableLayout.addView(tableRow);
         }
     }
+/*
+public void createInfoTable() {
+Resources r = getResources();
+int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, r.getDisplayMetrics());
+int textWidth=px*8;
+TableRow tableRowAddress = new TableRow(this);
+//TableRow addressT = getHeadRow("Адрес:");
+//TableRow messageT = getHeadRow("Сообщение:");
+//TableRow usersT = getHeadRow("Пользователи:");
 
-    public void createInfoTable() {
-        Resources r = getResources();
-        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, r.getDisplayMetrics());
-        int textWidth=px*8;
-        TableRow tableRowAddress = new TableRow(this);
-        TableRow addressT = getHeadRow("Адрес:");
-        TableRow messageT = getHeadRow("Сообщение:");
-        TableRow usersT = getHeadRow("Пользователи:");
+TableRow tableRowMessage = new TableRow(this);
+TextView addressView = new TextView(this);
 
+TextView textMessageView = new TextView(this);
+textMessageView.setTypeface(Typeface.createFromAsset(getAssets(), "font/centurygothic.ttf"));
+textMessageView.setTextSize(px/5);
 
+textMessageView.setGravity(Gravity.CENTER);
+addressView.setText(MainActivity.curData.location);
+addressView.setTypeface(Typeface.createFromAsset(getAssets(), "font/centurygothic.ttf"));
+addressView.setTextSize(px/5);
+textMessageView.setText(MainActivity.curData.writtenText);
+addressView.setTextColor(-1);
+addressView.setGravity(Gravity.CENTER);
+textMessageView.setTextColor(-1);
 
-        TableRow tableRowMessage = new TableRow(this);
-        TextView addressView = new TextView(this);
-
-        TextView textMessageView = new TextView(this);
-        textMessageView.setTypeface(Typeface.createFromAsset(getAssets(), "font/centurygothic.ttf"));
-        textMessageView.setTextSize(px/5);
-
-        textMessageView.setGravity(Gravity.CENTER);
-        addressView.setText(MainActivity.curData.location);
-        addressView.setTypeface(Typeface.createFromAsset(getAssets(), "font/centurygothic.ttf"));
-        addressView.setTextSize(px/5);
-        textMessageView.setText(MainActivity.curData.writtenText);
-        addressView.setTextColor(-1);
-        addressView.setGravity(Gravity.CENTER);
-        textMessageView.setTextColor(-1);
-
-        tableRowAddress.setGravity(Gravity.CENTER_HORIZONTAL);
-        tableRowMessage.setGravity(Gravity.CENTER_HORIZONTAL);
-        int pxHeight = px*2;
-        int pxWidth = px*10;
-        tableRowAddress.addView(addressView,pxWidth,pxHeight);
-        tableRowMessage.addView(textMessageView, pxWidth, pxHeight);
-        ScrollView scrollView=new ScrollView(this);
-        scrollView.addView(tableRowMessage);
-        tableInfo.addView(addressT);
-        tableInfo.addView(tableRowAddress);
-        tableInfo.addView(messageT);
-        tableInfo.addView(scrollView);
-        tableInfo.addView(usersT);
-    }
+tableRowAddress.setGravity(Gravity.CENTER_HORIZONTAL);
+tableRowMessage.setGravity(Gravity.CENTER_HORIZONTAL);
+int pxHeight = px*2;
+int pxWidth = px*10;
+tableRowAddress.addView(addressView,pxWidth,pxHeight);
+tableRowMessage.addView(textMessageView, pxWidth, pxHeight);
+ScrollView scrollView=new ScrollView(this);
+scrollView.addView(tableRowMessage);
+tableInfo.addView(addressT);
+tableInfo.addView(tableRowAddress);
+tableInfo.addView(messageT);
+tableInfo.addView(scrollView);
+tableInfo.addView(usersT);
+} */
 
     TableRow getHeadRow(String text) {
         Resources r = getResources();
