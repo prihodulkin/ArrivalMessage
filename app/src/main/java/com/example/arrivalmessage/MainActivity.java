@@ -45,6 +45,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static Boolean isEnable=true;
     public static List<NotificationData> data;
     public static NotificationData curData = new NotificationData();
     public static NotificationData reserveData;
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     public static int defDays = 10;
     public static int defHours = 10;
     public static int defMinutes = 10;
-    public static double  ACCURACY=0.1;
+    public static double  ACCURACY=0.02;
 
     private LocationListener listener = new LocationListener() {
         @Override
@@ -326,6 +327,7 @@ public class MainActivity extends AppCompatActivity {
         cv1.put("defMinutes", defMinutes);
 
         mDb.insert("settings", null, cv1);
+        isEnable=false;
     }
 
 
