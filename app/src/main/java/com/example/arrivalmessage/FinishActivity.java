@@ -170,7 +170,7 @@ public class FinishActivity extends AppCompatActivity {
         tableRowAddress.setGravity(Gravity.CENTER_HORIZONTAL);
         tableRowMessage.setGravity(Gravity.CENTER_HORIZONTAL);
         int pxHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 55, getResources().getDisplayMetrics());
-        int pxWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 315, getResources().getDisplayMetrics());
+        int pxWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, getResources().getDisplayMetrics());
 
         tableRowAddress.addView(addressView, pxWidth, pxHeight);
         tableRowMessage.addView(textMessageView, pxWidth, pxHeight);
@@ -189,8 +189,11 @@ public class FinishActivity extends AppCompatActivity {
       //  addressHeadView.setTypeface(null, Typeface.BOLD_ITALIC);
         addressHeadView.setTextSize(20);
         TableRow tableRowHeadAddress = new TableRow(this);
-        tableRowHeadAddress.setMinimumHeight(50);
-        tableRowHeadAddress.addView(addressHeadView);
+        int minHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
+        tableRowHeadAddress.setMinimumHeight(minHeight);
+        int pxHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics());
+        int pxWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80, getResources().getDisplayMetrics());
+        tableRowHeadAddress.addView(addressHeadView, pxWidth,pxHeight);
         return tableRowHeadAddress;
 
     }
