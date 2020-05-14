@@ -48,10 +48,7 @@ public class AuthActivity extends AppCompatActivity {
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() { // Кнопка ОК
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                Intent n = getIntent();
                 finish();
-                startActivity(n);
             }
         }
         );
