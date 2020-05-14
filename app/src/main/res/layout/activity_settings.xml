@@ -87,7 +87,7 @@
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="55dp"
         android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="@+id/choice_table"
@@ -96,6 +96,7 @@
 
         <TextView
             android:id="@+id/cur_def_loc"
+            android:gravity="center"
             android:layout_weight="1"
             android:padding="5dp"
             android:textColor="#FFFFFF"
@@ -106,10 +107,10 @@
 
     <TextView
         android:id="@+id/textView10"
-        android:layout_width="306dp"
+        android:layout_width="match_parent"
         android:layout_height="58dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginEnd="80dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:fontFamily="@font/centurygothicbold"
         android:gravity="fill_horizontal|center_vertical"
         android:lineSpacingExtra="-10dp"
@@ -121,13 +122,16 @@
         app:layout_constraintEnd_toEndOf="@+id/choice_table"
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="@+id/choice_table"
-        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        app:layout_constraintTop_toTopOf="@+id/change_def_loc2"
         app:layout_constraintVertical_bias="0.29" />
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:fontFamily="@font/centurygothicbold"
         android:gravity="fill_horizontal|center_vertical"
         android:lineSpacingExtra="-10dp"
@@ -142,8 +146,10 @@
         app:layout_constraintVertical_bias="0.042" />
 
     <EditText
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:id="@+id/defMessage"
-        android:layout_width="311dp"
+        android:layout_width="match_parent"
         android:layout_height="136dp"
         android:layout_marginBottom="176dp"
         android:background="@drawable/table_white"

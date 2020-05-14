@@ -43,8 +43,8 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                 }
         );
-
-        /*Button days_plus_btn = findViewById(R.id.daysplus);
+/*
+        Button days_plus_btn = findViewById(R.id.daysplus);
         days_plus_btn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -133,16 +133,16 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                 }
         );
-
-        Button chadneDefLoc=findViewById(R.id.change_def_loc);
+*/
+        Button chadneDefLoc=findViewById(R.id.change_def_loc2);
         chadneDefLoc.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View view) {
 
                 Intent intent=new Intent(SettingsActivity.this,SelectDefaultLocationActivity.class);
-                startActivity(intent);*/
-           // }
-        //});
+                startActivity(intent);
+           }
+        });
     }
 
     @Override
@@ -151,3 +151,4 @@ public class SettingsActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 }
+
