@@ -122,7 +122,6 @@ public class FinishActivity extends AppCompatActivity {
 
     public void createDisplayList() {
         Resources r = getResources();
-        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, r.getDisplayMetrics());
         for (int i = 0; i < MainActivity.curData.displayFriends.length; i++) {
             final String friendName = MainActivity.curData.displayFriends[i];
             TableRow tableRow = new TableRow(this);
@@ -131,9 +130,7 @@ public class FinishActivity extends AppCompatActivity {
             fullName.setText(friendName);
             fullName.setTypeface(Typeface.createFromAsset(getAssets(), "font/centurygothic.ttf"));
             fullName.setTextColor(-1);
-            fullName.setTextSize(px/5);
             fullName.setGravity(Gravity.CENTER_HORIZONTAL);
-//fullName.setTypeface(null, Typeface.BOLD);
             tableRow.addView(fullName, ActionBar.LayoutParams.WRAP_CONTENT);
             tableLayout.addView(tableRow);
         }
