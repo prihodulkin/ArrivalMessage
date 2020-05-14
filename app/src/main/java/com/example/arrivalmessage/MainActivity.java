@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == 0) {
             manager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
             manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
-
+            manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,listener);
         }
         mDBHelper = new DatabaseHelper(this);
         /* try {
@@ -241,6 +241,7 @@ public class MainActivity extends AppCompatActivity {
         cursor.close();
         data.contains(1);
 
+
         Cursor cursor1 = mDb.rawQuery("SELECT * FROM settings", null);
         cursor1.moveToFirst();
         while (!cursor1.isAfterLast()) {
@@ -254,7 +255,6 @@ public class MainActivity extends AppCompatActivity {
             cursor1.moveToNext();
         }
         cursor1.close();
-
 
     }
 
@@ -300,9 +300,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+
     @Override
     protected void onPause() {
         super.onPause();
+        if(data==null)
+            return;
         mDb.execSQL("DELETE FROM" + " users");
         if (data.size() > 0) {
             for (NotificationData d : data) {
@@ -326,45 +330,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        ContentValues cv1 = new ContentValues();
-        cv1.put("defLatitude", defLatitude);
-        cv1.put("defLongitude", defLongitude);
-        cv1.put("defMessage", defMessage);
-        cv1.put("defLocation", defLocation);
-        cv1.put("defDays", defDays);
-        cv1.put("defHours", defHours);
-        cv1.put("defMinutes", defMinutes);
-        Log.i("PPSH", "SHUE");
-        mDb.insert("settings", null, cv1);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mDb.execSQL("DELETE FROM" + " users");
-        if (data.size() > 0) {
-            for (NotificationData d : data) {
-                ContentValues cv = new ContentValues();
-                String users_ids = "";
-                for (int id : d.idChosenFriends) {
-                    users_ids += id + " ";
-                }
-                cv.put("users_ids", users_ids);
-                cv.put("latitude", d.latitude);
-                cv.put("longitude", d.longitude);
-                cv.put("message", d.writtenText);
-                cv.put("isEnabled", d.isEnabled);
-                cv.put("location", d.location);
-                cv.put("user_id", d.user_id);
-                cv.put("days", d.days);
-                cv.put("hours", d.hours);
-                cv.put("minutes", d.minutes);
-                cv.put("flag", d.flag);
-                mDb.insert("users", null, cv);
-            }
-        }
         data.clear();
-        data = null;
 
         ContentValues cv1 = new ContentValues();
         cv1.put("defLatitude", defLatitude);
@@ -376,9 +342,8 @@ public class MainActivity extends AppCompatActivity {
         cv1.put("defMinutes", defMinutes);
 
         mDb.insert("settings", null, cv1);
-
-        finish();
     }
+
 
     @Override
     public void onBackPressed() {
@@ -415,8 +380,7 @@ public class MainActivity extends AppCompatActivity {
                                 mDb.insert("users", null, cv);
                             }
                         }
-                        data.clear();
-                        data = null;
+
 
                         ContentValues cv1 = new ContentValues();
                         cv1.put("defLatitude", defLatitude);
