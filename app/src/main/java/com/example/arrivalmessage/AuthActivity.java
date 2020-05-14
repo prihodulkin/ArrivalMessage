@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -81,6 +82,12 @@ public class AuthActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             int logoTimer = 0;
+
+                            while (logoTimer<2000) {
+                                sleep(100);
+                                logoTimer+=100;
+                            }
+
                             while (VK_Controller.friends.size() == 0) {
                                 sleep(100);
                                 logoTimer = logoTimer + 100;
