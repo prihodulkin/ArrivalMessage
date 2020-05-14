@@ -66,52 +66,45 @@ public class AuthActivity extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
         }
+        else {
+            if (controller == null) {
+                RequestQueue requestQueue = Volley.newRequestQueue(this);
+                controller = new VK_Controller(requestQueue, getResources().getString(R.string.Access_Key), getResources().getString(R.string.Group_id));
+            }
 
-        if (controller == null) {
-            RequestQueue requestQueue = Volley.newRequestQueue(this);
-            controller = new VK_Controller(requestQueue, getResources().getString(R.string.Access_Key), getResources().getString(R.string.Group_id));
-        }
-
-        if (!VK.isLoggedIn()) {
-            VK.login(this, Arrays.asList(VKScope.FRIENDS));
-        } else {
-            controller.UpdateFriends();
-            controller.UpdateUserID();
-            Thread logoTimer = new Thread()
-            {
-                public void run()
-                {
-                    try
-                    {
-                        int logoTimer = 0;
-                        while(VK_Controller.friends.size()==0)
-                        {
-                            sleep(100);
-                            logoTimer = logoTimer +100;
-                            if(logoTimer==1000)
-                            {
-                                controller.UpdateFriends();
-                                logoTimer = 0;
+            if (!VK.isLoggedIn()) {
+                VK.login(this, Arrays.asList(VKScope.FRIENDS));
+            } else {
+                controller.UpdateFriends();
+                controller.UpdateUserID();
+                Thread logoTimer = new Thread() {
+                    public void run() {
+                        try {
+                            int logoTimer = 0;
+                            while (VK_Controller.friends.size() == 0) {
+                                sleep(100);
+                                logoTimer = logoTimer + 100;
+                                if (logoTimer == 1000) {
+                                    controller.UpdateFriends();
+                                    logoTimer = 0;
+                                }
                             }
-                        };
-                        Intent intent = new Intent(AuthActivity.this, MainActivity.class);
-                        startActivity(intent);
+                            ;
+                            Intent intent = new Intent(AuthActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        } catch (InterruptedException e) {
+                            builder.setMessage(e.getStackTrace().toString());
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        } finally {
+                            finish();
+                        }
                     }
-                    catch (InterruptedException e)
-                    {
-                        builder.setMessage(e.getStackTrace().toString());
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                    }
-                    finally
-                    {
-                        finish();
-                    }
-                }
-            };
-            logoTimer.start();
-        }
+                };
+                logoTimer.start();
+            }
 
+        }
     }
     public void addListenerOnButton() {
         /*Button create_btn = findViewById(R.id.start_but);
