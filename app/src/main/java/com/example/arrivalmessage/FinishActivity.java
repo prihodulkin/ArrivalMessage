@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -168,10 +169,11 @@ public class FinishActivity extends AppCompatActivity {
 
         tableRowAddress.setGravity(Gravity.CENTER_HORIZONTAL);
         tableRowMessage.setGravity(Gravity.CENTER_HORIZONTAL);
+        int pxHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 55, getResources().getDisplayMetrics());
+        int pxWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 315, getResources().getDisplayMetrics());
 
-        tableRowAddress.addView(addressView, 900, 150);
-        tableRowMessage.addView(textMessageView, 900, 150);
-
+        tableRowAddress.addView(addressView, pxWidth, pxHeight);
+        tableRowMessage.addView(textMessageView, pxWidth, pxHeight);
         tableInfo.addView(addressT);
         tableInfo.addView(tableRowAddress);
         tableInfo.addView(messageT);
