@@ -25,7 +25,7 @@
         android:id="@+id/change_def_loc2"
         android:layout_width="153dp"
         android:layout_height="30dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="5dp"
         android:layout_weight="3"
         android:background="#99A6C9D6"
         android:fontFamily="@font/centurygothicbold"
@@ -87,7 +87,7 @@
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="55dp"
         android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="@+id/choice_table"
@@ -106,10 +106,10 @@
 
     <TextView
         android:id="@+id/textView10"
-        android:layout_width="306dp"
+        android:layout_width="match_parent"
         android:layout_height="58dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginEnd="80dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:fontFamily="@font/centurygothicbold"
         android:gravity="fill_horizontal|center_vertical"
         android:lineSpacingExtra="-10dp"
@@ -126,7 +126,9 @@
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="40dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/centurygothicbold"
         android:gravity="fill_horizontal|center_vertical"
@@ -143,8 +145,10 @@
 
     <EditText
         android:id="@+id/defMessage"
-        android:layout_width="311dp"
+        android:layout_width="match_parent"
         android:layout_height="136dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:layout_marginBottom="176dp"
         android:background="@drawable/table_white"
         android:text=""
