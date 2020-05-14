@@ -31,16 +31,17 @@ import java.util.Arrays;
 public class AuthActivity extends AppCompatActivity {
 
     public static VK_Controller controller;
+    AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.auth);
         //addListenerOnButton();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder = new AlertDialog.Builder(this);
         builder.setTitle("Внимание!");
         builder.setMessage("Для работы приложения нужен доступ к интернету");
         builder.setCancelable(false);
@@ -84,17 +85,24 @@ public class AuthActivity extends AppCompatActivity {
                     try
                     {
                         int logoTimer = 0;
-                        while(logoTimer < 3000)
+                        while(VK_Controller.friends.size()==0)
                         {
                             sleep(100);
                             logoTimer = logoTimer +100;
+                            if(logoTimer==1000)
+                            {
+                                controller.UpdateFriends();
+                                logoTimer = 0;
+                            }
                         };
                         Intent intent = new Intent(AuthActivity.this, MainActivity.class);
                         startActivity(intent);
                     }
                     catch (InterruptedException e)
                     {
-                        e.printStackTrace();
+                        builder.setMessage(e.getStackTrace().toString());
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
                     }
                     finally
                     {
@@ -178,6 +186,9 @@ public class AuthActivity extends AppCompatActivity {
                         }
                         catch (InterruptedException e)
                         {
+                            builder.setMessage(e.getStackTrace().toString());
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
                             e.printStackTrace();
                         }
                         finally

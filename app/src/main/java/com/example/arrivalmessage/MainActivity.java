@@ -45,7 +45,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    public static Boolean isEnable=true;
     public static List<NotificationData> data;
     public static NotificationData curData = new NotificationData();
     public static NotificationData reserveData;
@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     public static int defDays = 10;
     public static int defHours = 10;
     public static int defMinutes = 10;
+    public static double  ACCURACY=0.02;
 
     private LocationListener listener = new LocationListener() {
         @Override
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             for (NotificationData d : data) {
                 if (d.isEnabled == 1) {
                     LatLng latLng = new LatLng(d.latitude, d.longitude);
-                    if (calculationByDistance(latLng, new LatLng(location.getLatitude(), location.getLongitude())) <= 0.1) {
+                    if (calculationByDistance(latLng, new LatLng(location.getLatitude(), location.getLongitude())) <= ACCURACY) {
 
                        /* AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                         builder.setTitle("Внимание!");
@@ -88,10 +89,8 @@ public class MainActivity extends AppCompatActivity {
                         dialog.show();*/
                         Log.i("Sent message", "Сообщение " + d.writtenText + " отправлено!");
                         for (int id : d.idChosenFriends)
-                            AuthActivity.controller.SendMessage(id, d.writtenText);
-
+                            AuthActivity.controller.SendMessage(id, VK_Controller.FirstName+" "+VK_Controller.SecondName+" : "+d.writtenText);
                         d.isEnabled = 0;
-
                     }
 
 
@@ -180,34 +179,14 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
         }
-        //
 
-        //requestQueue.start();
-
-
-        /*if (controller == null) {
-            RequestQueue requestQueue = Volley.newRequestQueue(this);
-            controller = new VK_Controller(requestQueue, getResources().getString(R.string.Access_Key), getResources().getString(R.string.Group_id));
-        }
-
-        if (!VK.isLoggedIn()) {
-            VK.login(this, Arrays.asList(VKScope.FRIENDS));
-        } else {
-            controller.UpdateFriends();
-            controller.UpdateUserID();
-        }
-*/
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == 0) {
             manager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
             manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
-            manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,listener);
+
         }
         mDBHelper = new DatabaseHelper(this);
-        /* try {
-            mDBHelper.updateDataBase();
-        } catch (IOException mIOException) {
-            throw new Error("UnableToUpdateDatabase");
-        }*/
+
         try {
             mDb = mDBHelper.getReadableDatabase();
         } catch (SQLException mSQLException) {
@@ -298,15 +277,23 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        Button info_btn = findViewById(R.id.info_btn);
+        info_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, InfoActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
+
 
 
 
     @Override
     protected void onPause() {
         super.onPause();
-        if(data==null)
-            return;
         mDb.execSQL("DELETE FROM" + " users");
         if (data.size() > 0) {
             for (NotificationData d : data) {
@@ -330,8 +317,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        data.clear();
-
         ContentValues cv1 = new ContentValues();
         cv1.put("defLatitude", defLatitude);
         cv1.put("defLongitude", defLongitude);
@@ -342,7 +327,9 @@ public class MainActivity extends AppCompatActivity {
         cv1.put("defMinutes", defMinutes);
 
         mDb.insert("settings", null, cv1);
+        isEnable=false;
     }
+
 
 
     @Override
@@ -358,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
 
                         // SelectUserActivity.chosenFriends.clear();
                         //  SelectUserActivity.friends.clear();
-                        mDb.execSQL("DELETE FROM" + " users");
+                       /* mDb.execSQL("DELETE FROM" + " users");
                         if (data.size() > 0) {
                             for (NotificationData d : data) {
                                 ContentValues cv = new ContentValues();
@@ -380,7 +367,8 @@ public class MainActivity extends AppCompatActivity {
                                 mDb.insert("users", null, cv);
                             }
                         }
-
+                        data.clear();
+                        data = null;
 
                         ContentValues cv1 = new ContentValues();
                         cv1.put("defLatitude", defLatitude);
@@ -391,7 +379,7 @@ public class MainActivity extends AppCompatActivity {
                         cv1.put("defHours", defHours);
                         cv1.put("defMinutes", defMinutes);
 
-                        mDb.insert("settings", null, cv1);
+                        mDb.insert("settings", null, cv1);*/
 
                         finish();
                     }
@@ -408,6 +396,8 @@ public class MainActivity extends AppCompatActivity {
         TextView aText = alertDialog.findViewById(android.R.id.message);
         aText.setTypeface(Typeface.createFromAsset(getAssets(), "font/centurygothic.ttf"));
     }
+
+
 
  /*   @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

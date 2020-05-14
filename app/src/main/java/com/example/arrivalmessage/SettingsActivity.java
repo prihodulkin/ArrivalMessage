@@ -34,7 +34,6 @@ public class SettingsActivity extends AppCompatActivity {
         hours.setText(MainActivity.defHours +" ");
         TextView mins = findViewById(R.id.mins);
         mins.setText(MainActivity.defMinutes +" ");
-
         addListenerOnButton();
 
     }

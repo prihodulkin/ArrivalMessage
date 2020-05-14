@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:paddingTop="10px"
-    android:paddingBottom="10px"
-    android:layout_height="170px"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
+    android:layout_height="57dp"
     android:gravity="center_vertical">
 
     <com.example.arrivalmessage.CircularImageView
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:padding="5px"
+        android:padding="17dp"
         >
         <TextView
             android:id="@+id/full_name"

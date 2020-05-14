@@ -2,11 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/saved_act"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/map"
-    tools:context=".SavedNotificationsActivity">
+    tools:context=".InfoActivity">
 
     <TableRow
         android:id="@+id/tableRow"
@@ -38,7 +37,7 @@
 
         <TextView
             android:id="@+id/textView4"
-            android:text="Мои уведомления"
+            android:text="Руководство пользователя"
             android:layout_width="match_parent"
             android:layout_height="65dp"
             android:fontFamily="@font/centurygothicbold"
@@ -46,7 +45,7 @@
             android:lineSpacingExtra="-10dp"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            android:textSize="29dp"
+            android:textSize="23dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,34 +54,34 @@
 
     </TableRow>
 
-
     <ScrollView
-        android:id="@+id/ScrollTable"
-        android:background="@drawable/table_blue"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="90dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="30dp"
-        android:scrollbarStyle="insideOverlay"
-        android:scrollbarThumbVertical="@color/Thumb"
-        android:scrollbarTrackVertical="@color/Track"
+        android:layout_width="339dp"
+        android:layout_height="488dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableRow">
+        app:layout_constraintTop_toBottomOf="@+id/tableRow"
+        app:layout_constraintVertical_bias="0.494">
 
-        <TableLayout
-
-            android:paddingTop="30dp"
-            android:padding="5dp"
-            android:id="@+id/notificationsList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/table_blue"
+            android:fontFamily="@font/centurygothic"
+            android:paddingStart="13dp"
+            android:paddingLeft="13dp"
+            android:paddingTop="13dp"
+            android:paddingEnd="13dp"
+            android:paddingRight="13dp"
+            android:paddingBottom="13dp"
+            android:text="• Чтобы создать уведомление, нажмите \''Создать уведомление\''. Далее выберите друзей, геолокацию и введите текст сообщения. \n\n• Созданные уведомления хранятся во вкладке \''Мои уведомления\''. Там Вы можете включать/выключать, редактировать, удалять уведомления. \n\n• Во вкладке \''Настройки\'' Вы можете определить время повторного запуска, геолокацию и текст сообщения по умолчанию. \n\n• Если вы хотите сменить свой аккаунт ВКонтакте, нажмите \''Сменить аккаунт\''."
+            android:textColor="#ffff"
+            android:textSize="19dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tableRow" />
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

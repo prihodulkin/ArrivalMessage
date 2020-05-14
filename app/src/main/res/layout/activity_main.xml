@@ -14,7 +14,6 @@
         android:layout_width="120dp"
         android:layout_height="20dp"
         android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginBottom="5dp"
         android:alpha="0.5"
         android:background="#000000"
@@ -85,5 +84,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/create_btn" />
+
+    <Button
+        android:id="@+id/info_btn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="179dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/info_btn"
+        app:layout_constraintEnd_toStartOf="@+id/settings_btn"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/change_acc_btn"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

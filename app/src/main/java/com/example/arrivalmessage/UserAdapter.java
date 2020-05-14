@@ -1,7 +1,6 @@
 package com.example.arrivalmessage;
 
 
-
 import android.content.Context;
 
 import android.view.LayoutInflater;
