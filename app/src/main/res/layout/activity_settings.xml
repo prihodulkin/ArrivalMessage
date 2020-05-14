@@ -10,15 +10,12 @@
 
     <ImageView
         android:id="@+id/choice_table"
-        android:layout_width="346dp"
-        android:layout_height="483dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="60dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="365dp"
+        android:layout_height="505dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableRow2"
-        app:layout_constraintVertical_bias="0.447"
         app:srcCompat="@drawable/table_blue" />
 
     <TableRow
