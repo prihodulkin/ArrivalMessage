@@ -151,12 +151,12 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
                     final String city = address.getLocality() != null ? address.getLocality() : "";
 
                     MainActivity.curData.location = street + " " + house + ", " + city;
-                    if(MainActivity.reserveData!=null)
+                    if(MainActivity.reserveData!=null&&SavedNotificationsActivity.texts!=null&&SavedNotificationsActivity.texts.containsKey( MainActivity.curData))
                         SavedNotificationsActivity.texts.get(MainActivity.curData).setText(street + " " + house + ", " + city);
 
                     if (MainActivity.curData.location.equals(" , ")) {
                         MainActivity.curData.location = "Unknown location";
-                        if(MainActivity.reserveData!=null)
+                        if(MainActivity.reserveData!=null&&SavedNotificationsActivity.texts!=null&&SavedNotificationsActivity.texts.containsKey( MainActivity.curData))
                             SavedNotificationsActivity.texts.get(MainActivity.curData).setText(street + " " + house + ", " + city);
                     }
                 } catch (IOException e) {
@@ -270,15 +270,15 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
                     final String house = address.getSubThoroughfare() != null ? address.getSubThoroughfare() : "";
                     final String city = address.getLocality() != null ? address.getLocality() : "";
 
-                    TextView textView=SavedNotificationsActivity.texts.get(MainActivity.curData);
+
 
                     MainActivity.curData.location = street + " " + house + ", " + city;
-                    if(MainActivity.reserveData!=null)
-                        textView.setText(street + " " + house + ", " + city);
+                    if(MainActivity.reserveData!=null&&SavedNotificationsActivity.texts!=null&&SavedNotificationsActivity.texts.containsKey( MainActivity.curData))
+                        SavedNotificationsActivity.texts.get(MainActivity.curData).setText(street + " " + house + ", " + city);
 
                     if (MainActivity.curData.location.equals(" , ")) {
                         MainActivity.curData.location = "Unknown location";
-                        if(MainActivity.reserveData!=null)
+                        if(MainActivity.reserveData!=null&&SavedNotificationsActivity.texts!=null&&SavedNotificationsActivity.texts.containsKey( MainActivity.curData))
                             SavedNotificationsActivity.texts.get(MainActivity.curData).setText(street + " " + house + ", " + city);
                     }
                 } catch (IOException e) {
