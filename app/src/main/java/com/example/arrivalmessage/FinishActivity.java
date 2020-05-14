@@ -7,6 +7,7 @@ import android.Manifest;
 import android.app.ActionBar;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.database.SQLException;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -47,19 +49,10 @@ public class FinishActivity extends AppCompatActivity {
         tableInfo = findViewById(R.id.tableInfo);
         createDisplayList();
         createInfoTable();
-
         for (int id : MainActivity.curData.idChosenFriends) {
             users_ids += id + " ";
         }
-
         mDBHelper = new DatabaseHelper(this);
-
-        /*try {
-            mDBHelper.updateDataBase();
-        } catch (IOException mIOException) {
-            throw new Error("UnableToUpdateDatabase");
-        }*/
-
         try {
             mDb = mDBHelper.getWritableDatabase();
         } catch (SQLException mSQLException) {
@@ -102,6 +95,7 @@ public class FinishActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
         FinishActivity.super.finish();
         FinishManager.finishActivity(SelectUserActivity.class);
         FinishManager.finishActivity(SelectLocationActivity.class);
@@ -127,75 +121,79 @@ public class FinishActivity extends AppCompatActivity {
     }
 
     public void createDisplayList() {
+        Resources r = getResources();
+        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, r.getDisplayMetrics());
         for (int i = 0; i < MainActivity.curData.displayFriends.length; i++) {
             final String friendName = MainActivity.curData.displayFriends[i];
             TableRow tableRow = new TableRow(this);
             TextView fullName = new TextView(this);
-            tableRow.setGravity(Gravity.CENTER);
+            tableRow.setGravity(Gravity.CENTER_HORIZONTAL);
             fullName.setText(friendName);
+            fullName.setTypeface(Typeface.createFromAsset(getAssets(), "font/centurygothic.ttf"));
             fullName.setTextColor(-1);
+            fullName.setTextSize(px/5);
             fullName.setGravity(Gravity.CENTER_HORIZONTAL);
-            //fullName.setTypeface(null, Typeface.BOLD);
+//fullName.setTypeface(null, Typeface.BOLD);
             tableRow.addView(fullName, ActionBar.LayoutParams.WRAP_CONTENT);
             tableLayout.addView(tableRow);
         }
     }
 
     public void createInfoTable() {
-
+        Resources r = getResources();
+        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, r.getDisplayMetrics());
+        int textWidth=px*8;
         TableRow tableRowAddress = new TableRow(this);
-        TableRow addressT = getHeadRow("Адрес: ");
-        TableRow messageT = getHeadRow("Сообщение: ");
-        TableRow usersT = getHeadRow("Пользователи: ");
+        TableRow addressT = getHeadRow("Адрес:");
+        TableRow messageT = getHeadRow("Сообщение:");
+        TableRow usersT = getHeadRow("Пользователи:");
 
 
 
         TableRow tableRowMessage = new TableRow(this);
-
         TextView addressView = new TextView(this);
+
         TextView textMessageView = new TextView(this);
+        textMessageView.setTypeface(Typeface.createFromAsset(getAssets(), "font/centurygothic.ttf"));
+        textMessageView.setTextSize(px/5);
 
-
-        String address1 = MainActivity.curData.location;
-        addressView.setText(address1);
+        textMessageView.setGravity(Gravity.CENTER);
+        addressView.setText(MainActivity.curData.location);
+        addressView.setTypeface(Typeface.createFromAsset(getAssets(), "font/centurygothic.ttf"));
+        addressView.setTextSize(px/5);
         textMessageView.setText(MainActivity.curData.writtenText);
-
         addressView.setTextColor(-1);
         addressView.setGravity(Gravity.CENTER);
-        //addressView.setTypeface(null, Typeface.BOLD);
         textMessageView.setTextColor(-1);
-        textMessageView.setGravity(Gravity.CENTER);
-      //  textMessageView.setTypeface(null, Typeface.BOLD);
 
         tableRowAddress.setGravity(Gravity.CENTER_HORIZONTAL);
         tableRowMessage.setGravity(Gravity.CENTER_HORIZONTAL);
-        int pxHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 55, getResources().getDisplayMetrics());
-        int pxWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, getResources().getDisplayMetrics());
-
-        tableRowAddress.addView(addressView, pxWidth, pxHeight);
+        int pxHeight = px*2;
+        int pxWidth = px*10;
+        tableRowAddress.addView(addressView,pxWidth,pxHeight);
         tableRowMessage.addView(textMessageView, pxWidth, pxHeight);
+        ScrollView scrollView=new ScrollView(this);
+        scrollView.addView(tableRowMessage);
         tableInfo.addView(addressT);
         tableInfo.addView(tableRowAddress);
         tableInfo.addView(messageT);
-        tableInfo.addView(tableRowMessage);
+        tableInfo.addView(scrollView);
         tableInfo.addView(usersT);
     }
 
     TableRow getHeadRow(String text) {
+        Resources r = getResources();
+        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, r.getDisplayMetrics());
         TextView addressHeadView = new TextView(this);
         addressHeadView.setText(text);
         addressHeadView.setTextColor(-1);
         addressHeadView.setGravity(Gravity.CENTER_HORIZONTAL);
-      //  addressHeadView.setTypeface(null, Typeface.BOLD_ITALIC);
-        addressHeadView.setTextSize(20);
+        addressHeadView.setTextSize(px/4);
         TableRow tableRowHeadAddress = new TableRow(this);
-        int minHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
-        tableRowHeadAddress.setMinimumHeight(minHeight);
-        int pxHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics());
-        int pxWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80, getResources().getDisplayMetrics());
+        tableRowHeadAddress.setGravity(Gravity.CENTER_HORIZONTAL);
+        int pxHeight = px;
+        int pxWidth = px*8;
         tableRowHeadAddress.addView(addressHeadView, pxWidth,pxHeight);
         return tableRowHeadAddress;
-
     }
-
 }
