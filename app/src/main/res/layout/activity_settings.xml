@@ -12,11 +12,32 @@
         android:id="@+id/choice_table"
         android:layout_width="365dp"
         android:layout_height="505dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableRow2"
         app:srcCompat="@drawable/table_blue" />
+
+    <Button
+        android:id="@+id/change_def_loc2"
+        android:layout_width="153dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="3"
+        android:background="#99A6C9D6"
+        android:fontFamily="@font/centurygothicbold"
+        android:text="Изменить"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableRow5"
+        app:layout_constraintStart_toStartOf="@+id/tableRow5"
+        app:layout_constraintTop_toBottomOf="@+id/tableRow5">
+
+
+    </Button>
 
     <TableRow
         android:id="@+id/tableRow2"
@@ -61,6 +82,7 @@
     </TableRow>
 
     <TableRow
+        android:id="@+id/tableRow5"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
@@ -77,22 +99,6 @@
             android:padding="5dp"
             android:textColor="#FFFFFF"
             android:textSize="16dp"></TextView>
-
-        <Button
-            android:id="@+id/change_def_loc"
-            android:layout_height="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_weight="3"
-            android:background="#99A6C9D6"
-            android:fontFamily="@font/centurygothicbold"
-            android:text="Изменить"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="13dp">
-
-
-        </Button>
 
 
     </TableRow>
@@ -130,7 +136,6 @@
         android:textSize="21dp"
         app:layout_constraintBottom_toBottomOf="@+id/choice_table"
         app:layout_constraintEnd_toEndOf="@+id/choice_table"
-        app:layout_constraintHorizontal_bias="0.205"
         app:layout_constraintStart_toStartOf="@+id/choice_table"
         app:layout_constraintTop_toTopOf="@+id/choice_table"
         app:layout_constraintVertical_bias="0.042" />
