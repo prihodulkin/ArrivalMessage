@@ -49,6 +49,7 @@ public class AuthActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finish();
+                System.exit(0);
             }
         }
         );
@@ -56,6 +57,7 @@ public class AuthActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finish();
+                System.exit(0);
             }
         });
 
