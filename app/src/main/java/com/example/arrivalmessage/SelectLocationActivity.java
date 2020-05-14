@@ -27,6 +27,8 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.widget.TextView;
+
 import com.google.android.gms.maps.model.Marker;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -76,16 +78,6 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
     }
 
 
-
-
-
-
-
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if(MainActivity.curData.longitude!=null)
@@ -127,9 +119,6 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
         }
         Places.createClient(this);
         setAutocompleteSupportFragment();
-
-
-
     }
 
 
@@ -150,6 +139,29 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
                 gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),16f));
                 SelectedPlaceMarker =gmap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).icon(
                         BitmapDescriptorFactory.fromResource(R.drawable.marker)));
+
+                final Geocoder geocoder = new Geocoder(SelectLocationActivity.this, new Locale("ru", "RU"));
+
+                Address address;
+                try {
+                    address = geocoder.getFromLocation(latitude, longitude, 1).get(0);
+
+                    final String street = address.getThoroughfare() != null ? address.getThoroughfare() : "";
+                    final String house = address.getSubThoroughfare() != null ? address.getSubThoroughfare() : "";
+                    final String city = address.getLocality() != null ? address.getLocality() : "";
+
+                    MainActivity.curData.location = street + " " + house + ", " + city;
+                    if(MainActivity.reserveData!=null)
+                        SavedNotificationsActivity.texts.get(MainActivity.curData).setText(street + " " + house + ", " + city);
+
+                    if (MainActivity.curData.location.equals(" , ")) {
+                        MainActivity.curData.location = "Unknown location";
+                        if(MainActivity.reserveData!=null)
+                            SavedNotificationsActivity.texts.get(MainActivity.curData).setText(street + " " + house + ", " + city);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
 
             }
@@ -247,6 +259,31 @@ public class SelectLocationActivity extends AppCompatActivity implements OnMapRe
                         BitmapDescriptorFactory.fromResource(R.drawable.marker)));
                 latitude = latLng.latitude;
                 longitude=latLng.longitude;
+
+                final Geocoder geocoder = new Geocoder(SelectLocationActivity.this, new Locale("ru", "RU"));
+
+                Address address;
+                try {
+                    address = geocoder.getFromLocation(latitude, longitude, 1).get(0);
+
+                    final String street = address.getThoroughfare() != null ? address.getThoroughfare() : "";
+                    final String house = address.getSubThoroughfare() != null ? address.getSubThoroughfare() : "";
+                    final String city = address.getLocality() != null ? address.getLocality() : "";
+
+                    TextView textView=SavedNotificationsActivity.texts.get(MainActivity.curData);
+
+                    MainActivity.curData.location = street + " " + house + ", " + city;
+                    if(MainActivity.reserveData!=null)
+                        textView.setText(street + " " + house + ", " + city);
+
+                    if (MainActivity.curData.location.equals(" , ")) {
+                        MainActivity.curData.location = "Unknown location";
+                        if(MainActivity.reserveData!=null)
+                            SavedNotificationsActivity.texts.get(MainActivity.curData).setText(street + " " + house + ", " + city);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

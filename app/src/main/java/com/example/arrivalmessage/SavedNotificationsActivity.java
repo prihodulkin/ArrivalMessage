@@ -36,6 +36,7 @@ public class SavedNotificationsActivity extends AppCompatActivity {
     NotificationData curData;
     TextView nothingText;
     HashMap<TableRow, NotificationData> map;
+    static HashMap<NotificationData,TextView> texts;
 
 
     @Override
@@ -50,9 +51,8 @@ public class SavedNotificationsActivity extends AppCompatActivity {
         nothingText.setTextColor(-1);
         nothingText.setTextSize(20);
         map=new HashMap<>();
+        texts=new HashMap<>();
 
-
-        //nothingText.setTypeface(T);
         nothingText.setGravity(Gravity.CENTER_HORIZONTAL);
         nothingText.setGravity(Gravity.CENTER_HORIZONTAL);
 
@@ -130,6 +130,8 @@ public class SavedNotificationsActivity extends AppCompatActivity {
 
 
             );
+            texts.put(data.get(i),notificationText);
+
             final Switch toggle = new Switch(this);
             Resources r = getResources();
             int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, r.getDisplayMetrics());
